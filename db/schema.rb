@@ -10,14 +10,60 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_21_032220) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_21_044359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "boxes", force: :cascade do |t|
+    t.string "name"
+    t.string "quality"
+    t.decimal "weigth"
+    t.integer "hectare"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "hectares", force: :cascade do |t|
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.string "community"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "plants", force: :cascade do |t|
+    t.integer "HectareId"
+    t.decimal "humidity"
+    t.decimal "growthMm"
+    t.decimal "heatJoules"
+    t.decimal "steamThicknessMm"
+    t.boolean "pestPresence"
+    t.string "texture"
+    t.decimal "oxygenationLevel"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "shelves", force: :cascade do |t|
+    t.integer "division"
+    t.integer "partition"
+    t.integer "werehouseId"
+    t.integer "boxId"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "passwordDigest"
     t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "werehouses", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

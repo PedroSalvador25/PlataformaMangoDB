@@ -1,0 +1,2 @@
+module HectaresHelper
+end
