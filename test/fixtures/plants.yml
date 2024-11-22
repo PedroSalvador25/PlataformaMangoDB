@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  HectareId: 1
+  humidity: 9.99
+  growthMm: 9.99
+  heatJoules: 9.99
+  steamThicknessMm: 9.99
+  pestPresence: false
+  texture: MyString
+  oxygenationLevel: 9.99
+
+two:
+  HectareId: 1
+  humidity: 9.99
+  growthMm: 9.99
+  heatJoules: 9.99
+  steamThicknessMm: 9.99
+  pestPresence: false
+  texture: MyString
+  oxygenationLevel: 9.99
