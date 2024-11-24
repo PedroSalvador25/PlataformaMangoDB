@@ -37,7 +37,7 @@ gem "bootsnap", require: false
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'devise'
 gem 'tailwindcss-rails'
-
+gem 'bcrypt', '~> 3.1.7'
 gem 'sassc-rails'
 
 group :development, :test do
