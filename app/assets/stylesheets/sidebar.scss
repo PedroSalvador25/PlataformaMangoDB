@@ -35,11 +35,11 @@
         cursor: pointer;
         
         &.active{
-            background-color: $primary-color;
+            background-color: $secondary-color;
         }
 
         &:not(.active):hover {
-            background-color: lighten($primary-color, 20%);  /* Color más claro cuando no está activo */
+            background-color: lighten($secondary-color, 20%);  /* Color más claro cuando no está activo */
           }
     
     }
