@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_21_044359) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_24_204429) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "boxes", force: :cascade do |t|
-    t.string "name"
     t.string "quality"
     t.decimal "weigth"
     t.integer "hectare"
@@ -55,10 +54,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_21_044359) do
 
   create_table "users", force: :cascade do |t|
     t.string "email"
-    t.string "passwordDigest"
+    t.string "password_digest"
     t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "connected", default: false
+    t.integer "failed_attempts", default: 0, null: false
+    t.datetime "locked_until"
   end
 
   create_table "werehouses", force: :cascade do |t|

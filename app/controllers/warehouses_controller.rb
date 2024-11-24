@@ -1,25 +1,25 @@
-class WerehousesController < ApplicationController
+class WarehousesController < ApplicationController
   before_action :set_werehouse, only: %i[ show edit update destroy ]
 
-  # GET /werehouses or /werehouses.json
+  # GET /warehouses or /warehouses.json
   def index
-    @werehouses = Werehouse.all
+    @warehouses = Werehouse.all
   end
 
-  # GET /werehouses/1 or /werehouses/1.json
+  # GET /warehouses/1 or /warehouses/1.json
   def show
   end
 
-  # GET /werehouses/new
+  # GET /warehouses/new
   def new
     @werehouse = Werehouse.new
   end
 
-  # GET /werehouses/1/edit
+  # GET /warehouses/1/edit
   def edit
   end
 
-  # POST /werehouses or /werehouses.json
+  # POST /warehouses or /warehouses.json
   def create
     @werehouse = Werehouse.new(werehouse_params)
 
@@ -34,7 +34,7 @@ class WerehousesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /werehouses/1 or /werehouses/1.json
+  # PATCH/PUT /warehouses/1 or /warehouses/1.json
   def update
     respond_to do |format|
       if @werehouse.update(werehouse_params)
@@ -47,12 +47,12 @@ class WerehousesController < ApplicationController
     end
   end
 
-  # DELETE /werehouses/1 or /werehouses/1.json
+  # DELETE /warehouses/1 or /warehouses/1.json
   def destroy
     @werehouse.destroy!
 
     respond_to do |format|
-      format.html { redirect_to werehouses_path, status: :see_other, notice: "Werehouse was successfully destroyed." }
+      format.html { redirect_to warehouses_path, status: :see_other, notice: "Werehouse was successfully destroyed." }
       format.json { head :no_content }
     end
   end

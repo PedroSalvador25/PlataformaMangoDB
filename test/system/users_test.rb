@@ -15,7 +15,7 @@ class UsersTest < ApplicationSystemTestCase
     click_on "New user"
 
     fill_in "Email", with: @user.email
-    fill_in "Passworddigest", with: @user.passwordDigest
+    fill_in "Password_digest", with: @user.password_digest
     fill_in "Role", with: @user.role
     click_on "Create User"
 
@@ -28,7 +28,7 @@ class UsersTest < ApplicationSystemTestCase
     click_on "Edit this user", match: :first
 
     fill_in "Email", with: @user.email
-    fill_in "Passworddigest", with: @user.passwordDigest
+    fill_in "Password_digest", with: @user.password_digest
     fill_in "Role", with: @user.role
     click_on "Update User"
 
