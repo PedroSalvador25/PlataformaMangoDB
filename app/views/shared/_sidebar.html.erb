@@ -1,0 +1,17 @@
+<aside class="sidebar">
+    <div class="">
+        <%= image_tag 'logo.svg', alt: 'Logo de la empresa', class: 'w-[50px] h-[50px]' %>
+        <h2 class="text-xl gap-3">MangoDB</h2>
+    </div>
+    <nav class="nav">
+        <ul>
+            <% navigation_links.each do |link| %>
+            <li class="<%= 'active' if request.path.start_with?(link[:path]) %>">
+                  <%= image_tag link[:image], alt: 'icon' if link[:image] %>
+
+                <%= link_to link[:name], link[:path], class: 'w-full block' %>
+            </li>
+            <% end %>
+        </ul>
+    </nav>
+</aside>
