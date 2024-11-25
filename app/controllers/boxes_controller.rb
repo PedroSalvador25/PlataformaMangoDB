@@ -3,7 +3,8 @@ class BoxesController < ApplicationController
 
   # GET /boxes or /boxes.json
   def index
-    @boxes = Box.all
+    @q = Box.ransack(params[:q]) 
+    @boxes = @q.result(distinct: true) 
   end
 
   # GET /boxes/1 or /boxes/1.json
