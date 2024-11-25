@@ -1,6 +1,7 @@
 class User < ApplicationRecord
     has_secure_password
 
+    before_validation :set_default_role, on: :create
     enum role: { Administrator: 0, WarehouseManager: 1, Tagger: 2 }
 
     validates :email, presence: true, uniqueness: true
@@ -24,6 +25,11 @@ class User < ApplicationRecord
   
     def reset_failed_attempts!
       update(failed_attempts: 0)
+    end
+
+    private
+    def set_default_role
+      self.role ||= :Tagger
     end
   end
   
