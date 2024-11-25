@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :werehouses
+  resources :warehouses
   resources :shelves
   resources :plants
   resources :hectares
