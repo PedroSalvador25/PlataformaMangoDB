@@ -6,11 +6,14 @@ Rails.application.routes.draw do
   resources :boxes
   resources :users, except: [:login, :logout]
 
-  get 'login', to: 'users#login'
-  get 'logout', to: 'users#logout'
+  get 'login', to: 'authentication_views#login'
+  post 'login', to: 'authentication_views#login'
+  post 'logout', to: 'authentication_views#logout'
+
   post 'authentication/login', to: 'authentication#login'
   post 'authentication/logout', to: 'authentication#logout'
 
   root "users#index"
 end
+
 

@@ -19,21 +19,12 @@ class AuthenticationController < ApplicationController
   end
   
   def logout
-    user = User.find_by(id: session[:user_id])
+    user = User.find_by(id: params[:user_id])
     if user
       user.update(connected: false)
-      session[:user_id] = nil
-      flash[:notice] = 'Cierre de sesión exitoso.'
-      respond_to do |format|
-        format.html { redirect_to login_path }
-        format.json { render json: { message: 'Cierre de sesión exitoso' }, status: :ok }
-      end
+      render json: { message: 'Logout exitoso' }, status: :ok
     else
-      flash[:alert] = 'Usuario no encontrado.'
-      respond_to do |format|
-        format.html { redirect_to login_path }
-        format.json { render json: { error: 'Usuario no encontrado.' }, status: :not_found }
-      end
+      render json: { error: 'Usuario no encontrado.' }, status: :not_found
     end
   end
 
@@ -44,24 +35,12 @@ class AuthenticationController < ApplicationController
       user.increment!(:failed_attempts)
       if user.failed_attempts >= 3
         user.lock_account!
-        flash[:alert] = 'Cuenta bloqueada debido a demasiados intentos fallidos.'
-        respond_to do |format|
-          format.html { redirect_to login_path }
-          format.json { render json: { error: 'Cuenta bloqueada debido a demasiados intentos fallidos.' }, status: :forbidden }
-        end
+        render json: { error: 'Cuenta bloqueada debido a demasiados intentos fallidos.' }, status: :forbidden
       else
-        flash[:alert] = 'Credenciales incorrectas.'
-        respond_to do |format|
-          format.html { redirect_to login_path }
-          format.json { render json: { error: 'Credenciales incorrectas.' }, status: :unauthorized }
-        end
+        render json: { error: 'Credenciales incorrectas.' }, status: :unauthorized
       end
     else
-      flash[:alert] = 'Usuario no encontrado.'
-      respond_to do |format|
-        format.html { redirect_to login_path }
-        format.json { render json: { error: 'Usuario no encontrado.' }, status: :not_found }
-      end
+      render json: { error: 'Usuario no encontrado.' }, status: :not_found
     end
   end
 end
