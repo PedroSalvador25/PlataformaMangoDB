@@ -15,10 +15,9 @@
   <% @users.each do |user| %>
     <%= render user %>
     <p>
-      <%= link_to "Show this user", user %>
+      <%= link_to "Show this user", user, class: "btn-secondary" %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New user", new_user_path, class: "bg-blue-500 text-white py-2 px-4 rounded" %>
-
+<%= link_to "New user", new_user_path, class: "btn-primary" %>
