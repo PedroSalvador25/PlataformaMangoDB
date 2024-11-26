@@ -7,14 +7,14 @@
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Hectares</h1>
-    <%= link_to "New hectare", new_hectare_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+    <%= link_to "New hectare", new_hectare_path, class: "btn-primary" %>
   </div>
 
   <div id="hectares" class="min-w-full">
     <% @hectares.each do |hectare| %>
       <%= render hectare %>
       <p>
-        <%= link_to "Show this hectare", hectare, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+        <%= link_to "Show this hectare", hectare, class: "btn-secondary" %>
       </p>
     <% end %>
   </div>

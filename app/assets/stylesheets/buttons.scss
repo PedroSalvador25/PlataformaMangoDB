@@ -1,0 +1,40 @@
+@import "variables";
+
+
+@mixin buttons($color, $width) {
+    color: $black;
+    background-color: $color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $width;
+    height: 45px;
+    box-shadow: 0px 4px 4px lighten($color, 40%);
+    
+
+    border: none {
+//        bottom: 3px solid darken($color, 10%);
+        radius: 0.5rem;
+    };
+    &:hover{
+        cursor: pointer;
+        opacity: 90%;
+    }
+}
+
+.btn-primary{
+    @include buttons($primary-color, 150px);
+}
+
+.btn-secondary{
+    @include buttons($secondary-color, 150px);
+}
+
+.btn-destroy{
+    @include buttons($red, 150px);
+}
+
+.btn-back{
+    @include buttons($gray, 150px);
+}
+
