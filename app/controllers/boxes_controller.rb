@@ -14,7 +14,8 @@ class BoxesController < ApplicationController
 
   # GET /boxes/new
   def new
-    @box = Box.new
+    @hectare = Hectare.find_by(id: params[:hectare_id])
+    @box = Box.new(hectare: @hectare)
   end
 
   # GET /boxes/1/edit
@@ -24,7 +25,8 @@ class BoxesController < ApplicationController
   # POST /boxes or /boxes.json
   def create
     @box = Box.new(box_params)
-
+    @hectare = Hectare.find(params[:box][:hectare_id]) # Asocia la caja a la hectárea usando el ID
+  
     respond_to do |format|
       if @box.save
         format.html { redirect_to @box, notice: "Box was successfully created." }
@@ -67,6 +69,6 @@ class BoxesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def box_params
-      params.require(:box).permit(:name, :quality, :weigth, :hectare)
+      params.require(:box).permit(:quality, :weigth, :hectare_id) # Incluye :hectare_id
     end
 end

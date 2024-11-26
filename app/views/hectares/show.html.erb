@@ -6,6 +6,12 @@
 
     <%= render @hectare %>
 
+      
+
+    <% if user_has_role?(current_user, :Tagger) %>
+      <%= link_to "Agregar caja", new_box_path(hectare_id: @hectare.id), class: "btn-primary" %>
+    <% end %>
+
     <%= link_to "Edit this hectare", edit_hectare_path(@hectare), class: "btn-primary" %>
     <%= link_to "Back to hectares", hectares_path, class: "btn-back" %>
     <div class="inline-block ml-2">

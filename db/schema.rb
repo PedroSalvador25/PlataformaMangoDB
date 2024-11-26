@@ -10,16 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_26_034059) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_26_220210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "boxes", force: :cascade do |t|
     t.string "quality"
     t.decimal "weigth"
-    t.integer "hectare"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "hectare_id", null: false
+    t.index ["hectare_id"], name: "index_boxes_on_hectare_id"
   end
 
   create_table "hectares", force: :cascade do |t|
@@ -70,4 +71,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_034059) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "werehouses", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "boxes", "hectares"
 end
