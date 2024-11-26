@@ -23,7 +23,7 @@ class AuthenticationController < ApplicationController
         flash[:notice] = 'Inicio de sesión exitoso.'
         respond_to do |format|
           format.html { redirect_to root_path }
-          format.json { render json: { message: 'Inicio de sesión exitoso', user_id: user.id }, status: :ok }
+          format.json { render json: { message: 'Inicio de sesión exitoso', user_id: user.id, email: user.email, role: user.role, name: user.name }, status: :ok }
         end
       end
     else

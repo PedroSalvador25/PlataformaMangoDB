@@ -2,7 +2,7 @@ class User < ApplicationRecord
     has_secure_password
 
     before_validation :set_default_role, on: :create
-    enum role: { Administrator: 0, WarehouseManager: 1, Tagger: 2 }
+    enum role: { Administrator: 0, WarehouseManager: 1, Tagger: 2, Seller: 3 }
 
     validates :email, presence: true, uniqueness: true
     validates :password, presence: true, length: { minimum: 6 }, if: -> { new_record? || !password.nil? }

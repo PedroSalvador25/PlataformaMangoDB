@@ -24,6 +24,13 @@
   <% end %>
 
   <div>
+    <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1">
+      <%= form.text_field :name, class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#a4be7b] focus:border-[#a4be7b] sm:text-sm" %>
+    </div>
+  </div>
+
+  <div>
     <%= form.label :email, class: "block text-sm font-medium text-gray-700" %>
     <div class="mt-1">
       <%= form.email_field :email, class: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#a4be7b] focus:border-[#a4be7b] sm:text-sm" %>
@@ -48,3 +55,4 @@
     <%= form.submit class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#a4be7b] hover:bg-[#94ae6b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#a4be7b]" %>
   </div>
 <% end %>
+
