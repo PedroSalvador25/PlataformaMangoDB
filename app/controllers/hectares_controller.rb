@@ -1,4 +1,5 @@
 class HectaresController < ApplicationController
+  before_action :authenticate_user
   before_action :set_hectare, only: %i[ show edit update destroy ]
 
   # GET /hectares or /hectares.json

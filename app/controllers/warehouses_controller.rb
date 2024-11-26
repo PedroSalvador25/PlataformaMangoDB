@@ -1,9 +1,10 @@
 class WarehousesController < ApplicationController
-  before_action :set_werehouse, only: %i[ show edit update destroy ]
+  before_action :authenticate_user
+  before_action :set_warehouse, only: %i[ show edit update destroy ]
 
   # GET /warehouses or /warehouses.json
   def index
-    @warehouses = Werehouse.all
+    @warehouses = Warehouse.all
   end
 
   # GET /warehouses/1 or /warehouses/1.json
@@ -12,7 +13,7 @@ class WarehousesController < ApplicationController
 
   # GET /warehouses/new
   def new
-    @werehouse = Werehouse.new
+    @warehouse = Warehouse.new
   end
 
   # GET /warehouses/1/edit
@@ -21,15 +22,15 @@ class WarehousesController < ApplicationController
 
   # POST /warehouses or /warehouses.json
   def create
-    @werehouse = Werehouse.new(werehouse_params)
+    @warehouse = Warehouse.new(warehouse_params)
 
     respond_to do |format|
-      if @werehouse.save
-        format.html { redirect_to @werehouse, notice: "Werehouse was successfully created." }
-        format.json { render :show, status: :created, location: @werehouse }
+      if @warehouse.save
+        format.html { redirect_to @warehouse, notice: "Warehouse was successfully created." }
+        format.json { render :show, status: :created, location: @warehouse }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @werehouse.errors, status: :unprocessable_entity }
+        format.json { render json: @warehouse.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -37,34 +38,34 @@ class WarehousesController < ApplicationController
   # PATCH/PUT /warehouses/1 or /warehouses/1.json
   def update
     respond_to do |format|
-      if @werehouse.update(werehouse_params)
-        format.html { redirect_to @werehouse, notice: "Werehouse was successfully updated." }
-        format.json { render :show, status: :ok, location: @werehouse }
+      if @warehouse.update(warehouse_params)
+        format.html { redirect_to @warehouse, notice: "Warehouse was successfully updated." }
+        format.json { render :show, status: :ok, location: @warehouse }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @werehouse.errors, status: :unprocessable_entity }
+        format.json { render json: @warehouse.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # DELETE /warehouses/1 or /warehouses/1.json
   def destroy
-    @werehouse.destroy!
+    @warehouse.destroy!
 
     respond_to do |format|
-      format.html { redirect_to warehouses_path, status: :see_other, notice: "Werehouse was successfully destroyed." }
+      format.html { redirect_to warehouses_path, status: :see_other, notice: "Warehouse was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_werehouse
-      @werehouse = Werehouse.find(params[:id])
+    def set_warehouse
+      @warehouse = Warehouse.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
-    def werehouse_params
-      params.require(:werehouse).permit(:name, :location)
+    def warehouse_params
+      params.require(:warehouse).permit(:name, :location)
     end
 end

@@ -1,4 +1,5 @@
 class PlantsController < ApplicationController
+  before_action :authenticate_user
   before_action :set_plant, only: %i[ show edit update destroy ]
 
   # GET /plants or /plants.json

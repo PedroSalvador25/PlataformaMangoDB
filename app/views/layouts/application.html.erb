@@ -20,8 +20,19 @@
 
   <body>
     <main class="container mx-auto flex">
-        <%= render 'shared/sidebar' %>
-      <%= yield %>
+      <%= render 'shared/sidebar' %>
+
+      <div class="content w-full">
+        <% if flash[:notice] %>
+          <div class="alert alert-success"><%= flash[:notice] %></div>
+        <% end %>
+        <% if flash[:alert] %>
+          <div class="alert alert-danger"><%= flash[:alert] %></div>
+        <% end %>
+        
+        <%= yield %>
+      </div>
     </main>
   </body>
 </html>
+

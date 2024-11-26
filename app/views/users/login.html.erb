@@ -1,0 +1,15 @@
+<h1>Iniciar Sesión</h1>
+<%= form_with url: authentication_login_path, method: :post, local: true do |form| %>
+  <div>
+    <%= form.label :email, "Correo Electrónico" %>
+    <%= form.email_field :email, required: true %>
+  </div>
+  <div>
+    <%= form.label :password, "Contraseña" %>
+    <%= form.password_field :password, required: true %>
+  </div>
+  <div>
+    <%= form.submit "Iniciar Sesión" %>
+  </div>
+<% end %>
+

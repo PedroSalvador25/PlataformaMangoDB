@@ -1,0 +1,9 @@
+<h1>Cerrar Sesión</h1>
+<%= form_with url: authentication_logout_path, method: :post, local: true do |form| %>
+  <div>
+    <%= form.hidden_field :user_id, value: session[:user_id] %>
+    <%= form.submit "Cerrar Sesión" %>
+  </div>
+<% end %>
+
+

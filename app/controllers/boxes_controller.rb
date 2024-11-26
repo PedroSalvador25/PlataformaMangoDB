@@ -1,4 +1,5 @@
 class BoxesController < ApplicationController
+  before_action :authenticate_user
   before_action :set_box, only: %i[ show edit update destroy ]
 
   # GET /boxes or /boxes.json
