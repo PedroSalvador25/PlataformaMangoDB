@@ -6,31 +6,18 @@ class AuthenticationController < ApplicationController
     user = User.find_by(email: params[:email])
     if user&.authenticate(params[:password])
       if user.locked_until && Time.current < user.locked_until
-        flash[:alert] = 'Cuenta bloqueada. Inténtalo más tarde.'
-        respond_to do |format|
-          format.html { redirect_to login_path }
-          format.json { render json: { error: 'Cuenta bloqueada. Inténtalo más tarde.' }, status: :forbidden }
-        end
+        render json: { error: 'Cuenta bloqueada. Intentalo mas tarde.' }, status: :forbidden 
       elsif user.connected?
-        flash[:alert] = 'Usuario ya conectado en otro dispositivo.'
-        respond_to do |format|
-          format.html { redirect_to login_path }
-          format.json { render json: { error: 'Usuario ya conectado en otro dispositivo.' }, status: :forbidden }
-        end
+        render json: { error: 'Usuario ya conectado en otro dispositivo' }, status: :forbidden
       else
         user.update(connected: true, failed_attempts: 0)
-        session[:user_id] = user.id
-        flash[:notice] = 'Inicio de sesión exitoso.'
-        respond_to do |format|
-          format.html { redirect_to root_path }
-          format.json { render json: { message: 'Inicio de sesión exitoso', user_id: user.id, email: user.email, role: user.role, name: user.name }, status: :ok }
-        end
+        render json: { message: 'Inicio de sesión exitoso', user_id: user.id, role: user.role, email: user.email, name: user.name }, status: :ok
       end
     else
       handle_failed_attempt(user)
     end
   end
-
+  
   def logout
     user = User.find_by(id: session[:user_id])
     if user
