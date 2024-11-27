@@ -11,8 +11,6 @@
 
 <%= search_form_for @q, url: boxes_path, method: :get do |f| %>
 
-
-
   <div class="flex items-center space-x-4">
     <div class="my-2">
       <%= render "shared/combo_box", 
@@ -29,10 +27,15 @@
       <%= f.text_field :weigth_eq, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
     </div>
 
-    <div class="my-2">
-      <%= f.label :hectare_eq, "Hectárea" %>
-      <%= f.number_field :hectare_eq, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-    </div>
+  <div class="my-2">
+  <%= render "shared/combo_box", 
+     form: f, 
+     field: :hectare_id_eq, 
+     label: "Hectárea", 
+     options: @hectares_for_combo, 
+     selected: @q&.hectare_id_eq, 
+     placeholder: "Selecciona una hectárea" %>
+</div>
 
     <div class="my-2">
       <%= f.submit "Buscar", class: "btn-primary" %>

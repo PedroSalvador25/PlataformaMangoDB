@@ -6,6 +6,8 @@ class BoxesController < ApplicationController
   def index
     @q = Box.ransack(params[:q]) 
     @boxes = @q.result(distinct: true) 
+    @hectares_for_combo = Hectare.where.not(community: nil).map { |h| ["#{h.id} - #{h.community}", h.id] }
+      logger.debug "Parámetros de búsqueda: #{params[:q].inspect}"
   end
 
   # GET /boxes/1 or /boxes/1.json
@@ -21,13 +23,13 @@ class BoxesController < ApplicationController
   # GET /boxes/1/edit
   def edit
     @box = Box.find(params[:id])
-    @hectare = @box.hectare # Asegúrate de que la caja tenga una hectárea asociada
+    @hectare = @box.hectare
   end
 
   # POST /boxes or /boxes.json
   def create
     @box = Box.new(box_params)
-    @hectare = Hectare.find(params[:box][:hectare_id]) # Asocia la caja a la hectárea usando el ID
+    @hectare = Hectare.find(params[:box][:hectare_id]) 
   
     respond_to do |format|
       if @box.save
