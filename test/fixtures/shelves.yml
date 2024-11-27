@@ -3,11 +3,11 @@
 one:
   division: 1
   partition: 1
-  werehouseId: 1
+  warehouseId: 1
   boxId: 1
 
 two:
   division: 1
   partition: 1
-  werehouseId: 1
+  warehouseId: 1
   boxId: 1

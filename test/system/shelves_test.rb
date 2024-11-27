@@ -17,7 +17,7 @@ class ShelvesTest < ApplicationSystemTestCase
     fill_in "Boxid", with: @shelf.boxId
     fill_in "Division", with: @shelf.division
     fill_in "Partition", with: @shelf.partition
-    fill_in "Werehouseid", with: @shelf.werehouseId
+    fill_in "Warehouseid", with: @shelf.warehouseId
     click_on "Create Shelf"
 
     assert_text "Shelf was successfully created"
@@ -31,7 +31,7 @@ class ShelvesTest < ApplicationSystemTestCase
     fill_in "Boxid", with: @shelf.boxId
     fill_in "Division", with: @shelf.division
     fill_in "Partition", with: @shelf.partition
-    fill_in "Werehouseid", with: @shelf.werehouseId
+    fill_in "Warehouseid", with: @shelf.warehouseId
     click_on "Update Shelf"
 
     assert_text "Shelf was successfully updated"
