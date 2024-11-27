@@ -18,7 +18,7 @@ class AuthenticationViewsController < ApplicationController
           else
             user.update(connected: true, failed_attempts: 0)
             session[:user_id] = user.id
-            flash[:notice] = 'Inicio de sesión exitoso.'
+           # flash[:notice] = 'Inicio de sesión exitoso.'
             redirect_to root_path
           end
         else

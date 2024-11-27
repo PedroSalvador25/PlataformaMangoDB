@@ -34,6 +34,26 @@
 .btn-back{
     @include buttons($gray);
 }
+.btn-show{
+    color: $black;
+    background-color: rgba($primary-color, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 30px;
+    box-shadow: 0px 4px 4px lighten($primary-color, 40%);
+    width: 60px;
+    border:  1px solid $primary-color {
+        radius: 1rem;
+    };
+    transition: all 0.2s ease-in-out;
+    &:hover{
+        cursor: pointer;
+        background-color: rgba($primary-color, 0.8);
+
+    }   
+}
 
 
 .form__gruop{

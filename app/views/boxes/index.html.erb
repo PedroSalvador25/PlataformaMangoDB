@@ -49,20 +49,18 @@
                 <th class="px-4 py-2">Calidad</th>
                 <th class="px-4 py-2">Peso</th>
                 <th class="px-4 py-2">Hectárea</th>
-                <th class="px-4 py-2">Acciones</th>
+                <th class="px-4 py-2"></th>
             </tr>
         </thead>
         <tbody>
             <% @boxes.each do |box| %>
             <tr>
                 <td class=""><%= box.id %></td>
-                <td class=""><%= box.quality %></td>
+                <td class=""><%= box.quality == 'quality' ? 'Calidad' : 'No Calidad' %></td>
                 <td class=""><%= box.weigth %></td>
                 <td class=""><%= box.hectare_id %></td>
                 <td class="">
-                    <%= link_to 'Ver', box_path(box), class: "btn btn-info" %>
-                    <%= link_to 'Editar', edit_box_path(box), class: "btn btn-warning" %>
-                    <%= link_to 'Eliminar', box_path(box), method: :delete, data: { confirm: '¿Estás seguro?' }, class: "btn btn-danger" %>
+                    <%= link_to 'Ver', box_path(box), class: "btn-show" %>
                 </td>
             </tr>
             <% end %>
