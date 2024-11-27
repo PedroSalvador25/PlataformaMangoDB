@@ -7,12 +7,9 @@
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Boxes</h1>
-    <%= link_to "New box", new_box_path, class: "btn-primary" %>
   </div>
 
 <%= search_form_for @q, url: boxes_path, method: :get do |f| %>
-
-
 
   <div class="flex items-center space-x-4">
     <div class="my-2">
@@ -30,10 +27,15 @@
       <%= f.text_field :weigth_eq, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
     </div>
 
-    <div class="my-2">
-      <%= f.label :hectare_eq, "Hectárea" %>
-      <%= f.number_field :hectare_eq, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-    </div>
+  <div class="my-2">
+  <%= render "shared/combo_box", 
+     form: f, 
+     field: :hectare_id_eq, 
+     label: "Hectárea", 
+     options: @hectares_for_combo, 
+     selected: @q&.hectare_id_eq, 
+     placeholder: "Selecciona una hectárea" %>
+</div>
 
     <div class="my-2">
       <%= f.submit "Buscar", class: "btn-primary" %>
@@ -44,6 +46,7 @@
 <table class="table-auto w-full">
   <thead>
     <tr>
+      <th class="px-4 py-2">Id</th>
       <th class="px-4 py-2">Calidad</th>
       <th class="px-4 py-2">Peso</th>
       <th class="px-4 py-2">Hectárea</th>
@@ -53,9 +56,10 @@
   <tbody>
     <% @boxes.each do |box| %>
       <tr>
+        <td class="border px-4 py-2"><%= box.id %></td>
         <td class="border px-4 py-2"><%= box.quality %></td>
         <td class="border px-4 py-2"><%= box.weigth %></td>
-        <td class="border px-4 py-2"><%= box.hectare %></td>
+        <td class="border px-4 py-2"><%= box.hectare_id %></td>
         <td class="border px-4 py-2">
           <%= link_to 'Ver', box_path(box), class: "btn btn-info" %>
           <%= link_to 'Editar', edit_box_path(box), class: "btn btn-warning" %>

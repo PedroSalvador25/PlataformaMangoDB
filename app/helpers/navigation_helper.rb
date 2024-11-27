@@ -8,6 +8,11 @@ module NavigationHelper
       links << { name: "Usuarios", path: users_path, image: "icons/user.svg" }
       links << { name: "Estantes", path: shelves_path, image: "icons/shelf.svg" }
 
+      if user_has_role?(current_user, :Tagger) 
+        links << { name: "Etiquetar", path: hectares_path, image: "icons/hectare.svg" }
+      end
+
+
 
       links
     end
