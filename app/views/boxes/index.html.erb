@@ -7,7 +7,6 @@
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Boxes</h1>
-    
   </div>
 
 <%= search_form_for @q, url: boxes_path, method: :get do |f| %>
@@ -44,6 +43,7 @@
 <table class="table-auto w-full">
   <thead>
     <tr>
+      <th class="px-4 py-2">Id</th>
       <th class="px-4 py-2">Calidad</th>
       <th class="px-4 py-2">Peso</th>
       <th class="px-4 py-2">Hectárea</th>
@@ -53,6 +53,7 @@
   <tbody>
     <% @boxes.each do |box| %>
       <tr>
+        <td class="border px-4 py-2"><%= box.id %></td>
         <td class="border px-4 py-2"><%= box.quality %></td>
         <td class="border px-4 py-2"><%= box.weigth %></td>
         <td class="border px-4 py-2"><%= box.hectare_id %></td>

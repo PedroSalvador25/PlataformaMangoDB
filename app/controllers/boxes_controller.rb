@@ -20,6 +20,8 @@ class BoxesController < ApplicationController
 
   # GET /boxes/1/edit
   def edit
+    @box = Box.find(params[:id])
+    @hectare = @box.hectare # Asegúrate de que la caja tenga una hectárea asociada
   end
 
   # POST /boxes or /boxes.json
@@ -29,8 +31,8 @@ class BoxesController < ApplicationController
   
     respond_to do |format|
       if @box.save
-        format.html { redirect_to @box, notice: "Box was successfully created." }
-        format.json { render :show, status: :created, location: @box }
+        format.html { redirect_to @hectare, notice: "La caja se creó correctamente." }
+        format.json { render :show, status: :created, location: @hectare }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @box.errors, status: :unprocessable_entity }
