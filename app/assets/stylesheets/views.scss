@@ -1,0 +1,47 @@
+@import "variables";
+$border-r: 0.5rem;
+
+.container__index{
+    width: 100%;
+    background-color: $light-bg;
+    padding: 2rem;
+    height: calc(100vh - 80px);
+}
+
+.header__index{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+
+    .search{
+        display: flex;
+        gap: 1rem;
+        align-items: center;   
+    }
+ }
+
+
+.table__index{
+    background-color: white;
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: $border-r;
+    height: 85%;
+    overflow-y: scroll;
+
+    table{
+        width: 100%;
+    }
+    thead{
+        background-color: $light-bg;
+        border-radius: $border-r;
+        margin-bottom: 0.75rem;
+    }
+    tbody{
+        td{
+            padding: 0.75rem;
+            border-bottom: 1px solid $gray;
+        }
+    }
+}
