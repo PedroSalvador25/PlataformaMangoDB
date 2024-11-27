@@ -66,6 +66,6 @@ class ShelvesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def shelf_params
-      params.require(:shelf).permit(:division, :partition, :werehouseId, :boxId)
+      params.require(:shelf).permit(:division, :partition, :warehouseId, :boxId)
     end
 end

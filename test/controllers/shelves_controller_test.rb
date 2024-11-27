@@ -17,7 +17,7 @@ class ShelvesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create shelf" do
     assert_difference("Shelf.count") do
-      post shelves_url, params: { shelf: { boxId: @shelf.boxId, division: @shelf.division, partition: @shelf.partition, werehouseId: @shelf.werehouseId } }
+      post shelves_url, params: { shelf: { boxId: @shelf.boxId, division: @shelf.division, partition: @shelf.partition, warehouseId: @shelf.warehouseId } }
     end
 
     assert_redirected_to shelf_url(Shelf.last)
@@ -34,7 +34,7 @@ class ShelvesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update shelf" do
-    patch shelf_url(@shelf), params: { shelf: { boxId: @shelf.boxId, division: @shelf.division, partition: @shelf.partition, werehouseId: @shelf.werehouseId } }
+    patch shelf_url(@shelf), params: { shelf: { boxId: @shelf.boxId, division: @shelf.division, partition: @shelf.partition, warehouseId: @shelf.warehouseId } }
     assert_redirected_to shelf_url(@shelf)
   end
 
