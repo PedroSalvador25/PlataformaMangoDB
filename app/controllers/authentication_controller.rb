@@ -1,4 +1,5 @@
 class AuthenticationController < ApplicationController
+  layout "login"
   skip_before_action :verify_authenticity_token, only: [:login, :logout]
   skip_before_action :authenticate_user, only: [:login, :logout]
 

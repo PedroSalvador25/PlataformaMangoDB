@@ -20,9 +20,7 @@
 
   <body>
     <main class="container mx-auto flex">
-        <% unless controller_name == "sessions" && action_name == "new" %>
-          <%= render 'shared/sidebar' %>
-        <% end %>
+        
 
       <div class="content w-full">
         <% if flash[:notice] %>

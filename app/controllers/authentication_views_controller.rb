@@ -1,4 +1,5 @@
 class AuthenticationViewsController < ApplicationController
+  layout "login"
     skip_before_action :authenticate_user, only: [:login, :logout]
   
     def login

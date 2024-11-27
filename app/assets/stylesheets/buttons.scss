@@ -1,17 +1,14 @@
 @import "variables";
 
-
-@mixin buttons($color, $width) {
+@mixin buttons($color) {
     color: $black;
     background-color: $color;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: $width;
-    height: 45px;
+    width: 100%;
+    height: 40px;
     box-shadow: 0px 4px 4px lighten($color, 40%);
-    
-
     border: none {
 //        bottom: 3px solid darken($color, 10%);
         radius: 0.5rem;
@@ -23,18 +20,46 @@
 }
 
 .btn-primary{
-    @include buttons($primary-color, 150px);
+    @include buttons($primary-color);
 }
 
 .btn-secondary{
-    @include buttons($secondary-color, 150px);
+    @include buttons($secondary-color);
 }
 
 .btn-destroy{
-    @include buttons($red, 150px);
+    @include buttons($red);
 }
 
 .btn-back{
-    @include buttons($gray, 150px);
+    @include buttons($gray);
 }
 
+
+.form__gruop{
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.container__input{
+    border: 1px solid $gray{radius: 0.75rem; };
+    .input:focus {
+        border: 1px solid $primary-color;
+      }
+    
+}
+.input {
+    display: block; 
+    width: 100%;
+    height: 40px;
+    padding: 0.5rem 0.75rem; 
+    background-color: #ffffff !important;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); 
+    filter: brightness(150%);
+    height: fit-content;
+    
+    &:focus {
+        outline: $primary-color;
+      }
+  }
