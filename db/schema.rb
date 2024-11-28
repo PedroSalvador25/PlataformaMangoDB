@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_27_224906) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_28_041604) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,8 +19,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_27_224906) do
     t.decimal "weigth"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "hectare_id", null: false
-    t.index ["hectare_id"], name: "index_boxes_on_hectare_id"
+    t.bigint "plant_id", null: false
+    t.index ["plant_id"], name: "index_boxes_on_plant_id"
   end
 
   create_table "hectares", force: :cascade do |t|
@@ -42,6 +42,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_27_224906) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "hectare_id", null: false
+    t.integer "row", null: false
+    t.integer "column", null: false
     t.index ["hectare_id"], name: "index_plants_on_hectare_id"
   end
 
@@ -49,9 +51,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_27_224906) do
     t.integer "division"
     t.integer "partition"
     t.integer "warehouseId"
-    t.integer "boxId"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "box_id"
+    t.bigint "warehouse_id"
+    t.index ["box_id"], name: "index_shelves_on_box_id"
+    t.index ["warehouse_id"], name: "index_shelves_on_warehouse_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -73,6 +78,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_27_224906) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "boxes", "hectares"
+  add_foreign_key "boxes", "plants"
   add_foreign_key "plants", "hectares"
+  add_foreign_key "shelves", "boxes"
+  add_foreign_key "shelves", "warehouses"
 end

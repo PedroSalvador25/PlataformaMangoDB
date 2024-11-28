@@ -1,5 +1,6 @@
 class Plant < ApplicationRecord
     belongs_to :hectare
+    has_many :boxes
 
     validate :max_plants_in_hectare
 
