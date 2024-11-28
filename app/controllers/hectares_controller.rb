@@ -1,9 +1,10 @@
 class HectaresController < ApplicationController
+  before_action :authenticate_user
   before_action :set_hectare, only: %i[ show edit update destroy ]
 
   # GET /hectares or /hectares.json
   def index
-    @hectares_for_combo = Hectare.all.map { |h| [h.community, h.id] } 
+    @hectares_for_combo = Hectare.all.map { |h| ["#{h.id} - #{h.community}", h.id] } 
     @q = Hectare.ransack(params[:q]) 
     @hectares = @q.result(distinct: true) 
   end

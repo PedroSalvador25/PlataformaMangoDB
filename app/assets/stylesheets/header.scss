@@ -1,0 +1,35 @@
+@import "variables";
+
+.header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    background-color: $light-bg;
+    padding: 1rem 2rem 0rem 2rem;
+    
+}
+
+.container__profile{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 1.5rem;
+    background-color: white;
+    .profile{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        img{
+            width: 100%;    
+        }
+    }
+    .name{
+        font-size: 1rem;
+    }
+    .role{
+        font-size: 0.75rem;
+    }
+}

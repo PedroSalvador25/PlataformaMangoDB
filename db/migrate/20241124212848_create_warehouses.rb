@@ -1,6 +1,6 @@
-class CreateWerehouses < ActiveRecord::Migration[7.2]
+class CreateWarehouses < ActiveRecord::Migration[7.2]
   def change
-    create_table :werehouses do |t|
+    create_table :warehouses do |t|
       t.string :name
       t.string :location
 

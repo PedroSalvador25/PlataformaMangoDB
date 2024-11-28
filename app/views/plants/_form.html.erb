@@ -11,11 +11,10 @@
     </div>
   <% end %>
 
-  <div class="my-5">
-    <%= form.label :HectareId %>
-    <%= form.number_field :HectareId, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
 
+<%
+=begin%>
+ 
   <div class="my-5">
     <%= form.label :humidity %>
     <%= form.text_field :humidity, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
@@ -50,7 +49,9 @@
     <%= form.label :oxygenationLevel %>
     <%= form.text_field :oxygenationLevel, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
-
+ 
+<%
+=end%>
   <div class="inline">
     <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
   </div>

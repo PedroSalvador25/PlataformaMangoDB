@@ -1,46 +1,48 @@
 @import "variables";
 
-
-.sidebar{
-    min-width: 300px;
-    height: 100vh;
-    border-right: 1px solid gainsboro;
-    div{
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0rem 2rem;
-        justify-content: center;
-        height: 80px;
-        border: 1px solid gainsboro;
-    }
-
+.sidebar {
+  min-width: 250px;
+  height: 100vh;
+  border-right: 1px solid $gray;
+  div {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0rem 2rem;
+    justify-content: start;
+    height: 80px;
+  }
 }
 
-.nav{
-    padding: 1rem 0.5rem;
-    height: fit-content;
+.nav {
+  padding: 1rem 0.5rem;
+  height: fit-content;
 
-    ul{
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    li{
-        display: flex;
-        gap: 0.75rem;
-        padding: 0.75rem 2rem;
-        border-radius: 0.75rem;
-        cursor: pointer;
-        
-        &.active{
-            background-color: $secondary-color;
-        }
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  li {
+    border-radius: 0.75rem;
+    cursor: pointer;
 
-        &:not(.active):hover {
-            background-color: lighten($secondary-color, 20%);  /* Color más claro cuando no está activo */
-          }
-    
+    a {
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.75rem 2rem;
     }
+
+    &.active {
+      background-color: $secondary-color;
+    }
+
+    &:not(.active):hover {
+      background-color: lighten(
+        $secondary-color,
+        20%
+      ); /* Color más claro cuando no está activo */
+    }
+  }
 }
