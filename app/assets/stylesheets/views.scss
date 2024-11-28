@@ -53,7 +53,7 @@ $border-r: 0.5rem;
     overflow-y: auto;
 
     tr {
-      display: table; /* Asegura que las filas mantengan la estructura de tabla */
+      display: table;
       width: 100%;
       table-layout: fixed;
     }
@@ -63,7 +63,7 @@ $border-r: 0.5rem;
       border-bottom: 1px solid $gray;
     }
     &::-webkit-scrollbar {
-        display: none; /* Solo WebKit */
+        display: none; 
       }
   }
 }
