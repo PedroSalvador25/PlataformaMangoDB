@@ -1,16 +1,26 @@
-<h1>Iniciar Sesión</h1>
-<%= form_with url: login_path, method: :post, local: true do |form| %>
-  <div>
-    <%= form.label :email, "Correo Electrónico" %>
-    <%= form.email_field :email, required: true %>
+  <div class="container__login">
+      <div class="card__login animate-element">
+          <div class="flex items-center justify-center">
+              <%= image_tag 'logo.svg', alt: 'Logo de la empresa', class: 'w-[120px] h-[120px]' %>
+              <h1>MangoDB</h1>
+          </div>
+          <p>Ingrese sus credenciales para iniciar sesión en su cuenta.</p>
+          <%= form_with url: login_path, method: :post, class: "form",local: true do |form| %>
+          <div class="form__gruop">
+              <%= form.label :email, "Correo Electrónico" %>
+              <div class="container__input">
+                  <%= form.email_field :email, class:"input__login", required: true %>
+              </div>
+          </div>
+          <div  class="form__gruop">
+              <%= form.label :password, "Contraseña" %>
+              <div class="container__input">
+                  <%= form.password_field :password,  class:"input__login", required: true %>
+              </div>
+          </div>
+          <div>
+              <%= form.submit "Iniciar Sesión", class: "btn-primary" %>
+          </div>
+          <% end %>
+      </div>
   </div>
-  <div>
-    <%= form.label :password, "Contraseña" %>
-    <%= form.password_field :password, required: true %>
-  </div>
-  <div>
-    <%= form.submit "Iniciar Sesión" %>
-  </div>
-<% end %>
-
-

@@ -1,84 +1,74 @@
-<div class="w-full">
-  <% if notice.present? %>
+<div class="container__index">
+    <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
+    <% end %>
 
-  <% content_for :title, "Boxes" %>
+    <% content_for :title, "Boxes" %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Boxes</h1>
-  </div>
+    <div class="header__index">
+        <h1 class="font-bold text-4xl">Cajas</h1>
 
-<%= search_form_for @q, url: boxes_path, method: :get do |f| %>
+        <%= search_form_for @q, url: boxes_path, class:"search", method: :get do |f| %>
+            <div>
+                <%= render "shared/combo_box", 
+                  form: f, 
+                  field: :quality_eq, 
+                  label: "Calidad", 
+                  options: [["Calidad", "quality"], ["No calidad", "no-quality"]],
+                  selected: @q&.quality_eq, 
+                  placeholder: "Selecciona una calidad" %>
+            </div>
 
-  <div class="flex items-center space-x-4">
-    <div class="my-2">
-      <%= render "shared/combo_box", 
-           form: f, 
-           field: :quality_eq, 
-           label: "Calidad", 
-           options: [["Calidad", "quality"], ["No calidad", "no-quality"]],
-           selected: @q&.quality_eq, 
-           placeholder: "Selecciona una calidad" %>
+            <div>
+                <%= f.label :weigth_eq, "Peso" %>
+                <%= f.text_field :weigth_eq, class: "input" %>
+            </div>
+
+            <div>
+                <%= render "shared/combo_box", 
+                  form: f, 
+                  field: :hectare_id_eq, 
+                  label: "Hectárea", 
+                  options: @hectares_for_combo, 
+                  selected: @q&.hectare_id_eq, 
+                  placeholder: "Selecciona una hectárea" %>
+            </div>
+
+            <div class="button">
+                <%= f.submit "Buscar", class: "btn-primary" %>
+            </div>
+        <% end %>
+
     </div>
 
-    <div class="my-2">
-      <%= f.label :weigth_eq, "Peso" %>
-      <%= f.text_field :weigth_eq, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <div class="table__index">
+      <table >
+        <thead>
+            <tr>
+                <th class="px-4 py-2">Id</th>
+                <th class="px-4 py-2">Calidad</th>
+                <th class="px-4 py-2">Peso</th>
+                <th class="px-4 py-2">Hectárea</th>
+                <th class="px-4 py-2">Fecha de cosecha</th>
+                <th class="px-4 py-2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @boxes.each do |box| %>
+            <tr>
+                <td class=""><%= box.id %></td>
+                <td class=""><%= box.quality == 'quality' ? 'Calidad' : 'No Calidad' %></td>
+                <td class=""><%= box.weigth %></td>
+                <td class=""><%= box.hectare_id %></td>
+                <td class=""><%= box.created_at.strftime("%Y-%m-%d") %></td>
+                <td class="">
+                    <%= link_to 'Ver', box_path(box), class: "btn-show" %>
+                </td>
+            </tr>
+            <% end %>
+        </tbody>
+      </table>
     </div>
-
-  <div class="my-2">
-  <%= render "shared/combo_box", 
-     form: f, 
-     field: :hectare_id_eq, 
-     label: "Hectárea", 
-     options: @hectares_for_combo, 
-     selected: @q&.hectare_id_eq, 
-     placeholder: "Selecciona una hectárea" %>
 </div>
 
-    <div class="my-2">
-      <%= f.submit "Buscar", class: "btn-primary" %>
-    </div>
-  </div>
-<% end %>
-
-<table class="table-auto w-full">
-  <thead>
-    <tr>
-      <th class="px-4 py-2">Id</th>
-      <th class="px-4 py-2">Calidad</th>
-      <th class="px-4 py-2">Peso</th>
-      <th class="px-4 py-2">Hectárea</th>
-      <th class="px-4 py-2">Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @boxes.each do |box| %>
-      <tr>
-        <td class="border px-4 py-2"><%= box.id %></td>
-        <td class="border px-4 py-2"><%= box.quality %></td>
-        <td class="border px-4 py-2"><%= box.weigth %></td>
-        <td class="border px-4 py-2"><%= box.hectare_id %></td>
-        <td class="border px-4 py-2">
-          <%= link_to 'Ver', box_path(box), class: "btn btn-info" %>
-          <%= link_to 'Editar', edit_box_path(box), class: "btn btn-warning" %>
-          <%= link_to 'Eliminar', box_path(box), method: :delete, data: { confirm: '¿Estás seguro?' }, class: "btn btn-danger" %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<%
-=begin%>
-   <div id="boxes" class="min-w-full">
-    <% @boxes.each do |box| %>
-      <%= render box %>
-      <p>
-        <%= link_to "Show this box", box, class: "btn-secondary" %>
-      </p>
-    <% end %>
-  </div> 
-<%
-=end%>
-</div>
+    

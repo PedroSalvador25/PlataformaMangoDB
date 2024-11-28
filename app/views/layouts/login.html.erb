@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title><%= content_for(:title) || "Mango Db" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,28 +16,23 @@
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
     <%= javascript_importmap_tags %>
-</head>
+  </head>
 
-<body>
-    <main class="mx-auto flex">
+  <body>
+    <main class="container mx-auto flex">
+        
 
-        <%= render 'shared/sidebar' %>
-        <div class="content w-full" >
-            <%= render 'shared/header'%>
-            <%= yield %>
-
-        </div>
-
-        <div class="contentl">
-            <% if flash[:notice] %>
-            <div class="alert alert-success"><%= flash[:notice] %></div>
-            <% end %>
-            <% if flash[:alert] %>
-            <div class="alert alert-danger"><%= flash[:alert] %></div>
-            <% end %>
-
-        </div>
+      <div class="content w-full">
+        <% if flash[:notice] %>
+          <div class="alert alert-success"><%= flash[:notice] %></div>
+        <% end %>
+        <% if flash[:alert] %>
+          <div class="alert alert-danger"><%= flash[:alert] %></div>
+        <% end %>
+        
+        <%= yield %>
+      </div>
     </main>
-</body>
-
+  </body>
 </html>
+

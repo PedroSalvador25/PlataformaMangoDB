@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
+  layout "application"
   allow_browser versions: :modern
   before_action :authenticate_user
   helper_method :current_user
@@ -10,7 +11,7 @@ class ApplicationController < ActionController::Base
     unless session[:user_id]
       respond_to do |format|
         format.html do
-          redirect_to login_path, alert: 'Por favor, inicia sesión para continuar.'
+          redirect_to login_path #, alert: 'Por favor, inicia sesión para continuar.'
         end
         format.json do
           render json: { error: 'No autenticado. Por favor inicia sesión.' }, status: :unauthorized
