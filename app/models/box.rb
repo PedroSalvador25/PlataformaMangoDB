@@ -1,5 +1,5 @@
 class Box < ApplicationRecord
-    belongs_to :hectare
+    belongs_to :plant
 
     def self.ransackable_associations(auth_object = nil)
       ["hectare"]

@@ -1,5 +1,4 @@
 class Hectare < ApplicationRecord
-    has_many :boxes
     has_many :plants
     
     def self.ransackable_attributes(auth_object = nil)
