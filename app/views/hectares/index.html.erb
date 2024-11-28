@@ -1,73 +1,63 @@
-<div class="w-full">
-  <% if notice.present? %>
+<div class="container__index">
+    <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
+    <% end %>
 
-  <% content_for :title, "Hectares" %>
+    <% content_for :title, "Hectares" %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Hectares</h1>
-    <%= link_to "New hectare", new_hectare_path, class: "btn-primary" %>
-  </div>
+    <div class="header__index">
+        <% if user_has_role?(current_user, :Tagger) %>
+          <h1 class="font-bold text-4xl">Etiquetado</h1>
+        <% end %>
+          <% if user_has_role?(current_user, :Administrator) %>
+          <h1 class="font-bold text-4xl">Hectareas</h1>
+          <%= link_to "New hectare", new_hectare_path, class: "btn-primary" %>
+        <% end %>
 
 
-  <%= search_form_for @q, url: hectares_path, method: :get do |f| %>
-  <div class="flex items-center space-x-4">
-    <div class="my-2">
-      <%= render "shared/combo_box", 
+        <%= search_form_for @q, url: hectares_path,class:"search", method: :get do |f| %>
+        <div>
+            <%= render "shared/combo_box", 
            form: f, 
-           field: :id_eq,  # Usamos `community_eq` para buscar coincidencias exactas
+           field: :id_eq, 
            label: "Hectárea", 
            options: @hectares_for_combo, 
-           selected: @q&.id_eq,  # El valor seleccionado se toma del objeto `@q`
+           selected: @q&.id_eq, 
            placeholder: "Selecciona una hectárea" %>
+        </div>
+
+        <div class="button">
+            <%= f.submit "Buscar", class: "btn-primary" %>
+        </div>
+        <% end %>
     </div>
 
-    <div class="my-2">
-      <%= f.submit "Filtrar", class: "btn-primary" %>
+    <div class="table__index">
+        <table>
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">ID</th>
+                    <th class="px-4 py-2">Latitud</th>
+                    <th class="px-4 py-2">Longitud</th>
+                    <th class="px-4 py-2">Comunidad</th>
+                    <th class="px-4 py-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @hectares.each do |hectare| %>
+                <tr>
+                    <td><%= hectare.id %></td>
+                    <td><%= hectare.latitude %></td>
+                    <td><%= hectare.longitude %></td>
+                    <td><%= hectare.community %></td>
+                    <td>
+                        <%= link_to 'Ver', hectare_path(hectare), class: "btn btn-info" %>
+
+
+                    </td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
     </div>
-  </div>
-<% end %>
-
-
-<table class="table-auto w-full">
-  <thead>
-    <tr>
-      <th class="px-4 py-2">ID</th>
-      <th class="px-4 py-2">Latitud</th>
-      <th class="px-4 py-2">Longitud</th>
-      <th class="px-4 py-2">Comunidad</th>
-      <th class="px-4 py-2">Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @hectares.each do |hectare| %>
-      <tr>
-        <td class="border px-4 py-2"><%= hectare.id %></td>
-        <td class="border px-4 py-2"><%= hectare.latitude %></td>
-        <td class="border px-4 py-2"><%= hectare.longitude %></td>
-        <td class="border px-4 py-2"><%= hectare.community %></td>
-        <td class="border px-4 py-2">
-          <%= link_to 'Ver', hectare_path(hectare), class: "btn btn-info" %>
-    
-
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-
-
- <%
-=begin%>
-  <div id="hectares" class="min-w-full">
-  <% @hectares.each do |hectare| %>
-    <%= render partial: "hectares/hectare", locals: { hectare: hectare } %>
-    <p>
-      <%= link_to "Show this hectare", hectare, class: "btn-secondary" %>
-    </p>
-  <% end %>
-</div> 
-<%
-=end%>
+</div>

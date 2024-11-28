@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_26_034059) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_27_224906) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,7 +32,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_034059) do
   end
 
   create_table "plants", force: :cascade do |t|
-    t.integer "HectareId"
     t.decimal "humidity"
     t.decimal "growthMm"
     t.decimal "heatJoules"
@@ -42,6 +41,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_034059) do
     t.decimal "oxygenationLevel"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "hectare_id", null: false
+    t.index ["hectare_id"], name: "index_plants_on_hectare_id"
   end
 
   create_table "shelves", force: :cascade do |t|
@@ -73,4 +74,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_034059) do
   end
 
   add_foreign_key "boxes", "hectares"
+  add_foreign_key "plants", "hectares"
 end

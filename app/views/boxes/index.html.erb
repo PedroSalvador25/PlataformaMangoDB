@@ -21,7 +21,7 @@
 
             <div>
                 <%= f.label :weigth_eq, "Peso" %>
-                <%= f.text_field :weigth_eq, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+                <%= f.text_field :weigth_eq, class: "input" %>
             </div>
 
             <div>
@@ -34,7 +34,7 @@
                   placeholder: "Selecciona una hectárea" %>
             </div>
 
-            <div>
+            <div class="button">
                 <%= f.submit "Buscar", class: "btn-primary" %>
             </div>
         <% end %>
@@ -49,6 +49,7 @@
                 <th class="px-4 py-2">Calidad</th>
                 <th class="px-4 py-2">Peso</th>
                 <th class="px-4 py-2">Hectárea</th>
+                <th class="px-4 py-2">Fecha de cosecha</th>
                 <th class="px-4 py-2"></th>
             </tr>
         </thead>
@@ -59,6 +60,7 @@
                 <td class=""><%= box.quality == 'quality' ? 'Calidad' : 'No Calidad' %></td>
                 <td class=""><%= box.weigth %></td>
                 <td class=""><%= box.hectare_id %></td>
+                <td class=""><%= box.created_at.strftime("%Y-%m-%d") %></td>
                 <td class="">
                     <%= link_to 'Ver', box_path(box), class: "btn-show" %>
                 </td>
