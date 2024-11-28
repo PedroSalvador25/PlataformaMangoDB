@@ -4,10 +4,9 @@ class BoxesController < ApplicationController
 
   # GET /boxes or /boxes.json
   def index
-    @q = Box.ransack(params[:q]) 
-    @boxes = @q.result(distinct: true) 
+    @q = Box.ransack(params[:q])
+    @boxes = @q.result.includes(:plant).order(created_at: :desc)
     @hectares_for_combo = Hectare.where.not(community: nil).map { |h| ["#{h.id} - #{h.community}", h.id] }
-      logger.debug "Parámetros de búsqueda: #{params[:q].inspect}"
   end
 
   # GET /boxes/1 or /boxes/1.json
@@ -17,8 +16,14 @@ class BoxesController < ApplicationController
   # GET /boxes/new
   def new
     @hectare = Hectare.find_by(id: params[:hectare_id])
-    @box = Box.new(hectare: @hectare)
+    if @hectare
+      @plants = @hectare.plants # Asocia las plantas de la hectárea
+      @box = Box.new
+    else
+      redirect_to hectares_path, alert: "Hectárea no encontrada."
+    end
   end
+
 
   # GET /boxes/1/edit
   def edit
@@ -29,16 +34,12 @@ class BoxesController < ApplicationController
   # POST /boxes or /boxes.json
   def create
     @box = Box.new(box_params)
-    @hectare = Hectare.find(params[:box][:hectare_id]) 
-  
-    respond_to do |format|
-      if @box.save
-        format.html { redirect_to @hectare, notice: "La caja se creó correctamente." }
-        format.json { render :show, status: :created, location: @hectare }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @box.errors, status: :unprocessable_entity }
-      end
+
+    if @box.save
+      hectare_id = @box.plant.hectare.id
+      redirect_to hectare_path(hectare_id), notice: 'Caja creada exitosamente.'
+    else
+      render :new
     end
   end
 
@@ -73,6 +74,6 @@ class BoxesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def box_params
-      params.require(:box).permit(:quality, :weigth, :hectare_id) # Incluye :hectare_id
+      params.require(:box).permit(:quality, :weigth, :plant_id)
     end
 end

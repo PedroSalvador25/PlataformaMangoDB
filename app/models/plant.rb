@@ -4,6 +4,10 @@ class Plant < ApplicationRecord
 
     validate :max_plants_in_hectare
 
+    def self.ransackable_attributes(auth_object = nil)
+      ["column", "created_at", "growthMm", "heatJoules", "hectare_id", "humidity", "id", "oxygenationLevel", "pestPresence", "row", "steamThicknessMm", "texture", "updated_at"]
+    end
+
   private
 
   def max_plants_in_hectare

@@ -10,6 +10,15 @@
     </div>
   <% end %>
 
+   <%= render "shared/combo_box", 
+         form: form, 
+         field: :plant_id,
+         label: "Planta", 
+         options: @plants.map { |plant| ["#{plant.id} - #{plant.row} #{plant.column}", plant.id] },
+         selected: @plants.first&.id,
+         placeholder: "Selecciona una planta" %>
+
+
   <%= render "shared/combo_box", 
          form: form, 
          field: :quality, 
