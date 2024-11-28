@@ -6,25 +6,28 @@
     <% content_for :title, "Hectares" %>
 
     <div class="header__index">
-        <h1 class="font-bold text-4xl">Hectares</h1>
-        <%= link_to "New hectare", new_hectare_path, class: "btn-primary" %>
+        <% if user_has_role?(current_user, :Tagger) %>
+          <h1 class="font-bold text-4xl">Etiquetado</h1>
+        <% end %>
+          <% if user_has_role?(current_user, :Administrator) %>
+          <h1 class="font-bold text-4xl">Hectareas</h1>
+          <%= link_to "New hectare", new_hectare_path, class: "btn-primary" %>
+        <% end %>
 
 
-        <%= search_form_for @q, url: hectares_path, method: :get do |f| %>
-        <div class="flex items-center space-x-4">
-            <div class="my-2">
-                <%= render "shared/combo_box", 
+        <%= search_form_for @q, url: hectares_path,class:"search", method: :get do |f| %>
+        <div>
+            <%= render "shared/combo_box", 
            form: f, 
            field: :id_eq, 
            label: "Hectárea", 
            options: @hectares_for_combo, 
            selected: @q&.id_eq, 
            placeholder: "Selecciona una hectárea" %>
-            </div>
+        </div>
 
-            <div class="my-2">
-                <%= f.submit "Filtrar", class: "btn-primary" %>
-            </div>
+        <div class="button">
+            <%= f.submit "Buscar", class: "btn-primary" %>
         </div>
         <% end %>
     </div>

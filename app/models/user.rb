@@ -27,6 +27,15 @@ class User < ApplicationRecord
       update(failed_attempts: 0)
     end
 
+    def translated_role
+      {
+        "Administrator" => "Administrador",
+        "WarehouseManager" => "Gerente de Almacén",
+        "Tagger" => "Etiquetador",
+        "Seller" => "Vendedor"
+      }[role]
+    end
+
     private
     def set_default_role
       self.role ||= :Tagger

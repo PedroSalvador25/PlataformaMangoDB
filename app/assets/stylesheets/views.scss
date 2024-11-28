@@ -4,8 +4,8 @@ $border-r: 0.5rem;
 .container__index {
   width: 100%;
   background-color: $light-bg;
-  padding: 2rem;
-  height: calc(100vh - 80px);
+  padding: 0rem 2rem 2rem 2rem; 
+  height: calc(100vh - 74px);
 }
 
 .header__index {
@@ -17,7 +17,11 @@ $border-r: 0.5rem;
   .search {
     display: flex;
     gap: 1rem;
-    align-items: center;
+    align-items: end;
+
+    .button{
+      width: 90px;
+    }
   }
 }
 

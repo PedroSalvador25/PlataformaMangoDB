@@ -1,8 +1,14 @@
 <div class="header">
-  <%= button_to "Cerrar Sesión", logout_path, method: :post, class: "bg-red-500 text-black py-2 px-4 rounded" %>
+   
+  
 
-    <div>
-        <p><%= current_user.name %></p>
-        <p><%= current_user.role %></p>
+    <div class="container__profile">
+        <figure class="profile">
+            <%= image_tag 'no-photo.png', alt: 'Profile picture' %>
+        </figure>
+        <div>
+            <p class="name"><%= current_user.name %></p>
+            <p class="role"><%= current_user.translated_role  %></p>
+        </div>
     </div>
 </div>

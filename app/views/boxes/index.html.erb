@@ -21,7 +21,7 @@
 
             <div>
                 <%= f.label :weigth_eq, "Peso" %>
-                <%= f.text_field :weigth_eq, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+                <%= f.text_field :weigth_eq, class: "input" %>
             </div>
 
             <div>
@@ -34,7 +34,7 @@
                   placeholder: "Selecciona una hectárea" %>
             </div>
 
-            <div>
+            <div class="button">
                 <%= f.submit "Buscar", class: "btn-primary" %>
             </div>
         <% end %>
