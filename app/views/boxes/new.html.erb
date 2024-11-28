@@ -1,7 +1,14 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">New box</h1>
+<%= turbo_frame_tag "modal" do %>
+  <div data-controller="modal">
+    <div data-action="click->modal#close" class="modal">
+      <div class="modal-content">
+        <p data-action="click->modal#close">X</p>
+        <h1 class="font-bold text-4xl">New box</h1>
 
-  <%= render "form", box: @box %>
+        <%= render "form", box: @box %>
 
-  <%= link_to "Back to boxes", boxes_path, class: "btn-back" %>
-</div>
+        <%= link_to "Back to boxes", boxes_path, class: "btn-back" %>
+      </div>
+    </div>
+  </div>
+<% end %>
