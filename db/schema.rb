@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_28_041604) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_29_044911) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_28_041604) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "plant_id", null: false
+    t.boolean "occupied", default: false
     t.index ["plant_id"], name: "index_boxes_on_plant_id"
   end
 
@@ -56,6 +57,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_28_041604) do
     t.bigint "box_id"
     t.bigint "warehouse_id"
     t.index ["box_id"], name: "index_shelves_on_box_id"
+    t.index ["warehouse_id", "division", "partition"], name: "unique_shelf_positions", unique: true
     t.index ["warehouse_id"], name: "index_shelves_on_warehouse_id"
   end
 
