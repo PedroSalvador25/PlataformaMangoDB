@@ -24,16 +24,16 @@
                 <%= f.text_field :weigth_eq, class: "input" %>
             </div>
 
-            <div>
-                <%= render "shared/combo_box", 
-                  form: f, 
-                  field: :hectare_id_eq, 
-                  label: "Hectárea", 
-                  options: @hectares_for_combo, 
-                  selected: @q&.hectare_id_eq, 
-                  placeholder: "Selecciona una hectárea" %>
-            </div>
-
+             
+  <div>
+    <%= render "shared/combo_box", 
+      form: f, 
+      field: :plant_hectare_id_eq, 
+      label: "Hectárea", 
+      options: @hectares_for_combo, 
+      selected: @q&.plant_hectare_id_eq, 
+      placeholder: "Selecciona una hectárea" %>
+  </div>
             <div class="button">
                 <%= f.submit "Buscar", class: "btn-primary" %>
             </div>
@@ -48,7 +48,8 @@
                 <th class="px-4 py-2">Id</th>
                 <th class="px-4 py-2">Calidad</th>
                 <th class="px-4 py-2">Peso</th>
-                <th class="px-4 py-2">Hectárea</th>
+                <th class="px-4 py-2">Planta</th>
+                <th class="px-4 py-2">Hectarea</th>
                 <th class="px-4 py-2">Fecha de cosecha</th>
                 <th class="px-4 py-2"></th>
             </tr>
@@ -56,11 +57,12 @@
         <tbody>
             <% @boxes.each do |box| %>
             <tr>
-                <td class=""><%= box.id %></td>
-                <td class=""><%= box.quality == 'quality' ? 'Calidad' : 'No Calidad' %></td>
-                <td class=""><%= box.weigth %></td>
-                <td class=""><%= box.hectare_id %></td>
-                <td class=""><%= box.created_at.strftime("%Y-%m-%d") %></td>
+                <td><%= box.id %></td>
+                <td><%= box.quality == 'quality' ? 'Calidad' : 'No Calidad' %></td>
+                <td><%= box.weigth %></td>
+                <td><%= box.plant_id %></td>
+                <td><%= box.plant&.hectare&.id || 'N/A'  %> </td>
+                <td><%= box.created_at.strftime("%Y-%m-%d") %></td>
                 <td class="">
                     <%= link_to 'Ver', box_path(box), class: "btn-show" %>
                 </td>

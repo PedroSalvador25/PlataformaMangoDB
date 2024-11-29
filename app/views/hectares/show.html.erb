@@ -9,7 +9,7 @@
       
 
     <% if user_has_role?(current_user, :Tagger) %>
-      <%= link_to "Agregar caja", new_box_path(hectare_id: @hectare.id), class: "btn-primary" %>
+      <%= link_to "Agregar caja", new_box_path(hectare_id: @hectare.id), class: "btn-primary", data: {turbo_frame: "modal" } %>
     <% end %>
 
      <% if user_has_role?(current_user, :Administrator) %>

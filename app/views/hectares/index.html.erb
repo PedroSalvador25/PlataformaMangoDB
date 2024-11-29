@@ -8,10 +8,10 @@
     <div class="header__index">
         <% if user_has_role?(current_user, :Tagger) %>
           <h1 class="font-bold text-4xl">Etiquetado</h1>
+          <%= link_to "New hectare", new_hectare_path, class: "btn-primary" %>
         <% end %>
           <% if user_has_role?(current_user, :Administrator) %>
           <h1 class="font-bold text-4xl">Hectareas</h1>
-          <%= link_to "New hectare", new_hectare_path, class: "btn-primary" %>
         <% end %>
 
 

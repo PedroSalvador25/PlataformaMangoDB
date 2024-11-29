@@ -1,16 +1,30 @@
 <%= form_with(model: @box, class: "contents") do |form| %>
-  <% if @box.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(@box.errors.count, "error") %> prohibited this box from being saved:</h2>
-      <ul>
+<% if @box.errors.any? %>
+<div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+    <h2><%= pluralize(@box.errors.count, "error") %> prohibited this box from being saved:</h2>
+    <ul>
         <% @box.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <li><%= error.full_message %></li>
         <% end %>
-      </ul>
-    </div>
-  <% end %>
+    </ul>
+</div>
+<% end %>
 
-  <%= render "shared/combo_box", 
+<div class="form">
+    <div>
+        <p class="text-xl"> Hectarea <%= @hectare.id %> <%= @hectare.community  %></p>
+    </div>
+
+    <%= render "shared/combo_box", 
+         form: form, 
+         field: :plant_id,
+         label: "Planta", 
+         options: @plants.map { |plant| ["#{plant.id} - #{plant.row} #{plant.column}", plant.id] },
+         selected: @plants.first&.id,
+         placeholder: "Selecciona una planta" %>
+
+
+    <%= render "shared/combo_box", 
          form: form, 
          field: :quality, 
          label: "Calidad", 
@@ -18,17 +32,18 @@
          selected: "quality", 
          placeholder: "Selecciona una calidad" %>
 
-  <div class="my-5">
-    <%= form.label :weigth %>
-    <%= form.text_field :weigth, class: "input" %>
-  </div>
+    <div>
+        <%= form.label :Peso %>
+        <%= form.text_field :weigth, class: "input" %>
+    </div>
 
-  <!-- Este campo debe estar solo para mostrar la hectárea asociada -->
- <!-- Campo oculto para la hectárea -->
-  <%= form.hidden_field :hectare_id, value: @hectare.id %>
+    <%= form.hidden_field :hectare_id, value: @hectare.id %>
 
 
-  <div class="inline">
-    <%= form.submit class: "btn-primary" %>
-  </div>
+    <div class="inline">
+        <button type="button" class="btn-destroy" data-action="click->modal#close">Cancelar</button>
+        <%= form.submit "Guardar", class: "btn-primary" %>
+    </div>
+
+</div>
 <% end %>
