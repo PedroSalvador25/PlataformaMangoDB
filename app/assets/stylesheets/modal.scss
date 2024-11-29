@@ -1,6 +1,6 @@
 .modal {
     position: fixed;
-    z-index: 9999; 
+    z-index: 9; 
     left: 0;
     top: 0;
     width: 100%; 
@@ -13,19 +13,23 @@
   }
   
   .modal-content {
-    background-color: #fff;
-    margin: 15% auto;
-    padding: 20px;
-    border-radius: 5px;
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
     width: 80%; 
-    max-width: 600px;
+    max-width: 400px;
+    position: relative;
+
+    h1{
+      text-align: center;
+      font-size: 2rem;
+    }
   }
-  
-  /* El botón de cierre */
-  .close-btn {
-    color: #aaa; /* Color del botón de cierre */
-    float: right; /* Posición a la derecha */
-    font-size: 28px;
-    font-weight: bold;
+
+  .btn-close{
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
     cursor: pointer;
   }
+  

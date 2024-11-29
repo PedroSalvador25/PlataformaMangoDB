@@ -2,11 +2,11 @@ import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
 
-    close(event) {
-        this.element.remove();       
-    }
-  
-    dontclose(event) {
-      event.stopPropagation();
-    }
+  close(event) {
+      this.element.remove(); 
+    
+  }
+  dontclose(event) {
+    event.stopPropagation();
+  }
 }
