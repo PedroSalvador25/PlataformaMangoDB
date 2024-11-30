@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   post 'authentication/login', to: 'authentication#login'
   post 'authentication/logout', to: 'authentication#logout'
 
+  resources :hectares do
+    get 'list_ready', on: :collection
+  end
+
   root "users#index"
 end
 

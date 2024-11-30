@@ -61,6 +61,11 @@ class HarvestAuthorizationService
         plant.stemThicknessMm >= 20.0
     end
 
+    def check_pest(plant)
+        # Acceptable textures
+        !plant.pestPresence
+    end
+
     def check_texture(plant)
         # Acceptable textures
         ['firm', 'mature', 'ripe'].include?(plant.texture.downcase)

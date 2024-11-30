@@ -2,6 +2,8 @@ class HectaresController < ApplicationController
   before_action :authenticate_user
   before_action :set_hectare, only: %i[ show edit update destroy ]
 
+
+
   # GET /hectares or /hectares.json
   def index
     @hectares_for_combo = Hectare.all.map { |h| ["#{h.id} - #{h.community}", h.id] } 
@@ -60,6 +62,13 @@ class HectaresController < ApplicationController
     end
   end
 
+  def list_hectares_ready
+    @hectares_for_combo = Hectare.all.map { |h| ["#{h.id} - #{h.community}", h.id] }
+    @q = Hectare.ransack(params[:q])
+    @hectares = Hectare.all.select { |h| h.check_heactare? }
+    render :index
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_hectare
@@ -70,4 +79,5 @@ class HectaresController < ApplicationController
     def hectare_params
       params.require(:hectare).permit(:latitude, :longitude, :community)
     end
+
 end
