@@ -12,7 +12,10 @@
         <% end %>
         <% if user_has_role?(current_user, :Administrator) %>
           <h1 class="font-bold text-4xl">Hectareas</h1>
-          <%= link_to "List Ready Hectares", list_ready_hectares_path, class: "btn-primary" %>
+          <%= link_to "List Ready Hectares", list_hectares_ready_path, class: "btn-primary" %>
+        <% end %>
+        <% if @hectares.is_a?(Array) && @hectares.all? { |h| h.check_hectare? } %>
+            <h2 class="font-bold text-2xl mt-4">Hectares Ready for Authorization</h2>
         <% end %>
 
         <%= search_form_for @q, url: hectares_path, class: "search", method: :get do |f| %>

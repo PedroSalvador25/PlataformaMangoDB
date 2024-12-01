@@ -1,19 +1,9 @@
-#how to uses the service
-#hectare = Hectare.find(1)
-#service = HarvestAuthorizationService.new(hectare)
-#if service.authorized?
-#    puts "Authorized"
-#else
-#    puts "Not authorized"
-#end
-
 class HarvestAuthorizationService
     def initialize(hectare)
         @hectare = hectare
         @plants = Plant.where(hectareId: hectare.id)
-       # @plants = Plant.where(hectareId: @hectare.id)
+      # @plants = Plant.where(hectareId: @hectare.id)
     end
-
 
     def authorized?
         return false if @plants.empty?
@@ -21,8 +11,7 @@ class HarvestAuthorizationService
     end
 
     def check_all_parameters
-        
-        plants_status = @plants.map do |plant|
+        plants_status = @plnts.map do |plant|
             {
               humidity_ok: check_humidity(plant),
               growth_ok: check_growth(plant),
@@ -33,7 +22,7 @@ class HarvestAuthorizationService
               oxygenation_ok: check_oxygenation(plant)
             }
           end
-        total_plants = plants_status.size
+        total_plants = @plants.count
         plants_all_ok = plants_status.count { |status| status.values.all? }
         percentage_ok = (plants_all_ok.to_f / total_plants) * 100
 
@@ -42,12 +31,12 @@ class HarvestAuthorizationService
     end
 
     def check_humidity(plant)
-        #in %
+        # in %
         plant.humidity.between?(40.0, 70.0)
     end
 
-    def check_growth(plant) 
-        #in millimeters
+    def check_growth(plant)
+        # in millimeters
         plant.growthMm >= 150.0
     end
 
@@ -57,7 +46,7 @@ class HarvestAuthorizationService
       end
 
     def check_stem_thickness(plant)
-        #in millimeters
+        # in millimeters
         plant.stemThicknessMm >= 20.0
     end
 
@@ -68,12 +57,11 @@ class HarvestAuthorizationService
 
     def check_texture(plant)
         # Acceptable textures
-        ['firm', 'mature', 'ripe'].include?(plant.texture.downcase)
+        [ "firm", "mature", "ripe" ].include?(plant.texture.downcase)
       end
 
     def check_oxygenation(plant)
-        #in %
+        # in %
         plant.oxygenationLevel >= 80.0
     end
-
 end

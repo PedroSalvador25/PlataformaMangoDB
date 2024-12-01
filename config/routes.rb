@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   post 'authentication/logout', to: 'authentication#logout'
 
   resources :hectares do
-    get 'list_ready', on: :collection
+    get 'list_hectares_ready', to: 'hectares#list_hectares_ready'
   end
 
   root "users#index"

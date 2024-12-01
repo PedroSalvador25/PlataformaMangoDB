@@ -6,9 +6,9 @@ class HectaresController < ApplicationController
 
   # GET /hectares or /hectares.json
   def index
-    @hectares_for_combo = Hectare.all.map { |h| ["#{h.id} - #{h.community}", h.id] } 
-    @q = Hectare.ransack(params[:q]) 
-    @hectares = @q.result(distinct: true) 
+    @hectares_for_combo = Hectare.all.map { |h| [ "#{h.id} - #{h.community}", h.id ] }
+    @q = Hectare.ransack(params[:q])
+    @hectares = @q.result(distinct: true)
   end
 
   # GET /hectares/1 or /hectares/1.json
@@ -63,9 +63,9 @@ class HectaresController < ApplicationController
   end
 
   def list_hectares_ready
-    @hectares_for_combo = Hectare.all.map { |h| ["#{h.id} - #{h.community}", h.id] }
+    @hectares_for_combo = Hectare.all.map { |h| [ "#{h.id} - #{h.community}", h.id ] }
     @q = Hectare.ransack(params[:q])
-    @hectares = Hectare.all.select { |h| h.check_heactare? }
+    @hectares = Hectare.all.select { |h| h.check_hectare? }
     render :index
   end
 
@@ -79,5 +79,4 @@ class HectaresController < ApplicationController
     def hectare_params
       params.require(:hectare).permit(:latitude, :longitude, :community)
     end
-
 end
