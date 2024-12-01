@@ -4,7 +4,7 @@ class Hectare < ApplicationRecord
         [ "community", "created_at", "id", "latitude", "longitude", "updated_at" ]
       end
 
-    def check_hectare?
-        self.authorized = HarvestAuthorizationService.authorized?
+    def check_hectare(id)
+        HarvestAuthorizationService.ready(id)
     end
 end

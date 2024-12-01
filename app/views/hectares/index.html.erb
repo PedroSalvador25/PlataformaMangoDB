@@ -39,7 +39,7 @@
                     <th class="px-4 py-2">Latitud</th>
                     <th class="px-4 py-2">Longitud</th>
                     <th class="px-4 py-2">Comunidad</th>
-                    <th class="px-4 py-2">Autorizada</th>
+                    <th class="px-4 py-2">Lista</th>
                     <th class="px-4 py-2"></th>
                 </tr>
             </thead>
@@ -50,7 +50,7 @@
                     <td><%= hectare.latitude %></td>
                     <td><%= hectare.longitude %></td>
                     <td><%= hectare.community %></td>
-                    <td><%= hectare.authorized%></td>
+                    <td><%= hectare.isReady%></td>
                     <td>
                         <%= link_to 'Ver', hectare_path(hectare), class: "btn btn-info" %>
                     </td>

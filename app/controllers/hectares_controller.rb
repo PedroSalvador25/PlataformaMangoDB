@@ -10,7 +10,18 @@ class HectaresController < ApplicationController
     @q = Hectare.ransack(params[:q])
     @hectares = @q.result(distinct: true)
     # execute hectare check for all the hectares
-    @hectares.each { |h| h.check_hectare? }
+    # @hectares.each { |h| h.check_hectare(h.id) }
+    @hectares.each do |hectare|
+      if hectare.check_hectare(hectare.id)
+        # update hectare.isReady = true
+        hectare.isReady = true
+        hectare.save
+      else
+        # update hectare.isReady = false
+        hectare.isReady = false
+        hectare.save
+      end
+    end
   end
 
   # GET /hectares/1 or /hectares/1.json
