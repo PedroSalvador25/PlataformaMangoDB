@@ -9,6 +9,8 @@ class HectaresController < ApplicationController
     @hectares_for_combo = Hectare.all.map { |h| [ "#{h.id} - #{h.community}", h.id ] }
     @q = Hectare.ransack(params[:q])
     @hectares = @q.result(distinct: true)
+    # execute hectare check for all the hectares
+    @hectares.each { |h| h.check_hectare? }
   end
 
   # GET /hectares/1 or /hectares/1.json
@@ -62,12 +64,6 @@ class HectaresController < ApplicationController
     end
   end
 
-  def list_hectares_ready
-    @hectares_for_combo = Hectare.all.map { |h| [ "#{h.id} - #{h.community}", h.id ] }
-    @q = Hectare.ransack(params[:q])
-    @hectares = Hectare.all.select { |h| h.check_hectare? }
-    render :index
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

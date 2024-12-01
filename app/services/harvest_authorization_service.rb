@@ -1,17 +1,14 @@
 class HarvestAuthorizationService
-    def initialize(hectare)
-        @hectare = hectare
-        @plants = Plant.where(hectareId: hectare.id)
-      # @plants = Plant.where(hectareId: @hectare.id)
-    end
-
-    def authorized?
+    def self.authorized?
+        hectare_id=
+        # list of all the plants in the hectare x
+        @plants = Plant.where(hectare_id: params[:hectare_id])
         return false if @plants.empty?
         check_all_parameters
     end
 
     def check_all_parameters
-        plants_status = @plnts.map do |plant|
+        plants_status = @plants.map do |plant|
             {
               humidity_ok: check_humidity(plant),
               growth_ok: check_growth(plant),
