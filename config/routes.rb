@@ -13,6 +13,11 @@ Rails.application.routes.draw do
   post "authentication/login", to: "authentication#login"
   post "authentication/logout", to: "authentication#logout"
 
+  resources :hectares do
+    member do
+      patch :authorize # Ruta personalizada para autorizar la hectárea
+    end
+  end
 
   root "users#index"
 end

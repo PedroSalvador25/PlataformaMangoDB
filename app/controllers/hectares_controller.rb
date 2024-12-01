@@ -76,6 +76,14 @@ class HectaresController < ApplicationController
   end
 
 
+  def authorize
+    if @hectare.authorize!
+      render json: { success: true, is_authorized: @hectare.isAuthorized }
+    else
+      render json: { success: false, error: "Error al autorizar la hectárea." }, status: :unprocessable_entity
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_hectare

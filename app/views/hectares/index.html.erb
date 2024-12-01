@@ -50,7 +50,16 @@
                     <td><%= hectare.latitude %></td>
                     <td><%= hectare.longitude %></td>
                     <td><%= hectare.community %></td>
-                    <td><%= hectare.isReady%></td>
+                    <td>
+                        <% if hectare.isReady  %>
+                            <%= link_to 'Autorizar Cosecha', authorize_hectare_path(hectare), 
+                                        method: :patch, 
+                                        class: "btn btn-success", 
+                                        data: { confirm: '¿Estás seguro de que deseas autorizar esta hectárea?' } %>
+                        <% else %>
+                            <%= link_to 'Pendiente', '#', class: "btn btn-secondary", disabled: true %>
+                        <% end %>
+                    </td>
                     <td>
                         <%= link_to 'Ver', hectare_path(hectare), class: "btn btn-info" %>
                     </td>
