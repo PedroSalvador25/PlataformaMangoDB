@@ -1,21 +1,83 @@
-<div class="w-full">
-  <% if notice.present? %>
+<div class="container__index">
+    <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
-
-  <% content_for :title, "Hectares" %>
-
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Hectares</h1>
-    <%= link_to "New hectare", new_hectare_path, class: "btn-primary" %>
-  </div>
-
-  <div id="hectares" class="min-w-full">
-    <% @hectares.each do |hectare| %>
-      <%= render hectare %>
-      <p>
-        <%= link_to "Show this hectare", hectare, class: "btn-secondary" %>
-      </p>
     <% end %>
-  </div>
+
+    <% content_for :title, "Hectareas" %>
+
+    <div class="header__index">
+        <% if user_has_role?(current_user, :Tagger) %>
+            <h1 class="font-bold text-4xl">Etiquetado</h1>
+        <%= link_to "New hectare", new_hectare_path, class: "btn-primary" %>
+        <% end %>
+        <% if @hectares.is_a?(Array) && @hectares.all? { |h| h.check_hectare? } %>
+        <h2 class="font-bold text-2xl mt-4">Hectares Ready for Authorization</h2>
+        <% end %>
+
+        <%= search_form_for @q, url: hectares_path, class: "search", method: :get do |f| %>
+        <div>
+            <%= render "shared/combo_box", 
+           form: f, 
+           field: :id_eq, 
+           label: "Hectárea", 
+           options: @hectares_for_combo, 
+           selected: @q&.id_eq, 
+           placeholder: "Selecciona una hectárea" %>
+        </div>
+
+        <div class="button">
+            <%= f.submit "Buscar", class: "btn-primary" %>
+        </div>
+        <% end %>
+    </div>
+
+    <div class="table__index">
+        <table>
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">ID</th>
+                    <th class="px-4 py-2">Latitud</th>
+                    <th class="px-4 py-2">Longitud</th>
+                    <th class="px-4 py-2">Comunidad</th>
+                    <% if user_has_role?(current_user, :Administrator) %>
+                    <th class="px-4 py-2">Lista</th>
+                    <% end %>
+
+                    <th class="px-4 py-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @hectares.each do |hectare| %>
+                <tr>
+                    <td><%= hectare.id %></td>
+                    <td><%= hectare.latitude %></td>
+                    <td><%= hectare.longitude %></td>
+                    <td><%= hectare.community %></td>
+                    <% if user_has_role?(current_user, :Administrator) %>
+                    <td>
+                        <% if hectare.isReady && !hectare.isAuthorized %>
+                        <%= link_to 'Autorizar Cosecha', authorize_hectare_path(hectare), 
+                                        method: :patch, 
+                                        class: "btn-op-secondary", 
+                                        data: { confirm: '¿Estás seguro de que deseas autorizar esta hectárea?' } %>
+                        <% end %>
+
+                        <% if !hectare.isReady && !hectare.isAuthorized  %>
+                        <p class="pending">Pendiente</p>
+                        <% end %>
+
+                        <% if hectare.isReady && hectare.isAuthorized  %>
+                        <p class="authorized">Autorizada</p>
+                        <% end %>
+                    </td>
+                    <% end %>
+
+                    <td>
+                        <%= link_to 'Ver', hectare_path(hectare), class: "btn-op-primary" %>
+                    </td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
 </div>

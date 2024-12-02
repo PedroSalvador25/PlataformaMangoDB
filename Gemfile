@@ -35,10 +35,11 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'dotenv-rails', groups: [:development, :test]
-gem 'devise'
+gem 'pundit'
 gem 'tailwindcss-rails'
 gem 'bcrypt', '~> 3.1.7'
 gem 'sassc-rails'
+gem 'solargraph'
 
 
 gem 'ransack'

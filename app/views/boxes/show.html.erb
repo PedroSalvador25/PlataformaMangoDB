@@ -4,7 +4,10 @@
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
     <% end %>
 
-    <%= render @box %>
+  <p>Box ID: <%= @box.id %></p>
+
+<p>Calidad: <%= @box.quality %></p>
+<p>Peso: <%= @box.weigth %></p>
 
     <%= link_to "Edit this box", edit_box_path(@box), class: "btn-primary" %>
     <%= link_to "Back to boxes", boxes_path, class: "btn-back" %>

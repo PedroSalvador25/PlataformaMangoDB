@@ -1,4 +1,5 @@
 class ShelvesController < ApplicationController
+  before_action :authenticate_user
   before_action :set_shelf, only: %i[ show edit update destroy ]
 
   # GET /shelves or /shelves.json
@@ -65,6 +66,6 @@ class ShelvesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def shelf_params
-      params.require(:shelf).permit(:division, :partition, :werehouseId, :boxId)
+      params.require(:shelf).permit(:division, :partition, :warehouseId, :boxId)
     end
 end

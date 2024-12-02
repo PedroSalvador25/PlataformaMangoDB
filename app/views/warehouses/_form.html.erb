@@ -1,10 +1,10 @@
-<%= form_with(model: werehouse, class: "contents") do |form| %>
-  <% if werehouse.errors.any? %>
+<%= form_with(model: warehouse, class: "contents") do |form| %>
+  <% if warehouse.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(werehouse.errors.count, "error") %> prohibited this werehouse from being saved:</h2>
+      <h2><%= pluralize(warehouse.errors.count, "error") %> prohibited this warehouse from being saved:</h2>
 
       <ul>
-        <% werehouse.errors.each do |error| %>
+        <% warehouse.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>

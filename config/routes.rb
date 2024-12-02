@@ -1,25 +1,23 @@
 Rails.application.routes.draw do
-  resources :werehouses
+  resources :warehouses
   resources :shelves
   resources :plants
   resources :hectares
   resources :boxes
-  resources :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :users, except: [ :login, :logout ]
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  # get "up" => "rails/health#show", as: :rails_health_check
+  get "login", to: "authentication_views#login"
+  post "login", to: "authentication_views#login"
+  post "logout", to: "authentication_views#logout"
 
-  # # Render dynamic PWA files from app/views/pwa/*
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+  post "authentication/login", to: "authentication#login"
+  post "authentication/logout", to: "authentication#logout"
 
-  # Defines the root path route ("/")
-  
-  
-  post 'authentication/login', to: 'authentication#login'
-  post 'authentication/logout', to: 'authentication#logout'
+  get '/hectares/:id/authorize', to: 'hectares#authorize'
+
+  resources :hectares do
+    patch :authorize, on: :member
+  end
+
   root "users#index"
-
 end

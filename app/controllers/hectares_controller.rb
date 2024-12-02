@@ -1,9 +1,19 @@
 class HectaresController < ApplicationController
+  before_action :authenticate_user
   before_action :set_hectare, only: %i[ show edit update destroy ]
+
+
 
   # GET /hectares or /hectares.json
   def index
-    @hectares = Hectare.all
+    @hectares_for_combo = Hectare.all.map { |h| [ "#{h.id} - #{h.community}", h.id ] }
+    @q = Hectare.ransack(params[:q])
+    @hectares = @q.result(distinct: true)
+    # execute hectare check for all the hectares
+    # @hectares.each { |h| h.check_hectare(h.id) }
+    @hectares.each do |hectare|
+      hectare.check_hectare(hectare.id)
+    end
   end
 
   # GET /hectares/1 or /hectares/1.json
@@ -56,6 +66,19 @@ class HectaresController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
+  def authorize
+    @hectare = Hectare.find_by(id: params[:id])
+    
+    if @hectare.authorize!
+      redirect_to @hectare, notice: "Hectárea autorizada exitosamente."
+    else
+      redirect_to @hectare, alert: "Error al autorizar la hectárea."
+    end
+  end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

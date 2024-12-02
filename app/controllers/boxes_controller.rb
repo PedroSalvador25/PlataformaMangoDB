@@ -1,10 +1,17 @@
 class BoxesController < ApplicationController
+  before_action :authenticate_user
   before_action :set_box, only: %i[ show edit update destroy ]
 
   # GET /boxes or /boxes.json
   def index
-    @q = Box.ransack(params[:q]) 
-    @boxes = @q.result(distinct: true) 
+    @q = Box.ransack(params[:q])
+
+    if current_user.role == 'WarehouseManager'
+      @q.quality_eq = 'quality' unless params[:q] && params[:q][:quality_eq].present?
+    end
+    
+    @boxes = @q.result.includes(:plant).order(created_at: :desc)
+    @hectares_for_combo = Hectare.where.not(community: nil).map { |h| ["#{h.id} - #{h.community}", h.id] }
   end
 
   # GET /boxes/1 or /boxes/1.json
@@ -13,25 +20,31 @@ class BoxesController < ApplicationController
 
   # GET /boxes/new
   def new
-    @box = Box.new
+    @hectare = Hectare.find_by(id: params[:hectare_id])
+    if @hectare
+      @plants = @hectare.plants # Asocia las plantas de la hectárea
+      @box = Box.new
+    else
+      redirect_to hectares_path, alert: "Hectárea no encontrada."
+    end
   end
+
 
   # GET /boxes/1/edit
   def edit
+    @box = Box.find(params[:id])
+    @hectare = @box.hectare
   end
 
   # POST /boxes or /boxes.json
   def create
     @box = Box.new(box_params)
 
-    respond_to do |format|
-      if @box.save
-        format.html { redirect_to @box, notice: "Box was successfully created." }
-        format.json { render :show, status: :created, location: @box }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @box.errors, status: :unprocessable_entity }
-      end
+    if @box.save
+      hectare_id = @box.plant.hectare.id
+      redirect_to hectare_path(hectare_id), notice: 'Caja creada exitosamente.'
+    else
+      render :new
     end
   end
 
@@ -66,6 +79,6 @@ class BoxesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def box_params
-      params.require(:box).permit(:name, :quality, :weigth, :hectare)
+      params.require(:box).permit(:quality, :weigth, :plant_id)
     end
 end

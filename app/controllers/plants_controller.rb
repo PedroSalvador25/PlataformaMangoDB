@@ -1,4 +1,5 @@
 class PlantsController < ApplicationController
+  before_action :authenticate_user
   before_action :set_plant, only: %i[ show edit update destroy ]
 
   # GET /plants or /plants.json
@@ -65,6 +66,6 @@ class PlantsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def plant_params
-      params.require(:plant).permit(:HectareId, :humidity, :growthMm, :heatJoules, :steamThicknessMm, :pestPresence, :texture, :oxygenationLevel)
+      params.require(:plant).permit(:humidity, :growthMm, :heatJoules, :steamThicknessMm, :pestPresence, :texture, :oxygenationLevel, :hectare_id)
     end
 end

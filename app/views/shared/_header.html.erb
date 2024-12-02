@@ -1,0 +1,14 @@
+<div class="header">
+   
+  
+
+    <div class="container__profile">
+        <figure class="profile">
+            <%= image_tag 'no-photo.png', alt: 'Profile picture' %>
+        </figure>
+        <div>
+            <p class="name"><%= current_user.name %></p>
+            <p class="role"><%= current_user.translated_role  %></p>
+        </div>
+    </div>
+</div>

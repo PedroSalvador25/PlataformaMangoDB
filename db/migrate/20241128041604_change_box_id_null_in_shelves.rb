@@ -1,0 +1,5 @@
+class ChangeBoxIdNullInShelves < ActiveRecord::Migration[7.2]
+  def change
+    change_column_null :shelves, :box_id, true
+  end
+end
