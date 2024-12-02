@@ -1,23 +1,49 @@
-<p style="color: green"><%= notice %></p>
+<div class="container__index">
 
-<% content_for :title, "Users" %>
+    <p style="color: green"><%= notice %></p>
 
-<div class="flex justify-between items-center mb-4">
-  <h1>Users</h1>
-  <%= button_to "Cerrar Sesión", logout_path, method: :post, class: "bg-red-500 text-black py-2 px-4 rounded" %>
+    <% content_for :title, "Usuarios" %>
+     <div class="header__index">
+        <h1 class="font-bold text-4xl">Usuarios</h1>
+        <%= link_to "New user", new_user_path, class: "btn-primary" %>
+     </div>
+
+      <div class="table__index">
+        <table>
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">ID</th>
+                    <th class="px-4 py-2">Nombre</th>
+                    <th class="px-4 py-2">Correo</th>
+                    <th class="px-4 py-2">Rol</th>
+                    <th class="px-4 py-2">Activo</th>
+                    <th class="px-4 py-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @users.each do |user| %>
+                <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.name %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.translated_role %></td>
+                    <td>
+                      <% if user.connected  %>
+                        <p class="authorized">Activo</p>
+
+                        <% else %>
+                        <p class="pending">Inactivo</p>
+
+                        <% end %>
+                    </td>
+
+                    <td>
+                        <%= link_to 'Ver', user_path(user), class: "btn-op-primary" %>
+                    </td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+
 </div>
-
-<div class="text-red-500 text-xl">
-  TailwindCSS está funcionando correctamente 🎉
-</div>
-
-<div id="users">
-  <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Show this user", user, class: "btn-secondary" %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New user", new_user_path, class: "btn-primary" %>
