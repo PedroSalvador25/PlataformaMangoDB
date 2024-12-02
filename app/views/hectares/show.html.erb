@@ -3,11 +3,7 @@
     <% if notice.present? %>
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
     <% end %>
-
-    <%= render @hectare %>
-
       
-
     <% if user_has_role?(current_user, :Tagger) %>
       <%= link_to "Agregar caja", new_box_path(hectare_id: @hectare.id), class: "btn-primary", data: {turbo_frame: "modal" } %>
     <% end %>

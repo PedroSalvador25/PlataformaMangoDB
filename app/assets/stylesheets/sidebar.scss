@@ -4,6 +4,7 @@
   min-width: 250px;
   height: 100vh;
   border-right: 1px solid $gray;
+  outline: none;
   div {
     display: flex;
     align-items: center;
@@ -42,7 +43,7 @@
       background-color: lighten(
         $secondary-color,
         20%
-      ); /* Color más claro cuando no está activo */
+      ); 
     }
   }
 }
