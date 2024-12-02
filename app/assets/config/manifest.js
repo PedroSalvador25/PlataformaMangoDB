@@ -4,4 +4,3 @@
 //= link_tree ../../../vendor/javascript .js
 //= link application.tailwind.css
 //= link_tree ../builds
-//= link_tree ../builds

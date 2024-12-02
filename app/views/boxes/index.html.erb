@@ -1,0 +1,76 @@
+<div class="container__index">
+    <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <% end %>
+
+    <% content_for :title, "Boxes" %>
+
+    <div class="header__index">
+        <h1 class="font-bold text-4xl">Cajas</h1>
+
+        <%= search_form_for @q, url: boxes_path, class:"search", method: :get do |f| %>
+            <div>
+                <%= render "shared/combo_box", 
+                  form: f, 
+                  field: :quality_eq, 
+                  label: "Calidad", 
+                  options: [["Calidad", "quality"], ["No calidad", "no-quality"]],
+                  selected: @q&.quality_eq, 
+                  placeholder: "Selecciona una calidad" %>
+            </div>
+
+            <div>
+                <%= f.label :weigth_eq, "Peso" %>
+                <%= f.text_field :weigth_eq, class: "input" %>
+            </div>
+
+             
+  <div>
+    <%= render "shared/combo_box", 
+      form: f, 
+      field: :plant_hectare_id_eq, 
+      label: "Hectárea", 
+      options: @hectares_for_combo, 
+      selected: @q&.plant_hectare_id_eq, 
+      placeholder: "Selecciona una hectárea" %>
+  </div>
+            <div class="button">
+                <%= f.submit "Buscar", class: "btn-primary" %>
+            </div>
+        <% end %>
+
+    </div>
+
+    <div class="table__index">
+      <table >
+        <thead>
+            <tr>
+                <th class="px-4 py-2">Id</th>
+                <th class="px-4 py-2">Calidad</th>
+                <th class="px-4 py-2">Peso</th>
+                <th class="px-4 py-2">Planta</th>
+                <th class="px-4 py-2">Hectarea</th>
+                <th class="px-4 py-2">Fecha de cosecha</th>
+                <th class="px-4 py-2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @boxes.each do |box| %>
+            <tr>
+                <td><%= box.id %></td>
+                <td><%= box.quality == 'quality' ? 'Calidad' : 'No Calidad' %></td>
+                <td><%= box.weigth %></td>
+                <td><%= box.plant_id %></td>
+                <td><%= box.plant&.hectare&.id || 'N/A'  %> </td>
+                <td><%= box.created_at.strftime("%Y-%m-%d") %></td>
+                <td class="">
+                    <%= link_to 'Ver', box_path(box), class: "btn-show" %>
+                </td>
+            </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </div>
+</div>
+
+    

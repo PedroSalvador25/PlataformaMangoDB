@@ -1,2 +1,44 @@
 class User < ApplicationRecord
-end
+    has_secure_password
+
+    before_validation :set_default_role, on: :create
+    enum role: { Administrator: 0, WarehouseManager: 1, Tagger: 2, Seller: 3 }
+
+    validates :email, presence: true, uniqueness: true
+    validates :password, presence: true, length: { minimum: 6 }, if: -> { new_record? || !password.nil? }
+  
+    def lock_account!
+      update(locked_until: 1.hour.from_now, failed_attempts: 0)
+    end
+  
+    def unlock_account
+      update(locked_until: nil, failed_attempts: 0)
+    end
+  
+    def locked?
+      locked_until.present? && locked_until > Time.current
+    end
+  
+    def increment_failed_attempts!
+      update(failed_attempts: failed_attempts.to_i + 1)
+    end
+  
+    def reset_failed_attempts!
+      update(failed_attempts: 0)
+    end
+
+    def translated_role
+      {
+        "Administrator" => "Administrador",
+        "WarehouseManager" => "Gerente de Almacén",
+        "Tagger" => "Etiquetador",
+        "Seller" => "Vendedor"
+      }[role]
+    end
+
+    private
+    def set_default_role
+      self.role ||= :Tagger
+    end
+  end
+  

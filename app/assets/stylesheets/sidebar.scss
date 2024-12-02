@@ -1,0 +1,49 @@
+@import "variables";
+
+.sidebar {
+  min-width: 250px;
+  height: 100vh;
+  border-right: 1px solid $gray;
+  outline: none;
+  div {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0rem 2rem;
+    justify-content: start;
+    height: 80px;
+  }
+}
+
+.nav {
+  padding: 1rem 0.5rem;
+  height: fit-content;
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  li {
+    border-radius: 0.75rem;
+    cursor: pointer;
+
+    a {
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.75rem 2rem;
+    }
+
+    &.active {
+      background-color: $secondary-color;
+    }
+
+    &:not(.active):hover {
+      background-color: lighten(
+        $secondary-color,
+        20%
+      ); 
+    }
+  }
+}
