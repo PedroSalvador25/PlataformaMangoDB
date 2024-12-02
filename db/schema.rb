@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_02_041752) do
-ActiveRecord::Schema[7.2].define(version: 2024_12_01_061311) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_02_055914) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,8 +22,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_01_061311) do
     t.bigint "plant_id", null: false
     t.boolean "occupied", default: false
     t.bigint "shelf_id"
+    t.bigint "shelf_partition_id", null: false
     t.index ["plant_id"], name: "index_boxes_on_plant_id"
     t.index ["shelf_id"], name: "index_boxes_on_shelf_id"
+    t.index ["shelf_partition_id"], name: "index_boxes_on_shelf_partition_id"
   end
 
   create_table "hectares", force: :cascade do |t|
@@ -63,7 +64,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_01_061311) do
   end
 
   create_table "shelves", force: :cascade do |t|
-    t.integer "box_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "warehouse_id"
@@ -91,6 +91,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_01_061311) do
   end
 
   add_foreign_key "boxes", "plants"
+  add_foreign_key "boxes", "shelf_partitions"
   add_foreign_key "boxes", "shelves"
   add_foreign_key "plants", "hectares"
   add_foreign_key "shelf_partitions", "shelves"
