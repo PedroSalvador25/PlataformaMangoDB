@@ -6,10 +6,26 @@
     <% content_for :title, "Boxes" %>
 
     <div class="header__index">
-        <h1 class="font-bold text-4xl">Cajas</h1>
+        <% if user_has_role?(current_user, :WarehouseManager) %>
+            <h1 class="font-bold text-4xl">Entrada al Almacen</h1>
+        <% end %>
+            <% if user_has_role?(current_user, :Administrator) %>
+            <h1 class="font-bold text-4xl">Cajas</h1>
+        <% end %>
 
         <%= search_form_for @q, url: boxes_path, class:"search", method: :get do |f| %>
-            <div>
+            <% if user_has_role?(current_user, :WarehouseManager) %>
+                <div>
+                <%= render "shared/combo_box_noph", 
+                    form: f, 
+                    field: :quality_eq, 
+                    label: "Tipo de Almacen", 
+                    options: [["Calidad", "quality"], ["No calidad", "no-quality"]],
+                    selected: @q&.quality_eq.presence || "quality"%>
+                </div>
+            <% end %>
+            <% if user_has_role?(current_user, :Administrator) %>
+                <div>
                 <%= render "shared/combo_box", 
                   form: f, 
                   field: :quality_eq, 
@@ -17,22 +33,22 @@
                   options: [["Calidad", "quality"], ["No calidad", "no-quality"]],
                   selected: @q&.quality_eq, 
                   placeholder: "Selecciona una calidad" %>
-            </div>
-
-            <div>
-                <%= f.label :weigth_eq, "Peso" %>
-                <%= f.text_field :weigth_eq, class: "input" %>
-            </div>
+                </div>
+                <div>
+                    <%= f.label :weigth_eq, "Peso" %>
+                    <%= f.text_field :weigth_eq, class: "input" %>
+                </div>
+            <% end %>
 
              
   <div>
     <%= render "shared/combo_box", 
       form: f, 
       field: :plant_hectare_id_eq, 
-      label: "Hectárea", 
+      label: "Comunidad", 
       options: @hectares_for_combo, 
       selected: @q&.plant_hectare_id_eq, 
-      placeholder: "Selecciona una hectárea" %>
+      placeholder: "Selecciona una comunidad" %>
   </div>
             <div class="button">
                 <%= f.submit "Buscar", class: "btn-primary" %>
@@ -41,36 +57,68 @@
 
     </div>
 
-    <div class="table__index">
-      <table >
-        <thead>
-            <tr>
-                <th class="px-4 py-2">Id</th>
-                <th class="px-4 py-2">Calidad</th>
-                <th class="px-4 py-2">Peso</th>
-                <th class="px-4 py-2">Planta</th>
-                <th class="px-4 py-2">Hectarea</th>
-                <th class="px-4 py-2">Fecha de cosecha</th>
-                <th class="px-4 py-2"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <% @boxes.each do |box| %>
-            <tr>
-                <td><%= box.id %></td>
-                <td><%= box.quality == 'calidad' ? 'Calidad' : 'No Calidad' %></td>
-                <td><%= box.weigth %></td>
-                <td><%= box.plant_id %></td>
-                <td><%= box.plant&.hectare&.id || 'N/A'  %> </td>
-                <td><%= box.created_at.strftime("%Y-%m-%d") %></td>
-                <td class="">
-                    <%= link_to 'Ver', box_path(box), class: "btn-show" %>
-                </td>
-            </tr>
-            <% end %>
-        </tbody>
-      </table>
-    </div>
+    <% if user_has_role?(current_user, :Administrator) %>
+        <div class="table__index">
+        <table >
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">Id</th>
+                    <th class="px-4 py-2">Calidad</th>
+                    <th class="px-4 py-2">Peso</th>
+                    <th class="px-4 py-2">Planta</th>
+                    <th class="px-4 py-2">Hectarea</th>
+                    <th class="px-4 py-2">Fecha de cosecha</th>
+                    <th class="px-4 py-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @boxes.each do |box| %>
+                <tr>
+                    <td><%= box.id %></td>
+                    <td><%= box.quality == 'quality' ? 'Calidad' : 'No Calidad' %></td>
+                    <td><%= box.weigth %></td>
+                    <td><%= box.plant_id %></td>
+                    <td><%= box.plant&.hectare&.id || 'N/A'  %> </td>
+                    <td><%= box.created_at.strftime("%Y-%m-%d") %></td>
+                    <td class="">
+                        <%= link_to 'Ver', box_path(box), class: "btn-show" %>
+                    </td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+        </div>
+        <% end %>
+        <% if user_has_role?(current_user, :WarehouseManager) %>
+        <div class="table__index">
+        <table >
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">Id</th>
+                    <th class="px-4 py-2">Peso</th>
+                    <th class="px-4 py-2">Planta</th>
+                    <th class="px-4 py-2">Hectarea</th>
+                    <th class="px-4 py-2">Fecha de cosecha</th>
+                    <th class="px-4 py-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @boxes.each do |box| %>
+                <tr>
+                    <td><%= box.id %></td>
+                    <td><%= box.weigth %></td>
+                    <td><%= box.plant_id %></td>
+                    <td><%= box.plant&.hectare&.id || 'N/A'  %> </td>
+                    <td><%= box.created_at.strftime("%Y-%m-%d") %></td>
+                    <td class="Button">
+                        <%= link_to "Almacenar", box_path(box), class: "btn-primary" %>
+                    </td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+        </div>
+        <% end %>
 </div>
 
     
