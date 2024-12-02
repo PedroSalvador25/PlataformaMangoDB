@@ -1,6 +1,6 @@
 class BoxAssignmentService
   def self.assign_box(box)
-    warehouse = Warehouse.where(quality_type: box.quality).first
+    warehouse = Warehouse.where(warehouse_type: box.quality).first
     shelf = find_available_shelf(warehouse)
     
     if shelf
@@ -29,10 +29,10 @@ end
 
 #Migraciones pendientes que voy a revisar el viernes xd
 
-# # db/migrate/YYYYMMDDHHMMSS_add_quality_type_to_warehouses.rb
+# # db/migrate/YYYYMMDDHHMMSS_add_warehouse_type_to_warehouses.rb
 # class AddQualityTypeToWarehouses < ActiveRecord::Migration[7.2]
 #   def change
-#     add_column :warehouses, :quality_type, :string
+#     add_column :warehouses, :warehouse_type, :string
 #   end
 # end
 

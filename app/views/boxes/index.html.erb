@@ -58,7 +58,7 @@
             <% @boxes.each do |box| %>
             <tr>
                 <td><%= box.id %></td>
-                <td><%= box.quality == 'quality' ? 'Calidad' : 'No Calidad' %></td>
+                <td><%= box.quality == 'calidad' ? 'Calidad' : 'No Calidad' %></td>
                 <td><%= box.weigth %></td>
                 <td><%= box.plant_id %></td>
                 <td><%= box.plant&.hectare&.id || 'N/A'  %> </td>

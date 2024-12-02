@@ -4,11 +4,7 @@ class Box < ApplicationRecord
   belongs_to :shelf, optional: true
 
   validates :quality, presence: true
-  validates :weight, presence: true, numericality: { greater_than: 0 }
-  validates :occupied, inclusion: { in: [true, false] }
-
-  scope :occupied, -> { where(occupied: true) }
-  scope :unoccupied, -> { where(occupied: false) }
+  validates :weigth, presence: true, numericality: { greater_than: 0 }
 
 
   def self.ransackable_associations(auth_object = nil)
@@ -16,7 +12,7 @@ class Box < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "quality", "weigth", "updated_at", "plant.hectare_id", "occupied"]
+    ["created_at", "quality", "weigth", "updated_at", "plant.hectare_id"]
   end
   def assign_to_shelf(shelf)
     update(shelf: shelf, occupied: true)
