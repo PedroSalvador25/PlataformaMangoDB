@@ -77,12 +77,21 @@ class HectaresController < ApplicationController
 
 
   def authorize
+    @hectare = Hectare.find_by(id: params[:id])
+    
+    if @hectare.nil?
+      redirect_to hectares_path, alert: "Hectárea no encontrada."
+      return
+    end
+    
     if @hectare.authorize!
-      render json: { success: true, is_authorized: @hectare.isAuthorized }
+      redirect_to @hectare, notice: "Hectárea autorizada exitosamente."
     else
-      render json: { success: false, error: "Error al autorizar la hectárea." }, status: :unprocessable_entity
+      redirect_to @hectare, alert: "Error al autorizar la hectárea."
     end
   end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
