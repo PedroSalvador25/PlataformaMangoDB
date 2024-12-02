@@ -5,6 +5,11 @@ class BoxesController < ApplicationController
   # GET /boxes or /boxes.json
   def index
     @q = Box.ransack(params[:q])
+
+    if current_user.role == 'WarehouseManager'
+      @q.quality_eq = 'quality' unless params[:q] && params[:q][:quality_eq].present?
+    end
+    
     @boxes = @q.result.includes(:plant).order(created_at: :desc)
     @hectares_for_combo = Hectare.where.not(community: nil).map { |h| ["#{h.id} - #{h.community}", h.id] }
   end
