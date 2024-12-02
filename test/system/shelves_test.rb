@@ -14,10 +14,10 @@ class ShelvesTest < ApplicationSystemTestCase
     visit shelves_url
     click_on "New shelf"
 
-    fill_in "Boxid", with: @shelf.boxId
+    fill_in "Box_id", with: @shelf.box_id
     fill_in "Division", with: @shelf.division
     fill_in "Partition", with: @shelf.partition
-    fill_in "Warehouseid", with: @shelf.warehouseId
+    fill_in "Warehouse_id", with: @shelf.warehouse_id
     click_on "Create Shelf"
 
     assert_text "Shelf was successfully created"
@@ -28,10 +28,10 @@ class ShelvesTest < ApplicationSystemTestCase
     visit shelf_url(@shelf)
     click_on "Edit this shelf", match: :first
 
-    fill_in "Boxid", with: @shelf.boxId
+    fill_in "Box_id", with: @shelf.box_id
     fill_in "Division", with: @shelf.division
     fill_in "Partition", with: @shelf.partition
-    fill_in "Warehouseid", with: @shelf.warehouseId
+    fill_in "Warehouse_id", with: @shelf.warehouse_id
     click_on "Update Shelf"
 
     assert_text "Shelf was successfully updated"
