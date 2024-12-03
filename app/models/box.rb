@@ -1,7 +1,7 @@
 class Box < ApplicationRecord
   belongs_to :plant
-  belongs_to :shelf_partition, optional: true
-  belongs_to :shelf, optional: true
+  belongs_to :shelf_partition
+  belongs_to :shelf
 
   delegate :hectare, to: :plant
   delegate :shelf, to: :shelf_partition
@@ -18,10 +18,10 @@ class Box < ApplicationRecord
   end
 
   def assign_to_shelf_partition(shelf_partition)
-    update(shelf_partition: shelf_partition)
+    update!(shelf_partition: shelf_partition)  
   end
 
   def unassign_from_shelf_partition
-    update(shelf_partition: nil)
+    update!(shelf_partition: nil)  
   end
 end
