@@ -6,7 +6,7 @@ module NavigationHelper
       
     end 
     if user_has_role?(current_user, :WarehouseManager)
-      links << { name: "Cajas", path: boxes_path, image: "icons/box.svg" }
+      links << { name: "Entradas", path: boxes_path, image: "icons/box.svg" }
       links << { name: "Almacen", path: warehouses_path, image: "icons/warehouse.svg" }
       
     end

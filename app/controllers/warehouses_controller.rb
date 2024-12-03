@@ -9,6 +9,7 @@ class WarehousesController < ApplicationController
 
   # GET /warehouses/1 or /warehouses/1.json
   def show
+    @warehouse = Warehouse.includes(shelves: :shelf_partitions).find(params[:id])
   end
 
   # GET /warehouses/new

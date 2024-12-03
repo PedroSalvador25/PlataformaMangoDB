@@ -4,12 +4,39 @@
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
     <% end %>
 
-    <%= render @warehouse %>
+    <h1 class="text-2xl font-bold mb-4">Almacén: <%= @warehouse.name %></h1>
 
-    <%= link_to "Edit this warehouse", edit_warehouse_path(@warehouse), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Back to warehouses", warehouses_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <div>
+      <h2 class="text-xl font-semibold mb-3">Estantes:</h2>
+      <% if @warehouse.shelves.any? %>
+        <% @warehouse.shelves.each do |shelf| %>
+          <div class="mb-4 border p-3">
+            <h3 class="font-bold text-lg">Estante ID: <%= shelf.id %></h3>
+            
+            <% if shelf.shelf_partitions.any? %>
+              <ul class="list-disc pl-5">
+                <% shelf.shelf_partitions.each do |partition| %>
+                  <li>
+                    División: <%= partition.division %>, 
+                    Partición: <%= partition.partition %>, 
+                    Caja: <%= partition.box_id.present? ? "Caja ID: #{partition.box_id}" : "Sin caja asignada" %>
+                  </li>
+                <% end %>
+              </ul>
+            <% else %>
+              <p>Este estante no tiene particiones.</p>
+            <% end %>
+          </div>
+        <% end %>
+      <% else %>
+        <p>No hay estantes en este almacén.</p>
+      <% end %>
+    </div>
+
+    <%= link_to "Editar este almacén", edit_warehouse_path(@warehouse), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Volver a los almacenes", warehouses_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <div class="inline-block ml-2">
-      <%= button_to "Destroy this warehouse", @warehouse, method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+      <%= button_to "Eliminar este almacén", @warehouse, method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
     </div>
   </div>
 </div>
