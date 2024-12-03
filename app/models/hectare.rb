@@ -5,10 +5,12 @@ class Hectare < ApplicationRecord
       end
 
     def check_hectare(id)
-        HarvestAuthorizationService.ready(id)
+        if HarvestAuthorizationService.ready(id)
+          update(isReady: true)
+        end
     end
 
     def authorize!
         update(isAuthorized: true)
-      end
+    end
 end

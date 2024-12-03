@@ -60,6 +60,9 @@ $border-r: 0.5rem;
       display: table;
       width: 100%;
       table-layout: fixed;
+      &:hover{
+        background-color:  rgba($gray, 0.3);
+      }
     }
 
     td {
