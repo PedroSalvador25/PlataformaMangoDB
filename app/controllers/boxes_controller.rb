@@ -71,13 +71,45 @@ class BoxesController < ApplicationController
     end
   end
 
+  def release_kilos
+    box = Box.find(params[:id])  
+    kilos_to_release = params[:kilos].to_f  
+
+    raise "No hay particiones con cajas disponibles" if box.shelf_partition.nil? || box.shelf_partition.box.nil?
+
+    remaining_kilos = kilos_to_release
+
+    while remaining_kilos > 0
+      current_partition = box.shelf_partition 
+      box_in_partition = current_partition.box
+
+      if box_in_partition.nil? || box_in_partition.kilos == 0
+        current_partition.update!(box: nil)  
+        warehouse.increment_output_pointer  
+        next
+      end
+
+      if box_in_partition.kilos >= remaining_kilos
+        box_in_partition.update!(kilos: box_in_partition.kilos - remaining_kilos)  # Restamos los kilos
+        break  
+      else
+        remaining_kilos -= box_in_partition.kilos
+        box_in_partition.update!(kilos: 0)  
+        current_partition.update!(box: nil)  
+        warehouse.increment_output_pointer   
+      end
+    end
+
+    render json: { message: "Kilos liberados correctamente" }
+  rescue => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+end
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_box
       @box = Box.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def box_params
       params.require(:box).permit(:quality, :weigth, :plant_id, :shelf_id)
     end

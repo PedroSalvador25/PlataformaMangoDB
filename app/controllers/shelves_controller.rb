@@ -59,7 +59,6 @@ class ShelvesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_shelf
       @shelf = Shelf.find(params[:id])
     end
@@ -69,3 +68,5 @@ class ShelvesController < ApplicationController
       params.require(:shelf).permit( :warehouse_id)
     end
 end
+
+  

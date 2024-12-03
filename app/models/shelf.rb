@@ -1,7 +1,6 @@
 class Shelf < ApplicationRecord
   belongs_to :warehouse
   has_many :shelf_partitions, dependent: :destroy
-  has_many :boxes, through: :shelf_partitions
 
   validates :warehouse_id, presence: true
 
@@ -26,21 +25,18 @@ class Shelf < ApplicationRecord
     end
     current_partition = next_partition_for_input
     current_partition.update!(box: box)
-    box.update!(shelf_partition: current_partition, shelf_id: self.id)
+    box.update!(shelf_partition: current_partition)
     warehouse.increment_input_pointer
   end
-  
 
   def release_box
     raise "No hay cajas para retirar en este estante" if empty?
-
     current_partition = next_partition_for_output
     box = current_partition.box
     current_partition.update!(box: nil)
-
-    warehouse.increment_input_pointer
+    warehouse.increment_output_pointer
     box
-  end
+  end  
 
   private
 
@@ -60,6 +56,6 @@ class Shelf < ApplicationRecord
   end
 
   def next_partition_for_output
-    shelf_partitions.where.not(box_id: nil)[warehouse.input_pointer]
+    shelf_partitions[warehouse.output_pointer % shelf_partitions.count]
   end
 end

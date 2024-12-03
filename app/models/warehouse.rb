@@ -27,9 +27,9 @@ class Warehouse < ApplicationRecord
   end
 
   def increment_output_pointer
-    self.output_pointer = (self.output_pointer + 1) % total_shelf_partitions
+    update!(output_pointer: (output_pointer + 1) % shelf_partitions.count)
   end
-
+  
   private
 
   def create_shelves
