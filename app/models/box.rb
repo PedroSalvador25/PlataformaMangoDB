@@ -1,6 +1,7 @@
 class Box < ApplicationRecord
   belongs_to :plant
   belongs_to :shelf_partition
+  belongs_to :shelf_partition, optional: true
   belongs_to :shelf, optional: true
 
   delegate :hectare, to: :plant

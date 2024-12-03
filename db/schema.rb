@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_02_055914) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_03_015654) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,7 +22,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_02_055914) do
     t.bigint "plant_id", null: false
     t.boolean "occupied", default: false
     t.bigint "shelf_id"
-    t.bigint "shelf_partition_id", null: false
+    t.bigint "shelf_partition_id"
     t.index ["plant_id"], name: "index_boxes_on_plant_id"
     t.index ["shelf_id"], name: "index_boxes_on_shelf_id"
     t.index ["shelf_partition_id"], name: "index_boxes_on_shelf_partition_id"
