@@ -9,13 +9,7 @@ class Shelf < ApplicationRecord
   private
 
   def create_divisions_and_partitions
-    (1..5).each do |division_number|
-      (1..5).each do |partition_number|
-        shelf_partitions.create!(
-          division: division_number,
-          partition: partition_number
-        )
-      end
-    end
+    ShelvesDatabaseService.create_divisions_and_partitions(self.id)
   end
 end
+
