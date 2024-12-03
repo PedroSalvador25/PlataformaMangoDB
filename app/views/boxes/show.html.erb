@@ -1,18 +1,40 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
+<div class="container__show">
+  <div class="card_show">
+    <div class="mx-auto">
+      <% if notice.present? %>
+        <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+      <% end %>
+    </div>
 
-  <p>Box ID: <%= @box.id %></p>
+    <div class="header__show">
+      <h1>Información de la Caja</h1>
+    </div>
 
-<p>Calidad: <%= @box.quality %></p>
-<p>Peso: <%= @box.weigth %></p>
+    <div class="info__show">
+      <div>
+        <p class="font-semibold">ID de la Caja:</p>
+        <span><%= @box.id %></span>
+      </div>
+      <div>
+        <p class="font-semibold">Calidad:</p>
+        <span><%= @box.quality %></span>
+      </div>
+      <div>
+        <p class="font-semibold">Peso:</p>
+        <span><%= @box.weight %></span>
+      </div>
+    </div>
 
-    <%= link_to "Edit this box", edit_box_path(@box), class: "btn-primary" %>
-    <%= link_to "Back to boxes", boxes_path, class: "btn-back" %>
-    <div class="inline-block ml-2">
-      <%= button_to "Destroy this box", @box, method: :delete, class: "btn-destroy" %>
+    <div class="options__show">
+      <div class="button">
+        <%= link_to "Regresar", boxes_path, class: "btn-back" %>
+      </div>
+      <div class="button">
+        <%= link_to "Editar esta caja", edit_box_path(@box), class: "btn-primary" %>
+      </div>
+      <div class="button">
+        <%= button_to "Eliminar esta caja", @box, method: :delete, class: "btn-destroy" %>
+      </div>
     </div>
   </div>
 </div>

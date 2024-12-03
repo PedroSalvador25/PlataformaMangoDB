@@ -33,14 +33,13 @@
          placeholder: "Selecciona una calidad" %>
 
     <div>
-        <%= form.label :Peso %>
+        <%= form.label :weigth %>
         <%= form.text_field :weigth, class: "input" %>
     </div>
 
 
 
-    <div class="inline">
-        <button type="button" class="btn-destroy" data-action="click->modal#close">Cancelar</button>
+    <div>
         <%= form.submit "Guardar", class: "btn-primary" %>
     </div>
 

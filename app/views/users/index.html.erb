@@ -10,43 +10,44 @@
   </div>
   
   </div>
+    <% content_for :title, "Usuarios" %>
+     <div class="header__index">
+        <h1 class="font-bold text-4xl">Usuarios</h1>
+        <div class="button-2">
+          <%= link_to "Agregar usuario", new_user_path, class: "btn-primary" %>
+        </div>
+     </div>
 
-  <div class="table__index">
-    <table>
-      <thead>
-        <tr>
-          <th class="px-4 py-2">ID</th>
-          <th class="px-4 py-2">Nombre</th>
-          <th class="px-4 py-2">Correo</th>
-          <th class="px-4 py-2">Rol</th>
-          <th class="px-4 py-2">Activo</th>
-          <th class="px-4 py-2"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @users.each do |user| %>
-        <tr>
-          <td><%= user.id %></td>
-          <td><%= user.name %></td>
-          <td><%= user.email %></td>
-          <td><%= user.translated_role %></td>
-          <td>
-            <% if user.connected %>
-              <p class="authorized text-green-500">Activo</p>
-            <% else %>
-              <p class="pending text-red-500">Inactivo</p>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to 'Ver', user_path(user), class: "btn-op-primary" %>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+      <div class="table__index">
+        <table>
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">ID</th>
+                    <th class="px-4 py-2">Nombre</th>
+                    <th class="px-4 py-2">Correo</th>
+                    <th class="px-4 py-2">Rol</th>
+                    <th class="px-4 py-2">Activo</th>
+                    <th class="px-4 py-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @users.each do |user| %>
+                <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.name %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.translated_role %></td>
+                    <td>
+                      <%= user.connected ? raw('<p class="authorized">Activo</p>') : raw('<p class="pending">Inactivo</p>') %>
+                    </td>
+
+                    <td>
+                        <%= link_to 'Ver', user_path(user), class: "btn-op-primary" %>
+                    </td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+
 </div>
-
-
-
-
