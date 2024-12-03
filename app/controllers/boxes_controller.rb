@@ -79,6 +79,7 @@ class BoxesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def box_params
-      params.require(:box).permit(:quality, :weigth, :plant_id)
+      params.require(:box).permit(:quality, :weigth, :plant_id, :shelf_id)
     end
+    
 end

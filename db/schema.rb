@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_01_061311) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_03_015654) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,7 +20,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_01_061311) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "plant_id", null: false
+    t.bigint "shelf_id"
+    t.bigint "shelf_partition_id"
     t.index ["plant_id"], name: "index_boxes_on_plant_id"
+    t.index ["shelf_id"], name: "index_boxes_on_shelf_id"
+    t.index ["shelf_partition_id"], name: "index_boxes_on_shelf_partition_id"
   end
 
   create_table "hectares", force: :cascade do |t|
@@ -49,15 +53,19 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_01_061311) do
     t.index ["hectare_id"], name: "index_plants_on_hectare_id"
   end
 
-  create_table "shelves", force: :cascade do |t|
+  create_table "shelf_partitions", force: :cascade do |t|
+    t.bigint "shelf_id", null: false
     t.integer "division"
     t.integer "partition"
-    t.integer "warehouseId"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "box_id"
+    t.index ["shelf_id"], name: "index_shelf_partitions_on_shelf_id"
+  end
+
+  create_table "shelves", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "warehouse_id"
-    t.index ["box_id"], name: "index_shelves_on_box_id"
     t.index ["warehouse_id"], name: "index_shelves_on_warehouse_id"
   end
 
@@ -78,10 +86,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_01_061311) do
     t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "warehouse_type"
   end
 
   add_foreign_key "boxes", "plants"
+  add_foreign_key "boxes", "shelf_partitions"
+  add_foreign_key "boxes", "shelves"
   add_foreign_key "plants", "hectares"
-  add_foreign_key "shelves", "boxes"
+  add_foreign_key "shelf_partitions", "shelves"
   add_foreign_key "shelves", "warehouses"
 end

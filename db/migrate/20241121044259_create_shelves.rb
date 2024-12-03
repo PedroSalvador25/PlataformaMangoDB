@@ -4,7 +4,7 @@ class CreateShelves < ActiveRecord::Migration[7.2]
       t.integer :division
       t.integer :partition
       t.integer :warehouseId
-      t.integer :boxId
+      t.integer :box_id
 
       t.timestamps
     end
