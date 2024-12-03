@@ -9,8 +9,7 @@ class HectaresController < ApplicationController
     @hectares_for_combo = Hectare.all.map { |h| [ "#{h.id} - #{h.community}", h.id ] }
     @q = Hectare.ransack(params[:q])
     @hectares = @q.result(distinct: true)
-    # execute hectare check for all the hectares
-    # @hectares.each { |h| h.check_hectare(h.id) }
+    
     @hectares.each do |hectare|
       hectare.check_hectare(hectare.id)
     end

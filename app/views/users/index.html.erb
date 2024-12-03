@@ -5,7 +5,9 @@
     <% content_for :title, "Usuarios" %>
      <div class="header__index">
         <h1 class="font-bold text-4xl">Usuarios</h1>
-        <%= link_to "New user", new_user_path, class: "btn-primary" %>
+        <div class="button-2">
+          <%= link_to "Agregar usuario", new_user_path, class: "btn-primary" %>
+        </div>
      </div>
 
       <div class="table__index">
@@ -34,7 +36,7 @@
                         <% else %>
                         <p class="pending">Inactivo</p>
 
-<<<<<<< HEAD
+
                         <% end %>
                     </td>
 
@@ -48,6 +50,3 @@
     </div>
 
 </div>
-=======
-<%= link_to "New user", new_user_path, class: "btn-primary" %>
->>>>>>> 93cbb764aefd2e3a89104e02dbeae3efc95bab80
