@@ -1,18 +1,38 @@
 class Warehouse < ApplicationRecord
   has_many :shelves, dependent: :destroy
+
   validates :name, :location, :warehouse_type, presence: true
   validates :warehouse_type, inclusion: { in: ['calidad', 'no calidad'] }
 
-  scope :high_quality, -> { where(warehouse_type: 'calidad') }
-  scope :low_quality, -> { where(warehouse_type: 'no calidad') }
+  scope :high_quality, -> { WarehousesDatabaseService.high_quality }
+  scope :low_quality, -> { WarehousesDatabaseService.low_quality }
 
+  attr_accessor :input_pointer, :output_pointer
+
+  after_initialize :initialize_pointers
   after_create :create_shelves
+
+  def initialize_pointers
+    self.input_pointer ||= 0
+    self.output_pointer ||= 0
+  end
+
+  def total_shelf_partitions
+    WarehousesDatabaseService.total_shelf_partitions(self.id)
+  end
+
+  def increment_input_pointer
+    self.input_pointer = (self.input_pointer + 1) % total_shelf_partitions
+  end
+
+  def increment_output_pointer
+    self.output_pointer = (self.output_pointer + 1) % total_shelf_partitions
+    WarehousesDatabaseService.update_output_pointer(self.id, output_pointer)
+  end
 
   private
 
   def create_shelves
-    (1..10).each do |_|
-      self.shelves.create!(warehouse_id: self.id)
-    end
+    WarehousesDatabaseService.create_shelves(self.id)
   end
 end
