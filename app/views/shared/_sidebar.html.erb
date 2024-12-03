@@ -7,21 +7,22 @@
         <ul>
             <% navigation_links.each do |link| %>
             <li class="<%= 'active' if request.path.start_with?(link[:path]) %>">
-                <% if link[:name] == "Cerrar sesión" %>
-                  <%= form_with url: link[:path], method: :delete, class: 'w-full block inline' do %>
-                    <button type="submit" class="w-full block text-left">
-                      <%= image_tag link[:image], alt: 'icon', class: 'inline-block mr-2' if link[:image] %>
-                      <%= link[:name] %>
-                    </button>
-                  <% end %>
-                <% else %>
-                  <%= link_to link[:path], class: 'w-full block' do %>
-                    <%= image_tag link[:image], alt: 'icon', class: 'inline-block mr-2' if link[:image] %>
-                    <%= link[:name] %>
-                  <% end %>
+                <%= link_to link[:path], class: 'w-full block' do %>
+                <%= image_tag link[:image], alt: 'icon', class: 'inline-block mr-2' if link[:image] %>
+                <%= link[:name] %>
                 <% end %>
             </li>
             <% end %>
         </ul>
+        
+              
+        <%= form_with url: logout_path, class: 'logout', method: :delete do |form| %>
+            <button type="submit">
+                <span> 
+                    <%= image_tag "icons/logout.svg", alt: 'icon'%>
+                    Cerrar sesión 
+                </span>
+            </button>
+        <% end %>
     </nav>
 </aside>

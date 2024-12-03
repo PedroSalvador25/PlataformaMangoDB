@@ -5,7 +5,7 @@ class HectaresController < ApplicationController
   # GET /hectares or /hectares.json
   def index
     @q = Hectare.ransack(params[:q])
-    @hectares = Hectare.search_hectares(@q)
+    @hectares = Hectare.search_hectares(@q) 
     @hectares_for_combo = Hectare.combo_options
     Hectare.update_ready_status(@hectares)
   end

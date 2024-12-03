@@ -1,21 +1,26 @@
-<div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
+<div class="container__index">
 
-  <% content_for :title, "Warehouses" %>
+    <div class="w-full">
+        <% if notice.present? %>
+        <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+        <% end %>
+    </div>
+    <div class="container__warehouse">
+        <% content_for :title, "Warehouses" %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Warehouses</h1>
-    <%= link_to "New warehouse", new_warehouse_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
-  </div>
+        <% @warehouses.each do |warehouse| %>
+        <%= link_to warehouse do %>
+        <div class="card__warehouse">
+            <h2>Almacén de <%= warehouse.name %></h2>
+            <p>Ubicado en <%= warehouse.location %></p>
+            <% if warehouse.name == 'Calidad' %>
+            <%= image_tag 'img-warehouse.svg', alt: 'Imagen almacen' %>
+            <% else %>
+            <%= image_tag 'img-warehouse-2.svg', alt: 'Imagen almacen' %>
+            <% end %>
 
-  <div id="warehouses" class="min-w-full">
-    <% @warehouses.each do |warehouse| %>
-      <%= render warehouse %>
-      <p>
-        <%= link_to "Show this warehouse", warehouse, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-      </p>
-    <% end %>
-  </div>
+        </div>
+        <% end %>
+        <% end %>
+    </div>
 </div>
