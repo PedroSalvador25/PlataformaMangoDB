@@ -57,6 +57,7 @@
 
     </div>
 
+    <% if @boxes == 0 %>
     <div class="table__index">
       <table >
         <thead>
@@ -98,4 +99,7 @@
         </tbody>
       </table>
     </div>
+    <% else %>
+    <p class="no-data">No hay cajas registradas fuera del Almacen</p>
+    <% end %>
 </div>

@@ -23,6 +23,11 @@
   @include buttons($primary-color);
 }
 
+.btn-primary-2{
+  @include buttons($primary-color);
+  width: 160px;
+}
+
 .btn-secondary {
   @include buttons($secondary-color);
 }

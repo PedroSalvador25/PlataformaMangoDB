@@ -3,9 +3,7 @@
     <% content_for :title, "Usuarios" %>
      <div class="header__index">
         <h1 class="font-bold text-4xl">Usuarios</h1>
-        <div class="button-2">
-          <%= link_to "Agregar usuario", new_user_path, class: "btn-primary" %>
-        </div>
+          <%= link_to "Agregar usuario", new_user_path, class: "btn-primary-2", data: {turbo_frame: "modal"}%>
      </div>
       <div class="table__index">
         <table>

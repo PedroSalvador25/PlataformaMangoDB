@@ -4,7 +4,7 @@ $border-r: 0.5rem;
 .container__index {
   width: 100%;
   background-color: $light-bg;
-  padding: 0rem 2rem 2rem 2rem; 
+  padding: 1rem 2rem 2rem 2rem; 
   height: calc(100vh - 74px);
 }
 
@@ -21,6 +21,9 @@ $border-r: 0.5rem;
 
     .button{
       width: 120px;
+    }
+    .button-2{
+      width: 150px;
     }
   }
 }
@@ -134,7 +137,15 @@ $border-r: 0.5rem;
     width: 125px;
   }
 }
-
+.no-data{
+  margin-top: 5rem;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 2rem;
+  border: 1px solid $gray;
+  background-color: rgba($gray, 0.3);
+  border-radius: 1rem;
+}
 .form{
   display: flex;
   flex-direction: column;
