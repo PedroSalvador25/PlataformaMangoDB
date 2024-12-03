@@ -1,15 +1,5 @@
 <div class="container__index">
   <p style="color: green"><%= notice %></p>
-
-  <% content_for :title, "Usuarios" %>
-  
-  <div class="header__index">
-    <h1 class="font-bold text-4xl">Usuarios</h1>
-    <div class="actions">
-        <%= link_to "New user", new_user_path, class: "btn-primary" %>
-  </div>
-  
-  </div>
     <% content_for :title, "Usuarios" %>
      <div class="header__index">
         <h1 class="font-bold text-4xl">Usuarios</h1>
@@ -17,7 +7,6 @@
           <%= link_to "Agregar usuario", new_user_path, class: "btn-primary" %>
         </div>
      </div>
-
       <div class="table__index">
         <table>
             <thead>
@@ -49,5 +38,4 @@
             </tbody>
         </table>
     </div>
-
 </div>
