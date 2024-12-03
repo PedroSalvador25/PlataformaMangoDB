@@ -83,6 +83,33 @@ $border-r: 0.5rem;
       }
   }
 }
+.container__warehouse{
+  display: flex;
+  justify-content: space-evenly;
+  height: 100%;
+
+  .card__warehouse{
+    align-self: center;
+    background-color: white;
+    width: 400px;
+    height: 500px;
+    border-radius: 1rem;
+    box-shadow: 0px 4px 4px rgba($color: #000, $alpha: 0.10);
+    padding: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    h2{
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    img{
+      width: 250px;
+    }
+  }
+}
 
 .container__show{
   background-color: $light-bg;

@@ -82,7 +82,7 @@
                 <% end %>
                 <td><%= box.weigth %></td>
                 <td><%= box.plant_id %></td>
-                <td><%= box.plant&.hectare&.id || 'N/A'  %> </td>
+                <td><%= box.plant&.hectare&.id  %> </td>
                 <td><%= box.created_at.strftime("%Y-%m-%d") %></td>
                 <% if user_has_role?(current_user, :Tagger) %>
                     <td class="">
