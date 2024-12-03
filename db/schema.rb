@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_03_015654) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_03_063436) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,6 +59,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_03_015654) do
     t.integer "partition"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "box_id"
     t.index ["shelf_id"], name: "index_shelf_partitions_on_shelf_id"
   end
 
@@ -66,6 +67,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_03_015654) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "warehouse_id"
+    t.integer "input_pointer"
+    t.integer "output_pointer"
     t.index ["warehouse_id"], name: "index_shelves_on_warehouse_id"
   end
 
@@ -87,6 +90,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_03_015654) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "warehouse_type"
+    t.integer "input_pointer"
+    t.integer "output_pointer"
   end
 
   add_foreign_key "boxes", "plants"

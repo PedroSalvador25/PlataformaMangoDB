@@ -7,14 +7,6 @@ class Shelf < ApplicationRecord
 
   after_create :create_divisions_and_partitions
 
-  attr_accessor :input_pointer, :output_pointer
-
-  def initialize(*args)
-    super(*args)
-    @input_pointer = 0
-    @output_pointer = 0
-  end
-
   def available_spaces
     shelf_partitions.where(box_id: nil).count
   end
@@ -29,12 +21,15 @@ class Shelf < ApplicationRecord
 
   def assign_box(box)
     raise "No hay espacio disponible en este estante" if full?
-
+    if box.shelf_partition.present?
+      raise "La caja ya está asignada a otra partición del estante"
+    end
     current_partition = next_partition_for_input
     current_partition.update!(box: box)
-    box.update!(occupied: true)
-    increment_input_pointer
+    box.update!(shelf_partition: current_partition, shelf_id: self.id)
+    warehouse.increment_input_pointer
   end
+  
 
   def release_box
     raise "No hay cajas para retirar en este estante" if empty?
@@ -42,8 +37,8 @@ class Shelf < ApplicationRecord
     current_partition = next_partition_for_output
     box = current_partition.box
     current_partition.update!(box: nil)
-    box.update!(occupied: false)
-    increment_output_pointer
+
+    warehouse.increment_input_pointer
     box
   end
 
@@ -61,18 +56,10 @@ class Shelf < ApplicationRecord
   end
 
   def next_partition_for_input
-    shelf_partitions[@input_pointer % shelf_partitions.count]
+    shelf_partitions.where(box_id: nil)[warehouse.output_pointer]
   end
 
   def next_partition_for_output
-    shelf_partitions[@output_pointer % shelf_partitions.count]
-  end
-
-  def increment_input_pointer
-    @input_pointer = (@input_pointer + 1) % shelf_partitions.count
-  end
-
-  def increment_output_pointer
-    @output_pointer = (@output_pointer + 1) % shelf_partitions.count
+    shelf_partitions.where.not(box_id: nil)[warehouse.input_pointer]
   end
 end
