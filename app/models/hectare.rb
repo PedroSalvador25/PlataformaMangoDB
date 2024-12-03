@@ -25,7 +25,7 @@ class Hectare < ApplicationRecord
 
     return false if hectare.nil?
 
-    if HarvestAuthorizationService.ready(hectare_id)
+    if HarvestAuthorizationService.ready(hectare.id)
       HectaresDatabaseService.update_hectare(hectare, isAuthorized: true, isReady: true)
     else
       HectaresDatabaseService.update_hectare(hectare, isAuthorized: false, isReady: false)
