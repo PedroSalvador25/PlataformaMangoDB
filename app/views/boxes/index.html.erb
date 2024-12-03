@@ -57,6 +57,7 @@
 
     </div>
 
+    <% if @boxes != 0 %>
     <div class="table__index">
       <table >
         <thead>
@@ -81,16 +82,16 @@
                 <% end %>
                 <td><%= box.weigth %></td>
                 <td><%= box.plant_id %></td>
-                <td><%= box.plant&.hectare&.id || 'N/A'  %> </td>
+                <td><%= box.plant&.hectare&.id  %> </td>
                 <td><%= box.created_at.strftime("%Y-%m-%d") %></td>
-                <% if user_has_role?(current_user, :Administrator) %>
+                <% if user_has_role?(current_user, :Tagger) %>
                     <td class="">
-                        <%= link_to 'Ver', box_path(box), class: "btn-show" %>
+                        <%= link_to 'Ver', box_path(box), class: "btn-op-primary" %>
                     </td>
                 <% end %>
                 <% if user_has_role?(current_user, :WarehouseManager) %>
                     <td class="">
-                        <%= button_to "Entrada Almacen", @box, method: :delete, class: "btn-primary" %>
+                        <%= button_to "Entrada Almacen", @box, method: :delete, class: "btn-op-primary" %>
                     </td>
                 <% end %>
             </tr>
@@ -98,4 +99,7 @@
         </tbody>
       </table>
     </div>
+    <% else %>
+    <p class="no-data">No hay cajas registradas fuera del Almacen</p>
+    <% end %>
 </div>
