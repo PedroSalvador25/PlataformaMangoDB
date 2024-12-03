@@ -64,7 +64,7 @@ class ShelvesController < ApplicationController
       @shelf = Shelf.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
+   
     def shelf_params
       params.require(:shelf).permit( :warehouse_id)
     end

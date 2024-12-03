@@ -1,6 +1,5 @@
 class Box < ApplicationRecord
   belongs_to :plant
-  belongs_to :shelf_partition
   belongs_to :shelf_partition, optional: true
   belongs_to :shelf, optional: true
 
@@ -10,7 +9,6 @@ class Box < ApplicationRecord
   validates :quality, presence: true
   validates :weigth, presence: true, numericality: { greater_than: 0 }
 
-  # Métodos ransackables para búsqueda
   def self.ransackable_associations(auth_object = nil)
     ["plant", "shelf_partition"] 
   end
