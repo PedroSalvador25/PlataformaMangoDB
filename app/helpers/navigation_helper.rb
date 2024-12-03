@@ -12,8 +12,6 @@ module NavigationHelper
       links << { name: "Etiquetar", path: hectares_path, image: "icons/hectare.svg" }
     end
 
-    links << { name: "Cerrar sesión", path: logout_path, image: "icons/logout.svg" }
-
     links
   end
 end

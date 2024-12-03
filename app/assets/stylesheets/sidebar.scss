@@ -17,7 +17,10 @@
 
 .nav {
   padding: 1rem 0.5rem;
-  height: fit-content;
+  height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   ul {
     list-style: none;
@@ -25,7 +28,7 @@
     flex-direction: column;
     gap: 0.5rem;
   }
-  li {
+  li{
     border-radius: 0.75rem;
     cursor: pointer;
 
@@ -45,5 +48,22 @@
         20%
       ); 
     }
+  }
+  .logout{
+    
+    button{
+      padding: 0.75rem 2rem;
+      width: 100%;
+      border-radius: 0.75rem;
+      cursor: pointer;  
+      &:hover{
+        background-color: rgba($color: $gray, $alpha: 0.50);
+      }
+    }
+    span{
+      display: flex;
+      gap: 0.75rem;
+    }
+
   }
 }
