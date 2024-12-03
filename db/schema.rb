@@ -65,8 +65,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_03_085709) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "warehouse_id"
-    t.integer "input_pointer"
-    t.integer "output_pointer"
     t.index ["warehouse_id"], name: "index_shelves_on_warehouse_id"
   end
 

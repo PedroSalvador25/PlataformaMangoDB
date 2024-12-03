@@ -18,9 +18,9 @@ class Warehouse < ApplicationRecord
     self.output_pointer ||= 0
   end
 
-  def total_shelf_partitions
-    shelves.joins(:shelf_partitions).count
-  end
+  # def total_shelf_partitions
+  #   shelves.joins(:shelf_partitions).count
+  # end
 
   def increment_input_pointer
     self.input_pointer = (self.input_pointer + 1) % total_shelf_partitions
