@@ -1,10 +1,54 @@
-<p style="color: green"><%= notice %></p>
+<div class="container__show">
+    <div class="card_show">
+        <div class="mx-auto">
+            <% if notice.present? %>
+            <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+            <% end %>
+        </div>
 
-<%= render @user %>
+        <div class="header__show">
+            <h1>Información del usuario</h1>
+        </div>
 
-<div>
-  <%= link_to "Edit this user", edit_user_path(@user), class: "btn-primary" %> |
-  <%= link_to "Back to users", users_path, class: "btn-back" %>
+        <div class="info__show">
+            <div>
+                <p>ID de Usuario:</p>
+                <span> <%= @user.id %> </span>
+            </div>
+            <div>
+                <p>Nombre:</p>
+                <span> <%= @user.name %> </span>
+            </div>
+            <div>
+                <p>Correo:</p>
+                <span> <%= @user.email %> </span>
+            </div>
+            <div>
+                <p>Rol:</p>
+                <span> <%= @user.translated_role %> </span>
+            </div>
+            <div>
+                <p>Estado:</p>
+                <%= @user.connected ? raw('<span class="authorized">Activo</span>') : raw('<span class="pending">Inactivo</span>') %> 
+                
+            </div>
+            <div>
+                <p>Fecha de ingreso:</p>
+                <span> <%= @user.created_at.strftime("%Y-%m-%d")  %> </span>
+            </div>
+        </div>
 
-  <%= button_to "Destroy this user", @user, method: :delete, class: "btn-destroy"%>
+        <div class="options__show">
+            <div class="button">
+                <%= link_to "Editar", edit_user_path(@user), class: "btn-primary" %>
+            </div>
+            <div class="button">
+                <%= link_to "Regresar", users_path, class: "btn-back" %>
+            </div>
+
+            <div class="button">
+                <%= button_to "Eliminar", @user, method: :delete, class: "btn-destroy"%>
+            </div>
+        </div>
+    </div>
 </div>

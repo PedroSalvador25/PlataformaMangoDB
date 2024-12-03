@@ -20,10 +20,12 @@ $border-r: 0.5rem;
     align-items: end;
 
     .button{
-      width: 90px;
+      width: 120px;
     }
   }
 }
+
+
 
 .table__index {
   background-color: white;
@@ -34,6 +36,7 @@ $border-r: 0.5rem;
   height: 85%;
   overflow: hidden;
   text-align: center;
+  vertical-align: top;
   table {
     width: 100%;
   }
@@ -56,18 +59,78 @@ $border-r: 0.5rem;
     max-height: 500px; 
     overflow-y: auto;
 
+
     tr {
       display: table;
       width: 100%;
       table-layout: fixed;
+      &:hover{
+        background-color:  rgba($gray, 0.3);
+      }
+  
     }
-
+   
     td {
       padding: 0.75rem;
       border-bottom: 1px solid $gray;
+     
     }
     &::-webkit-scrollbar {
         display: none; 
       }
+  }
+}
+
+.container__show{
+  background-color: $light-bg;
+  width: 100%;
+  height: calc(100vh - 74px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+.card_show{
+  background-color: white;
+  width: 800px;
+  border-radius: 1rem;
+  height: 500px;
+  margin: auto auto;
+  box-shadow: 0px 4px 4px rgba($color: #000, $alpha: 0.10);
+  display: flex;
+  flex-direction: column;
+}
+.header__show{
+  border-bottom: 1px solid black;
+  font-weight: bolder;
+  font-size: 2rem;
+  text-align: center;
+  padding: 2rem 2rem 1rem 2rem;
+}
+.info__show{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2rem 1rem;
+  justify-content: space-between;
+  width: 80%;
+  margin: auto auto;
+  gap: 2rem;
+  div{
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    p{
+      font-weight: bolder;
+    }
+  }
+}
+.options__show{
+  display: flex;
+  justify-content: end;
+  gap: 1rem;
+  padding: 1rem 2rem 2rem 2rem;
+
+  .button{
+    width: 125px;
   }
 }

@@ -4,25 +4,23 @@ class AuthenticationController < ApplicationController
   skip_before_action :authenticate_user, only: [:login, :logout]
 
   def login
-    user = User.find_by(email: params[:email])
-    if user&.authenticate(params[:password])
-      if user.locked_until && Time.current < user.locked_until
-        render json: { error: 'Cuenta bloqueada. Intentalo mas tarde.' }, status: :forbidden 
-      elsif user.connected?
-        render json: { error: 'Usuario ya conectado en otro dispositivo' }, status: :forbidden
-      else
-        user.update(connected: true, failed_attempts: 0)
-        render json: { message: 'Inicio de sesión exitoso', user_id: user.id, role: user.role, email: user.email, name: user.name }, status: :ok
-      end
+    result = User.authenticate(params[:email], params[:password])
+
+    if result[:success]
+      render json: {
+        message: 'Inicio de sesión exitoso',
+        user_id: result[:user].id,
+        role: result[:user].role,
+        email: result[:user].email,
+        name: result[:user].name
+      }, status: :ok
     else
-      handle_failed_attempt(user)
+      render json: { error: result[:error] }, status: determine_status(result[:error])
     end
   end
-  
+
   def logout
-    user = User.find_by(id: params[:user_id])
-    if user
-      user.update(connected: false)
+    if User.logout(params[:user_id])
       render json: { message: 'Logout exitoso' }, status: :ok
     else
       render json: { error: 'Usuario no encontrado.' }, status: :not_found
@@ -31,17 +29,17 @@ class AuthenticationController < ApplicationController
 
   private
 
-  def handle_failed_attempt(user)
-    if user
-      user.increment!(:failed_attempts)
-      if user.failed_attempts >= 3
-        user.lock_account!
-        render json: { error: 'Cuenta bloqueada debido a demasiados intentos fallidos.' }, status: :forbidden
-      else
-        render json: { error: 'Credenciales incorrectas.' }, status: :unauthorized
-      end
+  def determine_status(error_message)
+    case error_message
+    when 'Cuenta bloqueada. Inténtalo más tarde.'
+      :forbidden
+    when 'Credenciales incorrectas.'
+      :unauthorized
+    when 'Cuenta bloqueada debido a demasiados intentos fallidos.'
+      :forbidden
     else
-      render json: { error: 'Usuario no encontrado.' }, status: :not_found
+      :not_found
     end
   end
 end
+
