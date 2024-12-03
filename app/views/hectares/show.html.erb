@@ -1,18 +1,60 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
-      
-    <% if user_has_role?(current_user, :Tagger) %>
-      <%= link_to "Agregar caja", new_box_path(hectare_id: @hectare.id), class: "btn-primary", data: {turbo_frame: "modal" } %>
-    <% end %>
+<div class="container__show">
+    <div class="card_show">
+        <div class="mx-auto">
+            <% if notice.present? %>
+            <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+            <% end %>
+        </div>
+        <div class="header__show">
+            <h1>Infomación de hectarea</h1>
+        </div>
 
-     <% if user_has_role?(current_user, :Administrator) %>
-      <%= link_to "Edit this hectare", edit_hectare_path(@hectare), class: "btn-primary" %>
-      <%= button_to "Destroy this hectare", @hectare, method: :delete, class: "btn-destroy" %>
-    <% end %>
+        <div class="info__show">
+            <div>
+                <p>ID de la Hectare:</p>
+                <span> <%= @hectare.id %> </span>
+            </div>
+            <div>
+                <p>Comunidad:</p>
+                <span> <%= @hectare.community %> </span>
+            </div>
+            <div>
+                <p>Latitud:</p>
+                <span> <%= @hectare.latitude %> </span>
+            </div>
+            <div>
+                <p>Longitud:</p>
+                <span> <%= @hectare.longitude %> </span>
+            </div>
+            <div>
+                <p>Listo para cosecha:</p>
+                <span> <%= @hectare.isReady ? "SI xd" : "nopi" %> </span>
+            </div>
+            <div>
+                <p>Autorizado:</p>
+                <span> <%= @hectare.isAuthorized ? "Autorizado" : "Pendiente" %> </span>
+            </div>
+        </div>
+        <div class="options__show">
+            <div class="button">
+                <%= link_to "Regresar", hectares_path, class: "btn-back" %>
+            </div>
+            <% if user_has_role?(current_user, :Tagger) %>
+            <div class="button">
+                <%= link_to "Agregar caja", new_box_path(hectare_id: @hectare.id), class: "btn-primary", data: {turbo_frame: "modal" } %>
+            </div>
+            <% end %>
 
-    <%= link_to "Back to hectares", hectares_path, class: "btn-back" %>
-  </div>
+            <% if user_has_role?(current_user, :Administrator) %>
+            <div class="button">
+                <%= button_to "Eliminar", @hectare, method: :delete, class: "btn-destroy" %>
+            </div>
+            <div class="button">
+                <%= link_to "Editar", edit_hectare_path(@hectare), class: "btn-primary" %>
+            </div>
+            <% end %>
+
+        </div>
+    </div>
+
 </div>
