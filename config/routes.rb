@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   post "login", to: "authentication_views#login"
   delete '/logout', to: 'authentication_views#logout', as: :logout
 
+  patch 'boxes/release_kilos', to: 'boxes#release_kilos', as: 'release_kilos'
+  
 
   
 
