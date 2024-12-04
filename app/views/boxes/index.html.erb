@@ -82,7 +82,10 @@
                             <% end %>
                             <% if user_has_role?(current_user, :WarehouseManager) %>
                                 <td>
-                                    <%= button_to "Entrada Almacen", box_path(box), method: :delete, class: "btn-op-primary" %>
+                                    <%= button_to "Entrada Almacen", 
+                                    assign_box_shelves_partition_path(id: box.id, box_id: box.id), 
+                                    method: :post, 
+                                    class: "btn-op-primary" %>
                                 </td>
                             <% end %>
                         </tr>
@@ -94,3 +97,4 @@
         <p class="no-data">No hay cajas registradas fuera del Almacen</p>
     <% end %>
 </div>
+
