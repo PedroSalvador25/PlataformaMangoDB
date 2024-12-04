@@ -71,7 +71,3 @@ class HectaresController < ApplicationController
     params.require(:hectare).permit(:latitude, :longitude, :community)
   end
 end
-
-
-
-

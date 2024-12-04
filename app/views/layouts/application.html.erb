@@ -18,6 +18,8 @@
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
     <%= javascript_importmap_tags %>
 </head>
 
@@ -30,6 +32,12 @@
             <%= yield %>
 
         </div>
+            <div id="toast-container" class="fixed top-4 right-4 z-50">
+            <div class="toast-message bg-green-500 text-white px-4 py-2 rounded-lg shadow-md">
+                Hectárea fue creada exitosamente.
+            </div>
+            </div>
+
 
         <div class="contentl">
             <% if flash[:notice] %>
