@@ -12,8 +12,10 @@ Rails.application.routes.draw do
 
   patch 'boxes/release_kilos', to: 'boxes#release_kilos', as: 'release_kilos'
   
-
-  
+  resources :shelves_partitions, only: [] do
+    post 'assign_box', on: :member, as: :assign_box
+    post 'release_box', on: :member, as: :release_box
+  end  
 
   post "authentication/login", to: "authentication#login"
   post "authentication/logout", to: "authentication#logout"
