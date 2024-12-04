@@ -1,17 +1,12 @@
 class BoxesController < ApplicationController
   before_action :authenticate_user
-  before_action :set_box, only: %i[ show edit update destroy ]
+  before_action :set_box, only: %i[show edit update destroy release_kilos]
 
   # GET /boxes or /boxes.json
   def index
-    @q = Box.ransack(params[:q])
-
-    if current_user.role == "WarehouseManager"
-      @q.quality_eq = "quality" unless params[:q] && params[:q][:quality_eq].present?
-    end
-
+    @q = Box.search(params[:q], current_user)
     @boxes = @q.result.includes(:plant).order(created_at: :desc)
-    @hectares_for_combo = Hectare.where.not(community: nil).map { |h| [ "#{h.id} - #{h.community}", h.id ] }
+    @hectares_for_combo = Box.fetch_hectares_for_combo
   end
 
   # GET /boxes/1 or /boxes/1.json
@@ -22,105 +17,64 @@ class BoxesController < ApplicationController
   def new
     @hectare = Hectare.find_by(id: params[:hectare_id])
     if @hectare
-      @plants = @hectare.plants # Asocia las plantas de la hectárea
+      @plants = @hectare.plants
       @box = Box.new
     else
-      redirect_to hectares_path, alert: "Hectárea no encontrada."
+      redirect_to hectares_path, alert: "HectÃ¡rea no encontrada."
     end
   end
 
   # GET /boxes/1/edit
   def edit
     @box = Box.find(params[:id])
-    @hectare = @box.hectare
+    @hectare = @box.plant&.hectare
+    @plants = @hectare&.plants || []
   end
 
   # POST /boxes or /boxes.json
   def create
-    @box = Box.new(box_params)
-
-    if @box.save
-      hectare_id = @box.plant.hectare.id
-      redirect_to hectare_path(hectare_id), notice: "Caja creada exitosamente."
+    result = Box.create_box(box_params)
+    if result[:success]
+      redirect_to hectare_path(result[:box].plant.hectare.id), notice: "Caja creada exitosamente."
     else
+      @box = result[:box]
       render :new
     end
   end
 
   # PATCH/PUT /boxes/1 or /boxes/1.json
   def update
-    respond_to do |format|
-      if @box.update(box_params)
-        format.html { redirect_to @box, notice: "Box was successfully updated." }
-        format.json { render :show, status: :ok, location: @box }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @box.errors, status: :unprocessable_entity }
-      end
+    result = Box.update_box(@box.id, box_params)
+    if result[:success]
+      redirect_to @box, notice: "Box was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /boxes/1 or /boxes/1.json
+  # DELETE /boxes/1 or /boxes.json
   def destroy
-    @box.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to boxes_path, status: :see_other, notice: "Box was successfully destroyed." }
-      format.json { head :no_content }
+    if Box.destroy_box(@box.id)
+      redirect_to boxes_path, status: :see_other, notice: "Box was successfully destroyed."
+    else
+      redirect_to boxes_path, status: :unprocessable_entity, alert: "Error al eliminar la caja."
     end
   end
 
   def release_kilos
-    box = Box.find(params[:id])
-    kilos_to_release = params[:kilos]
-
-    BoxesDatabaseService.call(box, kilos_to_release)
-
+    @box.release_kilos(params[:kilos])
     render json: { message: "Kilos liberados exitosamente" }, status: :ok
-  rescue => e
+  rescue StandardError => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
 
-  #   def release_kilos
-  #     box = Box.find(params[:id])
-  #     kilos_to_release = params[:kilos].to_f
-
-  #     raise "No hay particiones con cajas disponibles" if box.shelf_partition.nil? || box.shelf_partition.box.nil?
-
-  #     remaining_kilos = kilos_to_release
-
-  #     while remaining_kilos > 0
-  #       current_partition = box.shelf_partition
-  #       box_in_partition = current_partition.box
-
-  #       if box_in_partition.nil? || box_in_partition.kilos == 0
-  #         current_partition.update!(box: nil)
-  #         warehouse.increment_output_pointer
-  #         next
-  #       end
-
-  #       if box_in_partition.kilos >= remaining_kilos
-  #         box_in_partition.update!(kilos: box_in_partition.kilos - remaining_kilos)  # Restamos los kilos
-  #         break
-  #       else
-  #         remaining_kilos -= box_in_partition.kilos
-  #         box_in_partition.update!(kilos: 0)
-  #         current_partition.update!(box: nil)
-  #         warehouse.increment_output_pointer
-  #       end
-  #     end
-
-  #     render json: { message: "Kilos liberados correctamente" }
-  #   rescue => e
-  #     render json: { error: e.message }, status: :unprocessable_entity
-  #   end
-  # end
   private
-    def set_box
-      @box = Box.find(params[:id])
-    end
 
-    def box_params
-      params.require(:box).permit(:quality, :weigth, :plant_id, :shelf_partition_id)
-    end
+  def set_box
+    @box = Box.find(params[:id])
+  end
+
+  def box_params
+    params.require(:box).permit(:quality, :weigth, :plant_id, :shelf_partition_id)
+  end
 end
