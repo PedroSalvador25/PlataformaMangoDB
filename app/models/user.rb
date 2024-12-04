@@ -9,17 +9,23 @@ class User < ApplicationRecord
 
   def self.authenticate(email, password)
     user = UsersDatabaseService.find_user_with_lock(email)
-
-    if user.nil?
-      return { success: false, error: 'Credenciales incorrectas.' }
-    elsif user.locked?
+  
+    return { success: false, error: 'Credenciales incorrectas.' } if user.nil?
+  
+    if user.locked?
       return { success: false, error: 'Cuenta bloqueada. Inténtalo más tarde.' }
     elsif user.authenticate(password)
-      if user.connected?
-        { success: false, error: 'Credenciales incorrectas.' }
-      else
-        UsersDatabaseService.update_user(user, { connected: true, failed_attempts: 0 })
+      begin
+        ActiveRecord::Base.transaction do
+          if user.connected?
+            raise "Usuario ya conectado"
+          else
+            user.update!(connected: true, failed_attempts: 0)
+          end
+        end
         { success: true, user: user }
+      rescue StandardError => e
+        { success: false, error: e.message }
       end
     else
       user.handle_failed_attempt
