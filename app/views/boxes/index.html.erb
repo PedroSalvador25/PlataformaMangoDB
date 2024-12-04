@@ -63,7 +63,7 @@
         <thead>
             <tr>
                 <th class="px-4 py-2">Id</th>
-                <% if user_has_role?(current_user, :Administrator) %>
+                <% if user_has_role?(current_user, :Tagger) %>
                     <th class="px-4 py-2">Calidad</th>
                 <% end %>
                 <th class="px-4 py-2">Peso</th>
@@ -77,7 +77,7 @@
             <% @boxes.each do |box| %>
             <tr>
                 <td><%= box.id %></td>
-                <% if user_has_role?(current_user, :Administrator) %>
+                <% if user_has_role?(current_user, :Tagger) %>
                     <td><%= box.quality == 'quality' ? 'Calidad' : 'No Calidad' %></td>
                 <% end %>
                 <td><%= box.weigth %></td>
