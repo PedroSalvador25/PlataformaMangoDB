@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   delete '/logout', to: 'authentication_views#logout', as: :logout
 
 
+  
+
   post "authentication/login", to: "authentication#login"
   post "authentication/logout", to: "authentication#logout"
 
