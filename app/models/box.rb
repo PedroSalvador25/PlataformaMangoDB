@@ -13,7 +13,7 @@ class Box < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "quality", "weigth", "updated_at", "plant.hectare_id"]
+    ["id","created_at", "quality", "weigth", "updated_at", "plant.hectare_id"]
   end
 
   def self.search(params, current_user)
