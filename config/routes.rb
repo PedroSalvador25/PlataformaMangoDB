@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   get "login", to: "authentication_views#login"
   post "login", to: "authentication_views#login"
   delete '/logout', to: 'authentication_views#logout', as: :logout
+
+  patch 'boxes/release_kilos', to: 'boxes#release_kilos', as: 'release_kilos'
   
   resources :shelves_partitions, only: [] do
     post 'assign_box', on: :member, as: :assign_box
