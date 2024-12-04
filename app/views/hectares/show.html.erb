@@ -37,7 +37,7 @@
             </div>
             <% if user_has_role?(current_user, :Tagger) %>
             <div class="button">
-                <%= link_to "Agregar caja", new_box_path(hectare_id: @hectare.id), class: "btn-primary", data: {turbo_frame: "modal" } %>
+                <%= link_to "Agregar caja", new_box_path(hectare_id: @hectare.id), class: "btn-primary"%>
             </div>
             <% end %>
 
@@ -49,6 +49,6 @@
 
         </div>
     </div>
-    
+
 
 </div>

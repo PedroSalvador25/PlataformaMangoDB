@@ -3,6 +3,8 @@
         <div class="header__show">
             <h1>Editar caja</h1>
         </div>
-           <%= render "form", box: @box %>
+        <%= form_with(model: @box, class: "form") do |form| %>
+            <%= render "form", form: form %>
+        <% end %>
     </div>
 </div>

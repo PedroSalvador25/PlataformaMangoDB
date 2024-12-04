@@ -1,6 +1,9 @@
 <div class="header">
-   
-  
+<% if notice.present? %>
+    <div id="toast-simple" class="hidden flex items-center w-[500px] p-4 space-x-4 rtl:space-x-reverse text-green-600 bg-green-400 divide-x rtl:divide-x-reverse divide-green-200 rounded-lg shadow dark:text-gray-400 dark:divide-gray-700 dark:bg-gray-800 duration-50 fixed top-4 left-1/2 transform -translate-x-1/2 z-50" role="alert">
+        <div class="ps-4 text-sm font-normal" id="toast-message"><%= notice %></div>
+    </div>
+    <% end %>
 
     <div class="container__profile">
         <figure class="profile">
