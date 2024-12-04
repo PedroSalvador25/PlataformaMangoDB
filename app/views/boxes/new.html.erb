@@ -1,3 +1,10 @@
-<%= render "shared/modal", modal_title: "Nueva caja", content: render("form", box: @box) do %>
-  
-<% end %>
+<div class="container__show">
+    <div class="card_show">
+        <div class="header__show">
+            <h1>Agregar caja</h1>
+        </div>
+        <%= form_with(model: @box, class: "form") do |form| %>
+            <%= render "form", form: form %>
+        <% end %>
+    </div>
+</div>

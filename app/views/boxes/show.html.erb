@@ -1,10 +1,5 @@
 <div class="container__show">
   <div class="card_show">
-    <div class="mx-auto">
-      <% if notice.present? %>
-        <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-      <% end %>
-    </div>
 
     <div class="header__show">
       <h1>Información de la Caja</h1>
@@ -38,10 +33,10 @@
         <%= link_to "Regresar", boxes_path, class: "btn-back" %>
       </div>
       <div class="button">
-        <%= link_to "Editar esta caja", edit_box_path(@box), class: "btn-primary" %>
+        <%= link_to "Editar", edit_box_path(@box), class: "btn-primary" %>
       </div>
       <div class="button">
-        <%= button_to "Eliminar esta caja", @box, method: :delete, class: "btn-destroy" %>
+        <%= button_to "Eliminar", @box, method: :delete, class: "btn-destroy" %>
       </div>
     </div>
   </div>

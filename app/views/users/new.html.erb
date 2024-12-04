@@ -1,3 +1,8 @@
-<%= render "shared/modal", modal_title: "Nuevo usuario", content: render("form", box: @user) do %>
-  
-<% end %>
+<div class="container__show">
+    <div class="card_show">
+        <div class="header__show">
+            <h1>Agregar usuario</h1>
+        </div>
+           <%= render "form", user: @user %>
+    </div>
+</div>
