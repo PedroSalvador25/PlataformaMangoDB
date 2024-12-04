@@ -27,15 +27,18 @@ class Box < ApplicationRecord
   end
 
   def self.create_box(params)
-    BoxesDatabaseService.create_box(params)
+    box = Box.new(params)
+    BoxesDatabaseService.create_box(box)
   end
 
   def self.update_box(id, params)
-    BoxesDatabaseService.update_box(id, params)
+    box = Box.find(id)
+    BoxesDatabaseService.update_box(box, params)
   end
 
   def self.destroy_box(id)
-    BoxesDatabaseService.destroy_box(id)
+    box = Box.find(id)
+    BoxesDatabaseService.destroy_box(box)
   end
 
   def release_kilos(kilos_to_release)
