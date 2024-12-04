@@ -3,7 +3,7 @@
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
     <% end %>
 
-        <% content_for :title, "Boxes" %>
+    <% content_for :title, "Boxes" %>
 
     <div class="header__index">
         <% if user_has_role?(current_user, :WarehouseManager) %>
@@ -14,25 +14,18 @@
         <% end %>
 
         <%= search_form_for @q, url: boxes_path, class:"search", method: :get do |f| %>
-        <% if user_has_role?(current_user, :WarehouseManager) %>
         <div>
-            <%= render "shared/combo_box_noph", 
-                    form: f, 
-                    field: :quality_eq, 
-                    label: "Tipo de Almacen", 
-                    options: [["Calidad", "quality"], ["No calidad", "no-quality"]],
-                    selected: @q&.quality_eq.presence || "quality"%>
+            <%= f.label :id_eq, "Buscar por ID" %>
+            <%= f.text_field :id_eq, class: "input", placeholder: "Ingresa el ID de la caja" %>
         </div>
-        <% end %>
-        <% if user_has_role?(current_user, :Administrator) %>
         <div>
             <%= render "shared/combo_box", 
-                  form: f, 
-                  field: :quality_eq, 
-                  label: "Calidad", 
-                  options: [["Calidad", "quality"], ["No calidad", "no-quality"]],
-                  selected: @q&.quality_eq, 
-                  placeholder: "Selecciona una calidad" %>
+        form: f, 
+        field: :quality_eq, 
+        label: user_has_role?(current_user, :WarehouseManager) ? "Tipo de Almacen" : "Calidad", 
+        options: [["Calidad", "quality"], ["No calidad", "no-quality"]],
+        selected: @q&.quality_eq.presence || (user_has_role?(current_user, :WarehouseManager) ? "quality" : nil),
+        placeholder: user_has_role?(current_user, :Administrator) ? "Selecciona una calidad" : nil %>
         </div>
         <div>
             <%= f.label :weigth_eq, "Peso" %>
@@ -48,7 +41,7 @@
       label: "Hectárea", 
       options: @hectares_for_combo, 
       selected: @q&.plant_hectare_id_eq, 
-      placeholder: "Selecciona una hectarea" %>
+      placeholder: "Todo" %>
         </div>
         <div class="button">
             <%= f.submit "Buscar", class: "btn-primary" %>
@@ -59,45 +52,45 @@
 
     <% if @boxes != 0 %>
     <div class="table__index">
-      <table >
-        <thead>
-            <tr>
-                <th class="px-4 py-2">Id</th>
-                <% if user_has_role?(current_user, :Tagger) %>
+        <table>
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">Id</th>
+                    <% if user_has_role?(current_user, :Tagger) %>
                     <th class="px-4 py-2">Calidad</th>
-                <% end %>
-                <th class="px-4 py-2">Peso</th>
-                <th class="px-4 py-2">Planta</th>
-                <th class="px-4 py-2">Hectarea</th>
-                <th class="px-4 py-2">Fecha de cosecha</th>
-                <th class="px-4 py-2"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <% @boxes.each do |box| %>
-            <tr>
-                <td><%= box.id %></td>
-                <% if user_has_role?(current_user, :Tagger) %>
+                    <% end %>
+                    <th class="px-4 py-2">Peso</th>
+                    <th class="px-4 py-2">Planta</th>
+                    <th class="px-4 py-2">Hectarea</th>
+                    <th class="px-4 py-2">Fecha de cosecha</th>
+                    <th class="px-4 py-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @boxes.each do |box| %>
+                <tr>
+                    <td><%= box.id %></td>
+                    <% if user_has_role?(current_user, :Tagger) %>
                     <td><%= box.quality == 'quality' ? 'Calidad' : 'No Calidad' %></td>
-                <% end %>
-                <td><%= box.weigth %></td>
-                <td><%= box.plant_id %></td>
-                <td><%= box.plant&.hectare&.id  %> </td>
-                <td><%= box.created_at.strftime("%Y-%m-%d") %></td>
-                <% if user_has_role?(current_user, :Tagger) %>
+                    <% end %>
+                    <td><%= box.weigth %></td>
+                    <td><%= box.plant_id %></td>
+                    <td><%= box.plant&.hectare&.id  %> </td>
+                    <td><%= box.created_at.strftime("%Y-%m-%d") %></td>
+                    <% if user_has_role?(current_user, :Tagger) %>
                     <td class="">
                         <%= link_to 'Ver', box_path(box), class: "btn-op-primary" %>
                     </td>
-                <% end %>
-                <% if user_has_role?(current_user, :WarehouseManager) %>
+                    <% end %>
+                    <% if user_has_role?(current_user, :WarehouseManager) %>
                     <td class="">
                         <%= button_to "Entrada Almacen", @box, method: :delete, class: "btn-op-primary" %>
                     </td>
+                    <% end %>
+                </tr>
                 <% end %>
-            </tr>
-            <% end %>
-        </tbody>
-      </table>
+            </tbody>
+        </table>
     </div>
     <% else %>
     <p class="no-data">No hay cajas registradas fuera del Almacen</p>
