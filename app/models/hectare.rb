@@ -25,10 +25,23 @@ class Hectare < ApplicationRecord
 
     return false if hectare.nil?
 
-    if HarvestAuthorizationService.ready(hectare_id)
+    if HarvestAuthorizationService.ready(hectare.id)
       HectaresDatabaseService.update_hectare(hectare, isAuthorized: true, isReady: true)
     else
       HectaresDatabaseService.update_hectare(hectare, isAuthorized: false, isReady: false)
     end
   end
+
+  def save_record
+    HectaresDatabaseService.save_hectare(self)
+  end
+
+  def update_record(attributes)
+    HectaresDatabaseService.update_hectare(self, attributes)
+  end
+
+  def delete_record
+    HectaresDatabaseService.delete_hectare(self)
+  end
 end
+

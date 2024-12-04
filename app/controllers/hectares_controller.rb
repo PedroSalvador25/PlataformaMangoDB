@@ -1,6 +1,6 @@
 class HectaresController < ApplicationController
   before_action :authenticate_user
-  before_action :set_hectare, only: %i[show edit update destroy]
+  before_action :set_hectare, only: %i[show edit update destroy authorize]
 
   # GET /hectares or /hectares.json
   def index
@@ -27,37 +27,28 @@ class HectaresController < ApplicationController
   def create
     @hectare = Hectare.new(hectare_params)
 
-    respond_to do |format|
-      if @hectare.save
-        format.html { redirect_to @hectare, notice: "Hectárea fue creada exitosamente." }
-        format.json { render :show, status: :created, location: @hectare }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @hectare.errors, status: :unprocessable_entity }
-      end
+    if @hectare.save_record
+      redirect_to @hectare, notice: "Hectárea fue creada exitosamente."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /hectares/1 or /hectares/1.json
   def update
-    respond_to do |format|
-      if @hectare.update(hectare_params)
-        format.html { redirect_to @hectare, notice: "Hectárea fue actualizada exitosamente." }
-        format.json { render :show, status: :ok, location: @hectare }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @hectare.errors, status: :unprocessable_entity }
-      end
+    if @hectare.update_record(hectare_params)
+      redirect_to @hectare, notice: "Hectárea fue actualizada exitosamente."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /hectares/1 or /hectares.json
   def destroy
-    @hectare.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to hectares_path, status: :see_other, notice: "Hectárea fue eliminada exitosamente." }
-      format.json { head :no_content }
+    if @hectare.delete_record
+      redirect_to hectares_path, status: :see_other, notice: "Hectárea fue eliminada exitosamente."
+    else
+      redirect_to hectares_path, alert: "Error al eliminar la hectárea."
     end
   end
 
@@ -72,14 +63,11 @@ class HectaresController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_hectare
     @hectare = Hectare.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def hectare_params
     params.require(:hectare).permit(:latitude, :longitude, :community)
   end
 end
-

@@ -11,8 +11,8 @@
 <% end %>
 
 <div class="form">
-    <div>
-        <p class="text-xl"> Hectarea <%= @hectare.id %> <%= @hectare.community  %></p>
+    <div class="info">
+        <p> Hectarea <%= @hectare.id %>, de <%= @hectare.community  %></p>
     </div>
 
     <%= render "shared/combo_box", 
@@ -23,7 +23,6 @@
          selected: @plants.first&.id,
          placeholder: "Selecciona una planta" %>
 
-
     <%= render "shared/combo_box", 
          form: form, 
          field: :quality, 
@@ -31,13 +30,10 @@
          options: [["Calidad", "quality"], ["No calidad", "no-quality"]], 
          selected: "quality", 
          placeholder: "Selecciona una calidad" %>
-
     <div>
-        <%= form.label :weigth %>
-        <%= form.text_field :weigth, class: "input" %>
+        <%= form.label :weigth  %>
+        <%= form.text_field :weigth, class: "input", pattern: "\\d+(\\.\\d{1,3})?", title: "Debe ser un número con un máximo de 3 decimales" %>
     </div>
-
-
 
     <div>
         <%= form.submit "Guardar", class: "btn-primary" %>

@@ -1,15 +1,39 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
-
-    <%= render @warehouse %>
-
-    <%= link_to "Edit this warehouse", edit_warehouse_path(@warehouse), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Back to warehouses", warehouses_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to "Destroy this warehouse", @warehouse, method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+<div class="container__show__warehouse">
+    <div class="mx-auto">
+        <% if notice.present? %>
+        <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+        <% end %>
     </div>
-  </div>
+
+    <h1>Almacén de <%= @warehouse.name %></h1>
+
+    <div class="container__shelf">
+        <% @warehouse.shelves.each do |shelf| %>
+        <% grouped_partitions = shelf.shelf_partitions.group_by(&:division) %>
+
+        <ul class="shelf">
+            <div>
+                <h3>Estante <%= shelf.id %></h3>
+            </div>
+            <% grouped_partitions.each do |division, partitions| %>
+            <li class="division">
+                <p>División <%= division %></p>
+                <div class="container__partition">
+                    <% partitions.each_with_index do |partition, index| %>
+                    <span 
+                        class="partition  <%= partition.box_id.present? ? 'with-box' : 'without-box' %>" >
+                         
+                    </span>
+                    <% end %>
+                </div>
+            </li>
+            <% end %>
+        </ul>
+
+        <% end %>
+    </div>
+
+    <div>
+        <%= link_to "Regresar", warehouses_path, class: "btn-back" %>
+    </div>
 </div>

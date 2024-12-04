@@ -15,30 +15,43 @@
 <% end %>
 <div class="form">
 
-     <div>
-        <%= form.label :name, "Nombre" %>
-        <%= form.text_field :name, class: "input" %>
-    </div>
+  <div>
+    <%= form.label :name, "Nombre" %>
+    <%= form.text_field :name, 
+          class: "input", 
+          required: true, 
+          maxlength: 50, 
+          title: "El nombre no debe exceder los 50 caracteres" %>
+  </div>
 
-     <div>
-        <%= form.label :email, "Correo" %>
-        <%= form.text_field :email, class: "input" %>
-    </div>
+  <div>
+    <%= form.label :email, "Correo" %>
+    <%= form.text_field :email, 
+          class: "input", 
+          required: true, 
+          pattern: "[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}", 
+          title: "Por favor ingresa un correo válido" %>
+  </div>
 
-    <div>
-        <%= form.label :password, "Contraseña " %>
-        <%= form.text_field :password, class: "input" %>
-    </div>
-    <%= render "shared/combo_box", 
-         form: form, 
-         field: :role, 
-         label: "Rol", 
-         options: [["Administrador", "0"], ["Encargado de almacén", "1"], ["Etiquetador", "2"], ["Vendedor", "3"]], 
-         selected: "quality", 
-         placeholder: "Selecciona un rol" %>
+  <div>
+    <%= form.label :password, "Contraseña" %>
+    <%= form.text_field :password, 
+          class: "input", 
+          required: true, 
+          minlength: 8, 
+          title: "La contraseña debe tener al menos 8 caracteres" %>
+  </div>
 
-    <div>
-        <%= form.submit class: "btn-primary" %>
-    </div>
+  <%= render "shared/combo_box_noph", 
+       form: form, 
+       field: :role, 
+       label: "Rol", 
+       options: [["Administrador", "0"], ["Encargado de almacén", "1"], ["Etiquetador", "2"], ["Vendedor", "3"]], 
+       selected: "quality"%>
+
+  <div>
+    <%= form.submit class: "btn-primary" %>
+  </div>
+
 </div>
 <% end %>

@@ -1,6 +1,6 @@
 class ShelvesController < ApplicationController
   before_action :authenticate_user
-  before_action :set_shelf, only: %i[ show edit update destroy ]
+  before_action :set_shelf, only: %i[show edit update destroy]
 
   # GET /shelves or /shelves.json
   def index
@@ -25,7 +25,7 @@ class ShelvesController < ApplicationController
     @shelf = Shelf.new(shelf_params)
 
     respond_to do |format|
-      if @shelf.save
+      if @shelf.save_record
         format.html { redirect_to @shelf, notice: "Shelf was successfully created." }
         format.json { render :show, status: :created, location: @shelf }
       else
@@ -38,7 +38,7 @@ class ShelvesController < ApplicationController
   # PATCH/PUT /shelves/1 or /shelves/1.json
   def update
     respond_to do |format|
-      if @shelf.update(shelf_params)
+      if @shelf.update_record(shelf_params)
         format.html { redirect_to @shelf, notice: "Shelf was successfully updated." }
         format.json { render :show, status: :ok, location: @shelf }
       else
@@ -50,22 +50,29 @@ class ShelvesController < ApplicationController
 
   # DELETE /shelves/1 or /shelves/1.json
   def destroy
-    @shelf.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to shelves_path, status: :see_other, notice: "Shelf was successfully destroyed." }
-      format.json { head :no_content }
+    if @shelf.delete_record
+      respond_to do |format|
+        format.html { redirect_to shelves_path, status: :see_other, notice: "Shelf was successfully destroyed." }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to shelves_path, alert: "Error al eliminar la estantería." }
+        format.json { render json: { error: "Error al eliminar la estantería." }, status: :unprocessable_entity }
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_shelf
-      @shelf = Shelf.find(params[:id])
-    end
 
-   
-    def shelf_params
-      params.require(:shelf).permit( :warehouse_id)
-    end
+  def set_shelf
+    @shelf = Shelf.find(params[:id])
+  end
+
+  def shelf_params
+    params.require(:shelf).permit(:warehouse_id)
+  end
 end
+
+
+  

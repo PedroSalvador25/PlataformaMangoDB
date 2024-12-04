@@ -12,16 +12,24 @@
 
     <div class="info__show">
       <div>
-        <p class="font-semibold">ID de la Caja:</p>
+        <p>ID de la Caja:</p>
         <span><%= @box.id %></span>
       </div>
       <div>
-        <p class="font-semibold">Calidad:</p>
+        <p>Calidad:</p>
         <span><%= @box.quality %></span>
       </div>
       <div>
-        <p class="font-semibold">Peso:</p>
-        <span><%= @box.weight %></span>
+        <p>Peso:</p>
+        <span><%= @box.weigth %></span>
+      </div>      
+      <div>
+        <p>Planta:</p>
+        <span><%= @box.plant_id %></span>
+      </div>
+      <div>
+        <p>Hectarea:</p>
+        <span><%= @box.plant.hectare_id %></span>
       </div>
     </div>
 
