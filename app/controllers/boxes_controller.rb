@@ -6,12 +6,12 @@ class BoxesController < ApplicationController
   def index
     @q = Box.ransack(params[:q])
 
-    if current_user.role == 'WarehouseManager'
-      @q.quality_eq = 'quality' unless params[:q] && params[:q][:quality_eq].present?
+    if current_user.role == "WarehouseManager"
+      @q.quality_eq = "quality" unless params[:q] && params[:q][:quality_eq].present?
     end
-    
+
     @boxes = @q.result.includes(:plant).order(created_at: :desc)
-    @hectares_for_combo = Hectare.where.not(community: nil).map { |h| ["#{h.id} - #{h.community}", h.id] }
+    @hectares_for_combo = Hectare.where.not(community: nil).map { |h| [ "#{h.id} - #{h.community}", h.id ] }
   end
 
   # GET /boxes/1 or /boxes/1.json
@@ -41,7 +41,7 @@ class BoxesController < ApplicationController
 
     if @box.save
       hectare_id = @box.plant.hectare.id
-      redirect_to hectare_path(hectare_id), notice: 'Caja creada exitosamente.'
+      redirect_to hectare_path(hectare_id), notice: "Caja creada exitosamente."
     else
       render :new
     end
@@ -76,45 +76,45 @@ class BoxesController < ApplicationController
 
     BoxesDatabaseService.call(box, kilos_to_release)
 
-    render json: { message: 'Kilos liberados exitosamente' }, status: :ok
+    render json: { message: "Kilos liberados exitosamente" }, status: :ok
   rescue => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
 
-#   def release_kilos
-#     box = Box.find(params[:id])  
-#     kilos_to_release = params[:kilos].to_f  
+  #   def release_kilos
+  #     box = Box.find(params[:id])
+  #     kilos_to_release = params[:kilos].to_f
 
-#     raise "No hay particiones con cajas disponibles" if box.shelf_partition.nil? || box.shelf_partition.box.nil?
+  #     raise "No hay particiones con cajas disponibles" if box.shelf_partition.nil? || box.shelf_partition.box.nil?
 
-#     remaining_kilos = kilos_to_release
+  #     remaining_kilos = kilos_to_release
 
-#     while remaining_kilos > 0
-#       current_partition = box.shelf_partition 
-#       box_in_partition = current_partition.box
+  #     while remaining_kilos > 0
+  #       current_partition = box.shelf_partition
+  #       box_in_partition = current_partition.box
 
-#       if box_in_partition.nil? || box_in_partition.kilos == 0
-#         current_partition.update!(box: nil)  
-#         warehouse.increment_output_pointer  
-#         next
-#       end
+  #       if box_in_partition.nil? || box_in_partition.kilos == 0
+  #         current_partition.update!(box: nil)
+  #         warehouse.increment_output_pointer
+  #         next
+  #       end
 
-#       if box_in_partition.kilos >= remaining_kilos
-#         box_in_partition.update!(kilos: box_in_partition.kilos - remaining_kilos)  # Restamos los kilos
-#         break  
-#       else
-#         remaining_kilos -= box_in_partition.kilos
-#         box_in_partition.update!(kilos: 0)  
-#         current_partition.update!(box: nil)  
-#         warehouse.increment_output_pointer   
-#       end
-#     end
+  #       if box_in_partition.kilos >= remaining_kilos
+  #         box_in_partition.update!(kilos: box_in_partition.kilos - remaining_kilos)  # Restamos los kilos
+  #         break
+  #       else
+  #         remaining_kilos -= box_in_partition.kilos
+  #         box_in_partition.update!(kilos: 0)
+  #         current_partition.update!(box: nil)
+  #         warehouse.increment_output_pointer
+  #       end
+  #     end
 
-#     render json: { message: "Kilos liberados correctamente" }
-#   rescue => e
-#     render json: { error: e.message }, status: :unprocessable_entity
-#   end
-# end
+  #     render json: { message: "Kilos liberados correctamente" }
+  #   rescue => e
+  #     render json: { error: e.message }, status: :unprocessable_entity
+  #   end
+  # end
   private
     def set_box
       @box = Box.find(params[:id])

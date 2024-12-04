@@ -5,13 +5,14 @@ class HectaresController < ApplicationController
   # GET /hectares or /hectares.json
   def index
     @q = Hectare.ransack(params[:q])
-    @hectares = Hectare.search_hectares(@q) 
+    @hectares = Hectare.search_hectares(@q)
     @hectares_for_combo = Hectare.combo_options
     Hectare.update_ready_status(@hectares)
   end
 
   # GET /hectares/1 or /hectares/1.json
   def show
+    flash[:notice] = "Hectarea registrada!"
   end
 
   # GET /hectares/new
@@ -82,4 +83,3 @@ class HectaresController < ApplicationController
     params.require(:hectare).permit(:latitude, :longitude, :community)
   end
 end
-
