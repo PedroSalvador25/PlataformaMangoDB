@@ -1,35 +1,65 @@
 class BoxesDatabaseService
-    def initialize(box, kilos_to_release)
-      @box = box
-      @kilos_to_release = kilos_to_release.to_f
-      @remaining_kilos = @kilos_to_release
-      @warehouse = @box.warehouse  
+  def self.fetch_hectares_for_combo
+    Hectare.where.not(community: nil).map { |h| ["#{h.id} - #{h.community}", h.id] }
+  end
+
+  def self.create_box(params)
+    box = Box.new(params)
+    success = false
+    ActiveRecord::Base.transaction do
+      success = box.save
     end
-  
-    def self.call(box, kilos_to_release)
-        
-      raise "No hay particiones con cajas disponibles" if @box.shelf_partition.nil? || @box.shelf_partition.box.nil?
-  
-      while @remaining_kilos > 0
-        current_partition = @box.shelf_partition 
+    { success: success, box: box }
+  end
+
+  def self.update_box(id, params)
+    box = Box.find(id)
+    success = false
+    ActiveRecord::Base.transaction do
+      success = box.update(params)
+    end
+    { success: success }
+  end
+
+  def self.destroy_box(id)
+    box = Box.find(id)
+    success = false
+    ActiveRecord::Base.transaction do
+      success = box.destroy
+    end
+    success
+  end
+
+  def self.release_kilos(box, kilos_to_release)
+    ActiveRecord::Base.transaction do
+      remaining_kilos = kilos_to_release.to_f
+      warehouse = box.shelf_partition&.shelf&.warehouse
+
+      raise "No hay particiones con cajas disponibles" unless box.shelf_partition
+
+      while remaining_kilos.positive?
+        current_partition = box.shelf_partition
         box_in_partition = current_partition.box
-  
-        if box_in_partition.nil? || box_in_partition.kilos == 0
-          current_partition.update!(box: nil)  
-          @warehouse.increment_output_pointer  
+
+        if box_in_partition.nil? || box_in_partition.weigth.zero?
+          ShelvesPartitionDatabaseService.clear_partition_box(current_partition.id)
+          WarehousesDatabaseService.increment_output_pointer(warehouse)
           next
         end
-  
-        if box_in_partition.kilos >= @remaining_kilos
-          box_in_partition.update!(kilos: box_in_partition.kilos - @remaining_kilos)  # Restamos los kilos
-          break  
+
+        if box_in_partition.weigth >= remaining_kilos
+          box_in_partition.update!(weigth: box_in_partition.weigth - remaining_kilos)
+          remaining_kilos = 0
         else
-          @remaining_kilos -= box_in_partition.kilos
-          box_in_partition.update!(kilos: 0)  
-          current_partition.update!(box: nil)  
-          @warehouse.increment_output_pointer   
+          remaining_kilos -= box_in_partition.weigth
+          box_in_partition.update!(weigth: 0)
+          ShelvesPartitionDatabaseService.clear_partition_box(current_partition.id)
+          WarehousesDatabaseService.increment_output_pointer(warehouse)
         end
       end
     end
   end
+end
+
+
   

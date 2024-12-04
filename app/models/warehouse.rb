@@ -30,9 +30,22 @@ class Warehouse < ApplicationRecord
     WarehousesDatabaseService.update_output_pointer(self.id, output_pointer)
   end
 
+  def save_record
+    WarehousesDatabaseService.save_warehouse(self)
+  end
+
+  def update_record(attributes)
+    WarehousesDatabaseService.update_warehouse(self, attributes)
+  end
+
+  def delete_record
+    WarehousesDatabaseService.delete_warehouse(self)
+  end
+
   private
 
   def create_shelves
     WarehousesDatabaseService.create_shelves(self.id)
   end
 end
+
