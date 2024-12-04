@@ -20,7 +20,7 @@ class BoxesController < ApplicationController
       @plants = @hectare.plants
       @box = Box.new
     else
-      redirect_to hectares_path, alert: "HectÃ¡rea no encontrada."
+      redirect_to hectares_path, alert: "Hectarea no encontrada."
     end
   end
 
