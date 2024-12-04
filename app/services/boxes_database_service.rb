@@ -3,8 +3,7 @@ class BoxesDatabaseService
     Hectare.where.not(community: nil).map { |h| ["#{h.id} - #{h.community}", h.id] }
   end
 
-  def self.create_box(params)
-    box = Box.new(params)
+  def self.create_box(box)
     success = false
     ActiveRecord::Base.transaction do
       success = box.save
@@ -12,8 +11,7 @@ class BoxesDatabaseService
     { success: success, box: box }
   end
 
-  def self.update_box(id, params)
-    box = Box.find(id)
+  def self.update_box(box, params)
     success = false
     ActiveRecord::Base.transaction do
       success = box.update(params)
@@ -21,8 +19,7 @@ class BoxesDatabaseService
     { success: success }
   end
 
-  def self.destroy_box(id)
-    box = Box.find(id)
+  def self.destroy_box(box)
     success = false
     ActiveRecord::Base.transaction do
       success = box.destroy
