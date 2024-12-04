@@ -15,22 +15,19 @@ class User < ApplicationRecord
     if user.locked?
       return { success: false, error: 'Cuenta bloqueada. Inténtalo más tarde.' }
     elsif user.authenticate(password)
-      begin
-        ActiveRecord::Base.transaction do
-          if user.connected?
-            raise "Usuario ya conectado"
-          else
-            user.update!(connected: true, failed_attempts: 0)
-          end
+      ActiveRecord::Base.transaction do
+        if user.connected?
+          return { success: false, error: 'Credenciales incorrectas.' }
+        else
+          user.update!(connected: true, failed_attempts: 0)
         end
-        { success: true, user: user }
-      rescue StandardError => e
-        { success: false, error: e.message }
       end
+      { success: true, user: user }
     else
       user.handle_failed_attempt
     end
   end
+  
 
   def self.logout(user_id)
     user = UsersDatabaseService.find_user_by_id(user_id)
