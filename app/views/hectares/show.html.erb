@@ -1,16 +1,6 @@
 <div class="container__show">
 
-      <div id="toast-simple" class="flex items-center w-full max-w-xs p-4 space-x-4 rtl:space-x-reverse text-gray-500 bg-white divide-x rtl:divide-x-reverse divide-gray-200 rounded-lg shadow dark:text-gray-400 dark:divide-gray-700 dark:bg-gray-800 duration-50" role="alert">
-         <div class="ps-4 text-sm font-normal">Message sent successfully.</div>
-  </div>
-
     <div class="card_show">
-        
-        <div class="mx-auto">
-            <% if notice.present? %>
-            <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-            <% end %>
-        </div>
         <div class="header__show">
             <h1>Infomación de hectarea</h1>
         </div>
@@ -33,12 +23,12 @@
                 <span> <%= @hectare.longitude %> </span>
             </div>
             <div>
-                <p>Listo para cosecha:</p>
-                <span> <%= @hectare.isReady ? "SI xd" : "nopi" %> </span>
+                <p>Estatus</p>
+                <span> <%= @hectare.isReady ? "Listo para cosecha" : "No cumple con los parametros" %> </span>
             </div>
             <div>
                 <p>Autorizado:</p>
-                <span> <%= @hectare.isAuthorized ? "Autorizado" : "Pendiente" %> </span>
+                <span> <%= @hectare.isAuthorized ? "Autorizado" : "SIn autorización" %> </span>
             </div>
         </div>
         <div class="options__show">
@@ -62,19 +52,3 @@
     
 
 </div>
-
-<script>
-  // Select the toast element
-  const toast = document.getElementById("toast-simple");
-
-  // Function to hide the toast after 3 seconds
-  setTimeout(() => {
-    toast.style.opacity = 0;  // Fade out the toast
-    toast.style.transition = "opacity 0.5s ease";  // Add fade-out transition
-  }, 3000);  // Time in milliseconds (3000 ms = 3 seconds)
-
-  // Optional: Remove the toast from the DOM after it fades out
-  setTimeout(() => {
-    toast.remove();
-  }, 3500);  // 3500 ms = slightly after the fade-out effect finishes
-</script>

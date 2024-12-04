@@ -1,3 +1,8 @@
-<%= render "shared/modal", modal_title: "Nueva caja", content: render("form", box: @box) do %>
-  
-<% end %>
+<div class="container__show">
+    <div class="card_show">
+        <div class="header__show">
+            <h1>Agregar caja</h1>
+        </div>
+           <%= render "form", box: @box %>
+    </div>
+</div>

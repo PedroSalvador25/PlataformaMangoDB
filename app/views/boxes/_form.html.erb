@@ -10,7 +10,7 @@
 </div>
 <% end %>
 
-<div class="form">
+<div class="info__show__form">
     <div class="info">
         <p> Hectarea <%= @hectare.id %>, de <%= @hectare.community  %></p>
     </div>
@@ -31,13 +31,25 @@
          selected: "quality", 
          placeholder: "Selecciona una calidad" %>
     <div>
-        <%= form.label :weigth  %>
+        <%= form.label :weigth, ""  %>
         <%= form.text_field :weigth, class: "input", pattern: "\\d+(\\.\\d{1,3})?", title: "Debe ser un número con un máximo de 3 decimales" %>
     </div>
 
-    <div>
-        <%= form.submit "Guardar", class: "btn-primary" %>
+    <div class="options__show__form">
+       <% if @box.new_record? %>
+    <div class="button">
+      <%= link_to "Cancelar", hectare_path(@hectare), class: "btn-back" %>
     </div>
-
+  <% else %>
+    <div class="button">
+      <%= link_to "Cancelar",  boxes_path, class: "btn-back" %>
+    </div>
+  <% end %>
+    </div>
+       <div class="options__show__form">
+        <div class="button">
+            <%= form.submit "Guardar", class: "btn-primary" %>
+        </div>
+    </div>
 </div>
 <% end %>
