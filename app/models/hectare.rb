@@ -31,4 +31,17 @@ class Hectare < ApplicationRecord
       HectaresDatabaseService.update_hectare(hectare, isAuthorized: false, isReady: false)
     end
   end
+
+  def save_record
+    HectaresDatabaseService.save_hectare(self)
+  end
+
+  def update_record(attributes)
+    HectaresDatabaseService.update_hectare(self, attributes)
+  end
+
+  def delete_record
+    HectaresDatabaseService.delete_hectare(self)
+  end
 end
+

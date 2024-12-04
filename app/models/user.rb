@@ -31,6 +31,18 @@ class User < ApplicationRecord
     user&.logout!
   end
 
+  def save_record
+    UsersDatabaseService.save_user(self)
+  end
+
+  def update_record(attributes)
+    UsersDatabaseService.update_user(self, attributes)
+  end
+
+  def delete_record
+    UsersDatabaseService.delete_user(self)
+  end
+
   def logout!
     UsersDatabaseService.update_user(self, connected: false)
   end
@@ -84,6 +96,7 @@ class User < ApplicationRecord
     self.role ||= :Tagger
   end
 end
+
 
 
 

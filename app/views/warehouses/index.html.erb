@@ -13,12 +13,7 @@
         <div class="card__warehouse">
             <h2>Almacén de <%= warehouse.name %></h2>
             <p>Ubicado en <%= warehouse.location %></p>
-            <% if warehouse.name == 'Calidad' %>
-            <%= image_tag 'img-warehouse.svg', alt: 'Imagen almacen' %>
-            <% else %>
-            <%= image_tag 'img-warehouse-2.svg', alt: 'Imagen almacen' %>
-            <% end %>
-
+          <%= image_tag(warehouse.name == 'Calidad' ? 'img-warehouse.svg' : 'img-warehouse-2.svg', alt: 'Imagen almacen') %>
         </div>
         <% end %>
         <% end %>

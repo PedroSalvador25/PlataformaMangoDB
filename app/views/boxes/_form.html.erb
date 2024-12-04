@@ -32,7 +32,7 @@
          placeholder: "Selecciona una calidad" %>
     <div>
         <%= form.label :weigth  %>
-        <%= form.text_field :weigth, class: "input" %>
+        <%= form.text_field :weigth, class: "input", pattern: "\\d+(\\.\\d{1,3})?", title: "Debe ser un número con un máximo de 3 decimales" %>
     </div>
 
     <div>

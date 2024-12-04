@@ -35,7 +35,7 @@ class BoxesController < ApplicationController
   def create
     result = Box.create_box(box_params)
     if result[:success]
-      redirect_to hectare_path(result[:box].plant.hectare.id), notice: "Caja creada exitosamente."
+      redirect_to hectare_path(result[:box].plant.hectare.id), notice: 'Caja creada exitosamente.'
     else
       @box = result[:box]
       render :new
@@ -63,7 +63,7 @@ class BoxesController < ApplicationController
 
   def release_kilos
     @box.release_kilos(params[:kilos])
-    render json: { message: "Kilos liberados exitosamente" }, status: :ok
+    render json: { message: 'Kilos liberados exitosamente' }, status: :ok
   rescue StandardError => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
@@ -78,3 +78,5 @@ class BoxesController < ApplicationController
     params.require(:box).permit(:quality, :weigth, :plant_id, :shelf_partition_id)
   end
 end
+
+
