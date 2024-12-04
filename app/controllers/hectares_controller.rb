@@ -16,7 +16,13 @@ class HectaresController < ApplicationController
 
   # GET /hectares/new
   def new
-    @hectare = Hectare.new
+    @hectare = Hectare.find_by(id: params[:hectare_id])
+    if @hectare
+      @plants = @hectare.plants
+      @box = Box.new
+    else
+      redirect_to hectares_path, alert: "Hectarea no encontrada."
+    end
   end
 
   # GET /hectares/1/edit

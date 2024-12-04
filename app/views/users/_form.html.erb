@@ -1,57 +1,66 @@
-<%= form_with(model: @user, local: true, class: "space-y-6") do |form| %>
-<% if @user.errors.any? %>
-<div class="ml-3">
-    <h3 class="text-sm font-medium text-red-800">
-        <%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:
-    </h3>
-    <div class="mt-2 text-sm text-red-700">
-        <ul class="list-disc pl-5 space-y-1">
-            <% @user.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-            <% end %>
-        </ul>
+<%= form_with(model: @user, local: true, class: "contents") do |form| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul>
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
     </div>
-</div>
-<% end %>
-<div class="form">
+  <% end %>
 
-  <div>
-    <%= form.label :name, "Nombre" %>
-    <%= form.text_field :name, 
-          class: "input", 
-          required: true, 
-          maxlength: 50, 
-          title: "El nombre no debe exceder los 50 caracteres" %>
+  <div class="info__show__form">
+    <div>
+      <%= form.label :name, "Nombre" %>
+      <%= form.text_field :name, 
+            class: "input", 
+            required: true, 
+            maxlength: 50, 
+            title: "El nombre no debe exceder los 50 caracteres" %>
+    </div>
+
+    <div>
+      <%= form.label :email, "Correo" %>
+      <%= form.text_field :email, 
+            class: "input", 
+            required: true, 
+            pattern: "[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}", 
+            title: "Por favor ingresa un correo válido" %>
+    </div>
+
+    <div>
+      <%= form.label :password, "Contraseña" %>
+      <%= form.text_field :password, 
+            class: "input", 
+            required: true, 
+            minlength: 8, 
+            title: "La contraseña debe tener al menos 8 caracteres" %>
+    </div>
+
+    <%= render "shared/combo_box_noph", 
+         form: form, 
+         field: :role, 
+         label: "Rol", 
+         options: [["Administrador", "0"], ["Encargado de almacén", "1"], ["Etiquetador", "2"], ["Vendedor", "3"]], 
+         selected: "quality" %>
+
+    <div class="options__show__form">
+      <% if @user.new_record? %>
+        <div class="button">
+          <%= link_to "Cancelar", users_path, class: "btn-back" %>
+        </div>
+      <% else %>
+        <div class="button">
+          <%= link_to "Cancelar", user_path(@user), class: "btn-back" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="options__show__form">
+      <div class="button">
+        <%= form.submit "Guardar", class: "btn-primary" %>
+      </div>
+    </div>
   </div>
-
-  <div>
-    <%= form.label :email, "Correo" %>
-    <%= form.text_field :email, 
-          class: "input", 
-          required: true, 
-          pattern: "[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}", 
-          title: "Por favor ingresa un correo válido" %>
-  </div>
-
-  <div>
-    <%= form.label :password, "Contraseña" %>
-    <%= form.text_field :password, 
-          class: "input", 
-          required: true, 
-          minlength: 8, 
-          title: "La contraseña debe tener al menos 8 caracteres" %>
-  </div>
-
-  <%= render "shared/combo_box_noph", 
-       form: form, 
-       field: :role, 
-       label: "Rol", 
-       options: [["Administrador", "0"], ["Encargado de almacén", "1"], ["Etiquetador", "2"], ["Vendedor", "3"]], 
-       selected: "quality"%>
-
-  <div>
-    <%= form.submit class: "btn-primary" %>
-  </div>
-
-</div>
 <% end %>

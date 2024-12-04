@@ -1,11 +1,8 @@
-
-<div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editar Usuario</h1>
-
-  <%= render "form", box: @box %>
-
-  <div class="flex flex-col items-start space-y-4 mt-4">
-    <%= link_to "Show this user", @user, class: "btn-secondary" %>
-    <%= link_to "Back to users", users_path, class: "btn-back" %>
-  </div>
+<div class="container__show">
+    <div class="card_show">
+        <div class="header__show">
+            <h1>Editar usuario</h1>
+        </div>
+           <%= render "form", user: @user %>
+    </div>
 </div>

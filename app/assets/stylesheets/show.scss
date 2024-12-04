@@ -20,6 +20,9 @@
   box-shadow: 0px 4px 4px rgba($color: #000, $alpha: 0.1);
   display: flex;
   flex-direction: column;
+  .button {
+    width: 125px;
+  }
 }
 .header__show {
   border-bottom: 1px solid black;
@@ -35,7 +38,7 @@
   justify-content: space-between;
   width: 80%;
   margin: auto auto;
-  gap: 2rem;
+  gap: 1rem;
   div {
     display: flex;
     flex-direction: column;
@@ -44,6 +47,35 @@
       font-weight: bolder;
     }
   }
+  
+}
+.info__show__form{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem 1rem 2rem 1rem;
+  justify-content: space-between;
+  width: 80%;
+  margin: auto auto;
+  gap: 1rem;
+  .info{
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  div {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    p {
+      font-weight: bolder;
+    }
+  } 
+  
+.options__show__form{
+  width: 150px;
+  .button {
+    width: 125px;
+  }
+}
 }
 .options__show {
   display: flex;
@@ -51,9 +83,6 @@
   gap: 1rem;
   padding: 1rem 2rem 2rem 2rem;
 
-  .button {
-    width: 125px;
-  }
 }
 .no-data {
   margin-top: 5rem;
