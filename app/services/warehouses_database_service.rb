@@ -1,25 +1,46 @@
 class WarehousesDatabaseService
-    def self.create_shelves(warehouse_id)
-      10.times do
-        Shelf.create!(warehouse_id: warehouse_id)
-      end
+  def self.save_warehouse(warehouse)
+    ActiveRecord::Base.transaction do
+      warehouse.save!
     end
-  
-    #def self.total_shelf_partitions(warehouse_id)
-    #  Shelf.joins(:shelf_partitions).where(warehouse_id: warehouse_id).count
-    #end
-  
-    def self.update_output_pointer(warehouse_id, output_pointer)
-      warehouse = Warehouse.find(warehouse_id)
-      warehouse.update!(output_pointer: output_pointer)
+  rescue ActiveRecord::RecordInvalid
+    false
+  end
+
+  def self.update_warehouse(warehouse, attributes)
+    ActiveRecord::Base.transaction do
+      warehouse.update!(attributes)
     end
-  
-    def self.high_quality
-      Warehouse.where(warehouse_type: 'calidad')
+  rescue ActiveRecord::RecordInvalid
+    false
+  end
+
+  def self.delete_warehouse(warehouse)
+    ActiveRecord::Base.transaction do
+      warehouse.destroy!
     end
-  
-    def self.low_quality
-      Warehouse.where(warehouse_type: 'no calidad')
+  rescue ActiveRecord::RecordNotDestroyed
+    false
+  end
+
+  def self.create_shelves(warehouse_id)
+    10.times do
+      Shelf.create!(warehouse_id: warehouse_id)
     end
   end
+
+  def self.update_output_pointer(warehouse_id, output_pointer)
+    warehouse = Warehouse.find(warehouse_id)
+    warehouse.update!(output_pointer: output_pointer)
+  end
+
+  def self.high_quality
+    Warehouse.where(warehouse_type: 'calidad')
+  end
+
+  def self.low_quality
+    Warehouse.where(warehouse_type: 'no calidad')
+  end
+end
+
   

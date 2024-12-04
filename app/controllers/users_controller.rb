@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-  # GET /users/1 or /users/1.json
+  # GET /users/1 or /users.json
   def show
   end
 
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     respond_to do |format|
-      if @user.save
+      if @user.save_record
         format.html { redirect_to @user, notice: "User was successfully created." }
         format.json { render :show, status: :created, location: @user }
       else
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1 or /users/1.json
   def update
     respond_to do |format|
-      if @user.update(user_params)
+      if @user.update_record(user_params)
         format.html { redirect_to @user, notice: "User was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -58,11 +58,16 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
-    @user.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to users_path, status: :see_other, notice: "User was successfully destroyed." }
-      format.json { head :no_content }
+    if @user.delete_record
+      respond_to do |format|
+        format.html { redirect_to users_path, status: :see_other, notice: "User was successfully destroyed." }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to users_path, alert: "Error al eliminar el usuario." }
+        format.json { render json: { error: "Error al eliminar el usuario." }, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -82,4 +87,5 @@ class UsersController < ApplicationController
     end
   end
 end
+
 

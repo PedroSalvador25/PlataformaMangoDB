@@ -1,6 +1,6 @@
 class WarehousesController < ApplicationController
   before_action :authenticate_user
-  before_action :set_warehouse, only: %i[ show edit update destroy ]
+  before_action :set_warehouse, only: %i[show edit update destroy]
 
   # GET /warehouses or /warehouses.json
   def index
@@ -26,7 +26,7 @@ class WarehousesController < ApplicationController
     @warehouse = Warehouse.new(warehouse_params)
 
     respond_to do |format|
-      if @warehouse.save
+      if @warehouse.save_record
         format.html { redirect_to @warehouse, notice: "Warehouse was successfully created." }
         format.json { render :show, status: :created, location: @warehouse }
       else
@@ -39,7 +39,7 @@ class WarehousesController < ApplicationController
   # PATCH/PUT /warehouses/1 or /warehouses/1.json
   def update
     respond_to do |format|
-      if @warehouse.update(warehouse_params)
+      if @warehouse.update_record(warehouse_params)
         format.html { redirect_to @warehouse, notice: "Warehouse was successfully updated." }
         format.json { render :show, status: :ok, location: @warehouse }
       else
@@ -51,22 +51,27 @@ class WarehousesController < ApplicationController
 
   # DELETE /warehouses/1 or /warehouses/1.json
   def destroy
-    @warehouse.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to warehouses_path, status: :see_other, notice: "Warehouse was successfully destroyed." }
-      format.json { head :no_content }
+    if @warehouse.delete_record
+      respond_to do |format|
+        format.html { redirect_to warehouses_path, status: :see_other, notice: "Warehouse was successfully destroyed." }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to warehouses_path, alert: "Error al eliminar el almacén." }
+        format.json { render json: { error: "Error al eliminar el almacén." }, status: :unprocessable_entity }
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_warehouse
-      @warehouse = Warehouse.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def warehouse_params
-      params.require(:warehouse).permit(:name, :location)
-    end
+  def set_warehouse
+    @warehouse = Warehouse.find(params[:id])
+  end
+
+  def warehouse_params
+    params.require(:warehouse).permit(:name, :location, :warehouse_type)
+  end
 end
+
