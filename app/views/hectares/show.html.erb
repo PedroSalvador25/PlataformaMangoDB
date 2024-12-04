@@ -15,6 +15,10 @@
                 <span> <%= @hectare.community %> </span>
             </div>
             <div>
+                <p>Cantidad de Plantas:</p>
+                <span><%= @hectare.plants.count %></span>
+            </div>
+            <div>
                 <p>Latitud:</p>
                 <span> <%= @hectare.latitude %> </span>
             </div>
@@ -41,14 +45,7 @@
             </div>
             <% end %>
 
-            <% if user_has_role?(current_user, :Administrator) %>
-            <div class="button">
-                <%= button_to "Eliminar", @hectare, method: :delete, class: "btn-destroy" %>
-            </div>
-            <% end %>
-
         </div>
     </div>
-
 
 </div>
