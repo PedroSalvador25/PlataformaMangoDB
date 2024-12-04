@@ -17,17 +17,17 @@ class Warehouse < ApplicationRecord
     self.output_pointer ||= 0
   end
 
-  def total_shelf_partitions
-    WarehousesDatabaseService.total_shelf_partitions(self.id)
+  def total_shelf_partitions(id)
+    WarehousesDatabaseService.total_shelf_partitions(id)
   end
 
   def increment_input_pointer
-    self.input_pointer = (self.input_pointer + 1) % total_shelf_partitions
+    self.input_pointer = (self.input_pointer + 1) % total_shelf_partitions(id)
   end
 
   def increment_output_pointer
-    self.output_pointer = (self.output_pointer + 1) % total_shelf_partitions
-    WarehousesDatabaseService.update_output_pointer(self.id, output_pointer)
+    self.output_pointer = (self.output_pointer + 1) % total_shelf_partitions(id)
+    WarehousesDatabaseService.update_output_pointer(id, output_pointer)
   end
 
   def save_record
