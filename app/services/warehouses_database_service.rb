@@ -23,6 +23,11 @@ class WarehousesDatabaseService
     false
   end
 
+  def self.total_shelf_partitions(warehouse_id)
+    Shelf.joins(:shelf_partitions).where(warehouse_id: warehouse_id).count
+  end
+  
+
   def self.create_shelves(warehouse_id)
     10.times do
       Shelf.create!(warehouse_id: warehouse_id)
